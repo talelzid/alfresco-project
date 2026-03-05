@@ -10,7 +10,7 @@
 
 Ce portail web est conçu comme **ressource pédagogique** pour l'enseignement des techniques de test logiciel, de l'automatisation et de la gestion de projet Agile. Il centralise l'ensemble de la documentation, guides et outils nécessaires aux étudiants pour mener à bien un projet de test sur le CMS Alfresco.
 
-**Public cible :** Étudiants en informatique (Groupe 1292)  
+**Public cible :** Étudiants en informatique (Groupes Assurance qualité)  
 **Contexte :** Projet de test du CMS Alfresco dans le cours projet de synthèse  
 **Technologies couvertes :** Robot Framework, Selenium WebDriver, Gherkin/BDD, XPath, PICT (pairwise testing), Jira, Xray
 
