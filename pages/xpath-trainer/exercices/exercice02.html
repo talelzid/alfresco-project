@@ -1,0 +1,358 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau 2 - Texte Exact | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Facile : Série d'exercices 2</h1>
+        <p>Texte exact - Utilisation de text()</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice01.html">← Exercice précédent</a>
+        <a href="exercice03.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>
+              Utiliser <code>text()</code> pour sélectionner par le contenu
+              textuel exact
+            </li>
+            <li>
+              Combiner <code>text()</code> avec des attributs pour plus de
+              précision
+            </li>
+            <li>Différencier les espaces et la casse dans les sélecteurs</li>
+            <li>Localiser des liens de navigation spécifiques</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Facile</span>
+            <span class="badge difficulty">Série 2</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Menu de Navigation</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici un menu de navigation d'un site web. Utilisez XPath pour
+            localiser les éléments demandés.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Menu principal -->
+            <nav class="main-navigation">
+              <div class="nav-brand">
+                <span class="brand-icon">🏢</span>
+                <h2 class="brand-name">MonEntreprise</h2>
+              </div>
+
+              <ul class="nav-menu">
+                <li class="nav-item">
+                  <a href="/accueil" class="nav-link active">Accueil</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/services" class="nav-link">Services</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/produits" class="nav-link">Produits</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/a-propos" class="nav-link">À propos</a>
+                </li>
+                <li class="nav-item">
+                  <a href="/contact" class="nav-link">Contact</a>
+                </li>
+              </ul>
+
+              <div class="nav-actions">
+                <button class="btn btn-secondary">Se connecter</button>
+                <button class="btn btn-primary">Créer un compte</button>
+              </div>
+            </nav>
+
+            <!-- Sous-menu Services -->
+            <div class="submenu" data-parent="services">
+              <h3 class="submenu-title">Nos Services</h3>
+              <ul class="submenu-list">
+                <li class="submenu-item">
+                  <a href="/services/consultation" class="submenu-link">
+                    <span class="icon">💼</span>
+                    Consultation
+                  </a>
+                </li>
+                <li class="submenu-item">
+                  <a href="/services/formation" class="submenu-link">
+                    <span class="icon">📚</span>
+                    Formation
+                  </a>
+                </li>
+                <li class="submenu-item">
+                  <a href="/services/support" class="submenu-link">
+                    <span class="icon">🛠️</span>
+                    Support technique
+                  </a>
+                </li>
+                <li class="submenu-item">
+                  <a href="/services/developpement" class="submenu-link">
+                    <span class="icon">💻</span>
+                    Développement sur mesure
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Fil d'Ariane -->
+            <div class="breadcrumb">
+              <a href="/" class="breadcrumb-link">Accueil</a>
+              <span class="separator">›</span>
+              <a href="/services" class="breadcrumb-link">Services</a>
+              <span class="separator">›</span>
+              <span class="breadcrumb-current">Formation</span>
+            </div>
+
+            <!-- Footer de navigation -->
+            <footer class="nav-footer">
+              <div class="footer-section">
+                <h4>Entreprise</h4>
+                <ul class="footer-links">
+                  <li><a href="/qui-sommes-nous">Qui sommes-nous</a></li>
+                  <li><a href="/equipe">Notre équipe</a></li>
+                  <li><a href="/carrieres">Carrières</a></li>
+                </ul>
+              </div>
+              <div class="footer-section">
+                <h4>Support</h4>
+                <ul class="footer-links">
+                  <li><a href="/faq">FAQ</a></li>
+                  <li><a href="/documentation">Documentation</a></li>
+                  <li><a href="/contact-support">Contacter le support</a></li>
+                </ul>
+              </div>
+            </footer>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Trouvez le XPath qui cible UN seul élément précis en utilisant le
+            texte exact.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Sélectionner le lien "Services"</h4>
+            <p>
+              Trouvez le lien du menu principal qui contient exactement le texte
+              "Services".
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[text()='Services']"
+              data-alternatives='["//a[text()=\"Services\"]", "//a[@class=\"nav-link\" and text()=\"Services\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>Exercice 2 : Sélectionner le bouton "Créer un compte"</h4>
+            <p>
+              Trouvez le bouton qui contient exactement le texte "Créer un
+              compte".
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//button[text()='Créer un compte']"
+              data-alternatives='["//button[text()=\"Créer un compte\"]", "//button[@class=\"btn btn-primary\" and text()=\"Créer un compte\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Exercice 3 : Sélectionner le titre "Nos Services"</h4>
+            <p>Trouvez le titre h3 qui contient exactement "Nos Services".</p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//h3[text()='Nos Services']"
+              data-alternatives='["//h3[text()=\"Nos Services\"]", "//h3[@class=\"submenu-title\" and text()=\"Nos Services\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>
+              Exercice 4 : Sélectionner "Formation" dans le breadcrumb (fil
+              d'Ariane)
+            </h4>
+            <p>
+              Trouvez le span dans le fil d'Ariane qui contient exactement
+              "Formation".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Attention : il y a aussi "Formation" dans le sous-menu !</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//span[@class='breadcrumb-current' and text()='Formation']"
+              data-alternatives='["//span[@class=\"breadcrumb-current\" and text()=\"Formation\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>Exercice 5 : Sélectionner le titre de section "Support"</h4>
+            <p>
+              Trouvez le h4 dans le footer qui contient exactement "Support".
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//h4[text()='Support']"
+              data-alternatives='["//h4[text()=\"Support\"]", "//div[@class=\"footer-section\"]//h4[text()=\"Support\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>
+              Exercice Bonus : Sélectionner le lien "Développement sur mesure"
+            </h4>
+            <p>
+              Trouvez le lien du sous-menu qui contient le texte "Développement
+              sur mesure".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Le texte est dans le lien, mais il y a aussi une icône avant
+                !</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[contains(., 'Développement sur mesure')]"
+              data-alternatives='["//a[contains(.,\"Développement sur mesure\")]", "//a[@href=\"/services/developpement\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice03.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : Prédicats AND →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

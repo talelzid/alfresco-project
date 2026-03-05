@@ -1,0 +1,1503 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Solutions Complètes | XPath Trainer</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+    <style>
+      .solution-section {
+        margin-bottom: 3rem;
+        background: white;
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: var(--shadow);
+      }
+
+      .solution-section h3 {
+        color: var(--primary-color);
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 3px solid var(--secondary-color);
+      }
+
+      .solution-item {
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background: var(--light-bg);
+        border-radius: 6px;
+        border-left: 4px solid var(--secondary-color);
+      }
+
+      .solution-item:hover {
+        background: #e8eef3;
+        transform: translateX(5px);
+        transition: all 0.3s ease;
+      }
+
+      .solution-number {
+        display: inline-block;
+        background: var(--secondary-color);
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        text-align: center;
+        line-height: 28px;
+        font-weight: bold;
+        margin-right: 0.75rem;
+        font-size: 0.9rem;
+      }
+
+      .solution-title {
+        font-weight: 600;
+        color: var(--text-primary);
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+      }
+
+      .solution-xpath {
+        font-family: "Courier New", monospace;
+        background: #2c3e50;
+        color: #2ecc71;
+        padding: 0.75rem 1rem;
+        border-radius: 4px;
+        margin-top: 0.5rem;
+        overflow-x: auto;
+        font-size: 0.9rem;
+        line-height: 1.6;
+      }
+
+      .difficulty-badge {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 4px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-left: 0.5rem;
+      }
+
+      .copy-btn {
+        background: var(--success-color);
+        color: white;
+        border: none;
+        padding: 0.4rem 0.8rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.85rem;
+        margin-left: 1rem;
+        transition: all 0.3s ease;
+      }
+
+      .copy-btn:hover {
+        background: #229954;
+        transform: scale(1.05);
+      }
+
+      .copy-btn:active {
+        transform: scale(0.95);
+      }
+
+      .stats-summary {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+        margin-bottom: 2rem;
+      }
+
+      .stat-box {
+        background: linear-gradient(135deg, var(--secondary-color), #5dade2);
+        color: white;
+        padding: 1.5rem;
+        border-radius: 8px;
+        text-align: center;
+      }
+
+      .stat-box .number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        display: block;
+      }
+
+      .stat-box .label {
+        font-size: 0.9rem;
+        opacity: 0.9;
+      }
+
+      .toc {
+        background: var(--light-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+      }
+
+      .toc h3 {
+        color: var(--primary-color);
+        margin-bottom: 1rem;
+      }
+
+      .toc ul {
+        list-style: none;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 0.5rem;
+      }
+
+      .toc li a {
+        color: var(--secondary-color);
+        text-decoration: none;
+        padding: 0.5rem;
+        display: block;
+        border-radius: 4px;
+        transition: all 0.3s ease;
+      }
+
+      .toc li a:hover {
+        background: white;
+        padding-left: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>📚 Solutions Complètes</h1>
+        <p>Toutes les solutions XPath des 54 exercices</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="../exercices/exercice01.html">📝 Exercices</a>
+      </nav>
+
+      <main>
+        <!-- Statistiques -->
+        <div class="stats-summary">
+          <div class="stat-box">
+            <span class="number">54</span>
+            <span class="label">Exercices</span>
+          </div>
+          <div class="stat-box">
+            <span class="number">9</span>
+            <span class="label">Séries</span>
+          </div>
+          <div class="stat-box">
+            <span class="number">3</span>
+            <span class="label">Niveaux</span>
+          </div>
+        </div>
+
+        <!-- Table des matières -->
+        <div class="toc">
+          <h3>📑 Table des matières</h3>
+          <ul>
+            <li><a href="#serie1">Série 1 - Sélection simple</a></li>
+            <li><a href="#serie2">Série 2 - Texte exact</a></li>
+            <li><a href="#serie3">Série 3 - Prédicats AND</a></li>
+            <li><a href="#serie4">Série 4 - Fonctions de texte</a></li>
+            <li><a href="#serie5">Série 5 - Axes ascendants</a></li>
+            <li><a href="#serie6">Série 6 - Axes siblings</a></li>
+            <li><a href="#serie7">Série 7 - Prédicats imbriqués</a></li>
+            <li><a href="#serie8">Série 8 - Axes complexes</a></li>
+            <li><a href="#serie9">Série 9 - Cas réels avancés</a></li>
+          </ul>
+        </div>
+
+        <!-- SÉRIE 1 -->
+        <section class="solution-section" id="serie1">
+          <h3>
+            <span class="difficulty easy">Facile</span>
+            Série 1 - Sélection simple
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">1</span>
+              Sélectionner le logo principal
+            </div>
+            <div class="solution-xpath">
+              //span[@id='main-logo']
+              <button
+                class="copy-btn"
+                onclick="copyToClipboard(this, `//span[@id='main-logo']`)"
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">2</span>
+              Sélectionner le titre du produit "Smartphone X12"
+            </div>
+            <div class="solution-xpath">
+              //h3[text()='Smartphone X12']
+              <button
+                class="copy-btn"
+                onclick="copyToClipboard(this, `//h3[text()='Smartphone X12']`)"
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">3</span>
+              Sélectionner le lien "Panier" avec data-attribute
+            </div>
+            <div class="solution-xpath">
+              //a[contains(@class, 'cart-link') and @data-items='3']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[contains(@class, 'cart-link') and @data-items='3']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">4</span>
+              Sélectionner le produit "coup de cœur"
+            </div>
+            <div class="solution-xpath">
+              //div[@class='product-card featured']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(this, `//div[@class='product-card featured']`)
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">5</span>
+              Sélectionner le bouton d'ajout au panier du produit P002
+            </div>
+            <div class="solution-xpath">
+              //button[@class='btn-add-cart' and @id='add-P002']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//button[@class='btn-add-cart' and @id='add-P002']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">6</span>
+              Sélectionner le prix du Laptop Pro 15
+            </div>
+            <div class="solution-xpath">
+              //span[@class='product-price' and text()='1799$']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//span[@class='product-price' and text()='1799$']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 2 -->
+        <section class="solution-section" id="serie2">
+          <h3>
+            <span class="difficulty easy">Facile</span>
+            Série 2 - Texte exact
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">7</span>
+              Sélectionner le lien "Services"
+            </div>
+            <div class="solution-xpath">
+              //a[text()='Services']
+              <button
+                class="copy-btn"
+                onclick="copyToClipboard(this, `//a[text()='Services']`)"
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">8</span>
+              Sélectionner le bouton "Créer un compte"
+            </div>
+            <div class="solution-xpath">
+              //button[text()='Créer un compte']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(this, `//button[text()='Créer un compte']`)
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">9</span>
+              Sélectionner le titre "Nos Services"
+            </div>
+            <div class="solution-xpath">
+              //h3[text()='Nos Services']
+              <button
+                class="copy-btn"
+                onclick="copyToClipboard(this, `//h3[text()='Nos Services']`)"
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">10</span>
+              Sélectionner "Formation" dans le breadcrumb (fil d'Ariane)
+            </div>
+            <div class="solution-xpath">
+              //span[@class='breadcrumb-current' and text()='Formation']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//span[@class='breadcrumb-current' and text()='Formation']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">11</span>
+              Sélectionner le titre de section "Support"
+            </div>
+            <div class="solution-xpath">
+              //h4[text()='Support']
+              <button
+                class="copy-btn"
+                onclick="copyToClipboard(this, `//h4[text()='Support']`)"
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">12</span>
+              Sélectionner le lien "Développement sur mesure"
+            </div>
+            <div class="solution-xpath">
+              //a[contains(., 'Développement sur mesure')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[contains(., 'Développement sur mesure')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 3 -->
+        <section class="solution-section" id="serie3">
+          <h3>
+            <span class="difficulty easy">Facile</span>
+            Série 3 - Prédicats AND
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">13</span>
+              Le lien "Voir" du projet "Refonte Site Web"
+            </div>
+            <div class="solution-xpath">
+              //a[text()='Voir' and starts-with(@href, '/projects/PRJ-001')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[text()='Voir' and starts-with(@href, '/projects/PRJ-001')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">14</span>
+              Le bouton "Modifier" du projet PRJ-002
+            </div>
+            <div class="solution-xpath">
+              //a[contains(@class, 'btn-edit') and @data-action='edit' and
+              starts-with(@href, '/projects/PRJ-002')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[contains(@class, 'btn-edit') and @data-action='edit' and starts-with(@href, '/projects/PRJ-002')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">15</span>
+              La carte du projet en statut "pending"
+            </div>
+            <div class="solution-xpath">
+              //div[contains(@class, 'project-card') and @data-status='pending']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[contains(@class, 'project-card') and @data-status='pending']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">16</span>
+              Le bouton "Nouveau projet"
+            </div>
+            <div class="solution-xpath">
+              //button[contains(@class, 'primary') and @data-tool='create']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//button[contains(@class, 'primary') and @data-tool='create']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">17</span>
+              Le titre du projet "Application Mobile"
+            </div>
+            <div class="solution-xpath">
+              //h3[contains(@class, 'project-name') and text()='Application
+              Mobile']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//h3[contains(@class, 'project-name') and text()='Application Mobile']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">18</span>
+              Le badge "Terminé"
+            </div>
+            <div class="solution-xpath">
+              //span[contains(@class, 'project-status') and contains(@class,
+              'badge-completed') and text()='Terminé']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//span[contains(@class, 'project-status') and contains(@class, 'badge-completed') and text()='Terminé']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 4 -->
+        <section class="solution-section" id="serie4">
+          <h3>
+            <span class="difficulty medium">Moyen</span>
+            Série 4 - Fonctions de texte
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">19</span>
+              Trouver un livre sur Python
+            </div>
+            <div class="solution-xpath">
+              //h3[@class='book-title' and starts-with(normalize-space(.),
+              'Introduction') and contains(., 'Python')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//h3[@class='book-title' and starts-with(normalize-space(.), 'Introduction') and contains(., 'Python')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">20</span>
+              Sélectionner un livre par catégorie
+            </div>
+            <div class="solution-xpath">
+              //span[@class='book-category' and text()='Histoire']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//span[@class='book-category' and text()='Histoire']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">21</span>
+              Normaliser les espaces dans un prix
+            </div>
+            <div class="solution-xpath">
+              //span[@class='book-price' and normalize-space(.)='45.99 $']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//span[@class='book-price' and normalize-space(.)='45.99 $']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">22</span>
+              Livre avec ISBN commençant par 978-2
+            </div>
+            <div class="solution-xpath">
+              //article[starts-with(@data-isbn, '978-2') and contains(@class,
+              'featured')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//article[starts-with(@data-isbn, '978-2') and contains(@class, 'featured')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">23</span>
+              Description contenant "techniques"
+            </div>
+            <div class="solution-xpath">
+              //p[@class='book-description' and contains(., 'techniques')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//p[@class='book-description' and contains(., 'techniques')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">24</span>
+              Lien avec href commençant par /books/python
+            </div>
+            <div class="solution-xpath">
+              //a[starts-with(@href, '/books/python') and
+              contains(ancestor::article, 'Avancé')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[starts-with(@href, '/books/python') and contains(ancestor::article, 'Avancé')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 5 -->
+        <section class="solution-section" id="serie5">
+          <h3>
+            <span class="difficulty medium">Moyen</span>
+            Série 5 - Axes ascendants
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">25</span>
+              Bouton de la ligne avec l'ID 78
+            </div>
+            <div class="solution-xpath">
+              //a[@href='/issues/78']/ancestor::tr//button[@class='btn-action']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[@href='/issues/78']/ancestor::tr//button[@class='btn-action']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">26</span>
+              Trouver la ligne avec priorité "High"
+            </div>
+            <div class="solution-xpath">
+              //td[@class='priority' and text()='High']/ancestor::tr
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//td[@class='priority' and text()='High']/ancestor::tr`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">27</span>
+              Remonter au tableau depuis une cellule
+            </div>
+            <div class="solution-xpath">
+              //a[@href='/issues/78']/ancestor::table
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[@href='/issues/78']/ancestor::table`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">28</span>
+              Ligne avec un Bug de priorité Urgent
+            </div>
+            <div class="solution-xpath">
+              //td[@class='tracker' and
+              text()='Bug']/parent::tr[.//td[@class='priority' and
+              text()='Urgent']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//td[@class='tracker' and text()='Bug']/parent::tr[.//td[@class='priority' and text()='Urgent']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">29</span>
+              Cellule parent d'un lien de projet
+            </div>
+            <div class="solution-xpath">
+              //a[@href='/projects/ecommerce']/parent::td
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//a[@href='/projects/ecommerce']/parent::td`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">30</span>
+              Ligne avec statut "Resolved"
+            </div>
+            <div class="solution-xpath">
+              //td[@class='status' and
+              text()='Resolved']/ancestor::tr[@id='issue-77']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//td[@class='status' and text()='Resolved']/ancestor::tr[@id='issue-77']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 6 -->
+        <section class="solution-section" id="serie6">
+          <h3>
+            <span class="difficulty medium">Moyen</span>
+            Série 6 - Axes siblings
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">31</span>
+              Frère suivant d'un label
+            </div>
+            <div class="solution-xpath">
+              //label[text()='Prénom']/following-sibling::input
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//label[text()='Prénom']/following-sibling::input`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">32</span>
+              Section "Adresse" après "Informations personnelles"
+            </div>
+            <div class="solution-xpath">
+              //div[@id='personal-info']/following-sibling::div[@class='form-section'][.//h3[text()='Adresse']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[@id='personal-info']/following-sibling::div[@class='form-section'][.//h3[text()='Adresse']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">33</span>
+              Message d'aide après le champ "Rue"
+            </div>
+            <div class="solution-xpath">
+              //input[@id='street']/following-sibling::span[@class='help-text']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//input[@id='street']/following-sibling::span[@class='help-text']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">34</span>
+              Section "Adresse" précédant "Préférences"
+            </div>
+            <div class="solution-xpath">
+              //div[@id='preferences']/preceding-sibling::div[@class='form-section'][.//h3[text()='Adresse']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[@id='preferences']/preceding-sibling::div[@class='form-section'][.//h3[text()='Adresse']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">35</span>
+              Bouton suivant le bouton "Réinitialiser"
+            </div>
+            <div class="solution-xpath">
+              //button[@type='reset']/following-sibling::button
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//button[@type='reset']/following-sibling::button`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">36</span>
+              Checkbox précédé d'un autre checkbox
+            </div>
+            <div class="solution-xpath">
+              //input[@id='notifications' and
+              preceding-sibling::input[@type='checkbox']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//input[@id='notifications' and preceding-sibling::input[@type='checkbox']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 7 -->
+        <section class="solution-section" id="serie7">
+          <h3>
+            <span class="difficulty hard">Difficile</span>
+            Série 7 - Prédicats imbriqués
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">37</span>
+              Produit en promo et en stock
+            </div>
+            <div class="solution-xpath">
+              //article[@data-id='P005' and .//span[@class='badge promo'] and
+              .//span[@class='stock available' and text()='En stock']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//article[@data-id='P005' and .//span[@class='badge promo'] and .//span[@class='stock available' and text()='En stock']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">38</span>
+              Produit de catégorie spécifique avec note élevée
+            </div>
+            <div class="solution-xpath">
+              //article[.//span[@class='badge-category' and contains(text(),
+              'Mobilier')] and .//span[@class='rating' and text()='⭐ 4.8']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//article[.//span[@class='badge-category' and contains(text(), 'Mobilier')] and .//span[@class='rating' and text()='⭐ 4.8']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">39</span>
+              Produit avec prix réduit mais rupture de stock
+            </div>
+            <div class="solution-xpath">
+              //article[.//span[@class='price original'] and
+              .//span[@class='stock unavailable' and text()='Rupture de stock']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//article[.//span[@class='price original'] and .//span[@class='stock unavailable' and text()='Rupture de stock']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">40</span>
+              Badge promo de -25% dans catégorie Audio
+            </div>
+            <div class="solution-xpath">
+              //span[@class='badge promo' and
+              text()='-25%']/ancestor::article[.//span[contains(text(),
+              'Audio')]]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//span[@class='badge promo' and text()='-25%']/ancestor::article[.//span[contains(text(), 'Audio')]]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">41</span>
+              Prix actuel sous 100$ avec plus de 400 avis
+            </div>
+            <div class="solution-xpath">
+              //span[@class='price current' and number(translate(., ' $', '')) <
+              100]/ancestor::article[.//span[@class='reviews' and
+              starts-with(text(), '412')]]//span[@class='price current']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//span[@class='price current' and number(translate(., ' $', '')) < 100]/ancestor::article[.//span[@class='reviews' and starts-with(text(), '412')]]//span[@class='price current']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">42</span>
+              Produit Électronique en promo avec stock faible
+            </div>
+            <div class="solution-xpath">
+              //article[.//span[contains(text(), '💻 Électronique')] and
+              .//span[@class='badge promo'] and .//span[@class='quantity' and
+              number(translate(., ' unités', '')) < 10]]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//article[.//span[contains(text(), '💻 Électronique')] and .//span[@class='badge promo'] and .//span[@class='quantity' and number(translate(., ' unités', '')) < 10]]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 8 -->
+        <section class="solution-section" id="serie8">
+          <h3>
+            <span class="difficulty hard">Difficile</span>
+            Série 8 - Axes complexes
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">43</span>
+              Note warning après un h3 spécifique
+            </div>
+            <div class="solution-xpath">
+              //h3[text()='📦 Installation']/following::div[contains(@class,
+              'note') and contains(@class, 'warning') and
+              .//span[contains(text(), 'accès au dépôt')]]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//h3[text()='📦 Installation']/following::div[contains(@class, 'note') and contains(@class, 'warning') and .//span[contains(text(), 'accès au dépôt')]]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">44</span>
+              Note danger après un code spécifique
+            </div>
+            <div class="solution-xpath">
+              //code[contains(text(),
+              'test:integration')]/following::div[contains(@class, 'danger') and
+              .//span[@class='content']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//code[contains(text(), 'test:integration')]/following::div[contains(@class, 'danger') and .//span[@class='content']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">45</span>
+              Élément précédant une note spécifique
+            </div>
+            <div class="solution-xpath">
+              //div[@class='note danger' and .//span[contains(text(), 'Ne
+              committez jamais')]]/preceding::h4[text()='Étape 3 :
+              Configuration']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[@class='note danger' and .//span[contains(text(), 'Ne committez jamais')]]/preceding::h4[text()='Étape 3 : Configuration']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">46</span>
+              Note info dans une section spécifique
+            </div>
+            <div class="solution-xpath">
+              //section[@id='installation']//div[contains(@class, 'note') and
+              contains(@class, 'info') and .//span[contains(text(),
+              'installation peut prendre')]]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//section[@id='installation']//div[contains(@class, 'note') and contains(@class, 'info') and .//span[contains(text(), 'installation peut prendre')]]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">47</span>
+              Code suivant un avertissement
+            </div>
+            <div class="solution-xpath">
+              //div[@class='note warning' and .//span[contains(text(), 'Modifiez
+              ces valeurs')]]/following::pre[@class='code' and
+              .//code[contains(text(), 'PORT=3000')]]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[@class='note warning' and .//span[contains(text(), 'Modifiez ces valeurs')]]/following::pre[@class='code' and .//code[contains(text(), 'PORT=3000')]]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">48</span>
+              Navigation complexe multi-axes
+            </div>
+            <div class="solution-xpath">
+              //div[contains(@class, 'danger') and .//span[contains(text(),
+              'intégration')]]/following::div[contains(@class, 'success')]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[contains(@class, 'danger') and .//span[contains(text(), 'intégration')]]/following::div[contains(@class, 'success')]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- SÉRIE 9 -->
+        <section class="solution-section" id="serie9">
+          <h3>
+            <span class="difficulty hard">Difficile</span>
+            Série 9 - Cas réels avancés
+          </h3>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">49</span>
+              Cliquer sur le bouton "Traiter en priorité"
+            </div>
+            <div class="solution-xpath">
+              //tr[.//td[@class='customer-name' and text()='Thomas Bernard'] and
+              .//span[contains(@class,
+              'status-pending')]]//button[@data-action='process']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//tr[.//td[@class='customer-name' and text()='Thomas Bernard'] and .//span[contains(@class, 'status-pending')]]//button[@data-action='process']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">50</span>
+              Vérifier le montant d'une commande spécifique
+            </div>
+            <div class="solution-xpath">
+              //tr[@data-order-id='ORD-2024-1588']//td[@class='order-amount']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//tr[@data-order-id='ORD-2024-1588']//td[@class='order-amount']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">51</span>
+              Filtrer les commandes expédiées uniquement
+            </div>
+            <div class="solution-xpath">
+              //tr[.//span[@class='badge status-shipped'] and
+              .//td[@class='customer-name' and text()='Jean Martin']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//tr[.//span[@class='badge status-shipped'] and .//td[@class='customer-name' and text()='Jean Martin']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">52</span>
+              Cliquer sur l'alerte warning spécifique
+            </div>
+            <div class="solution-xpath">
+              //div[@class='alert warning' and .//span[contains(text(),
+              'commandes en attente de
+              validation')]]//button[@class='alert-action']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[@class='alert warning' and .//span[contains(text(), 'commandes en attente de validation')]]//button[@class='alert-action']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">53</span>
+              Valider la statistique de revenus avec tendance positive
+            </div>
+            <div class="solution-xpath">
+              //div[@class='stat-card' and @data-metric='revenue' and
+              .//span[@class='stat-change positive']]
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//div[@class='stat-card' and @data-metric='revenue' and .//span[@class='stat-change positive']]`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+
+          <div class="solution-item">
+            <div class="solution-title">
+              <span class="solution-number">54</span>
+              Automation complète - Bouton suivre d'une commande haute valeur
+            </div>
+            <div class="solution-xpath">
+              //tr[.//span[@class='badge status-shipped'] and
+              .//td[@class='order-amount' and number(translate(., ' $', '')) >
+              1000]]//button[@data-action='track']
+              <button
+                class="copy-btn"
+                onclick="
+                  copyToClipboard(
+                    this,
+                    `//tr[.//span[@class='badge status-shipped'] and .//td[@class='order-amount' and number(translate(., ' $', '')) > 1000]]//button[@data-action='track']`,
+                  )
+                "
+              >
+                📋 Copier
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Message de félicitation -->
+        <section class="intro" style="margin-top: 3rem; text-align: center">
+          <h2>🎉 Félicitations !</h2>
+          <p>
+            Vous avez maintenant accès à toutes les solutions des 54 exercices
+            XPath. Utilisez-les pour vérifier vos réponses et approfondir votre
+            compréhension des axes, prédicats et fonctions XPath.
+          </p>
+          <p style="margin-top: 1rem">
+            <a
+              href="../index.html"
+              style="
+                display: inline-block;
+                padding: 1rem 2rem;
+                background: var(--secondary-color);
+                color: white;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 600;
+                margin-right: 1rem;
+              "
+            >
+              🏠 Retour à l'accueil
+            </a>
+            <a
+              href="../exercices/exercice01.html"
+              style="
+                display: inline-block;
+                padding: 1rem 2rem;
+                background: var(--success-color);
+                color: white;
+                text-decoration: none;
+                border-radius: 6px;
+                font-weight: 600;
+              "
+            >
+              📝 Recommencer les exercices
+            </a>
+          </p>
+        </section>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script>
+      // Fonction pour copier le XPath dans le presse-papiers
+      function copyToClipboard(button, xpath) {
+        navigator.clipboard.writeText(xpath).then(
+          function () {
+            const originalText = button.textContent;
+            button.textContent = "✓ Copié !";
+            button.style.background = "#27ae60";
+
+            setTimeout(function () {
+              button.textContent = originalText;
+              button.style.background = "";
+            }, 2000);
+          },
+          function (err) {
+            console.error("Erreur lors de la copie :", err);
+            alert("Erreur lors de la copie. Veuillez copier manuellement.");
+          },
+        );
+      }
+
+      // Smooth scroll pour la table des matières
+      document.querySelectorAll(".toc a").forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+          const targetId = this.getAttribute("href");
+          const targetElement = document.querySelector(targetId);
+          targetElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      console.log("✅ Page de solutions chargée avec succès");
+      console.log(
+        '💡 Cliquez sur "Copier" pour copier un XPath dans le presse-papiers',
+      );
+    </script>
+  </body>
+</html>

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>XPath - Exercices Pratiques</title>
+    <link rel="stylesheet" href="styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Exercices XPath Avancés</h1>
+        <p>Maîtrisez les axes, prédicats et expressions complexes</p>
+      </header>
+
+      <nav>
+        <a href="index.html" class="home-link">🏠 Accueil</a>
+        <a href="solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="intro">
+          <h2>Bienvenue</h2>
+          <p>
+            Ce site propose
+            <strong>9 séries d'exercices progressifs</strong> (54 exercices au
+            total) pour maîtriser XPath, du niveau débutant aux expressions les
+            plus complexes. Chaque série présente un DOM HTML réaliste (boutique
+            e-commerce, dashboard analytique, formulaires, système de tickets,
+            documentation technique...) avec 6 exercices à résoudre.
+          </p>
+          <p>
+            Vous développerez vos compétences sur les
+            <strong>axes de navigation</strong> (<code>ancestor::</code>,
+            <code>parent::</code>, <code>following-sibling::</code>,
+            <code>preceding::</code>, <code>following::</code>), les
+            <strong>prédicats imbriqués</strong> avec conditions multiples, et
+            les
+            <strong>fonctions de texte</strong> (<code>normalize-space()</code>,
+            <code>contains()</code>, <code>starts-with()</code>).
+          </p>
+          <p style="color: var(--text-secondary); margin-top: 1rem">
+            💡 Chaque exercice inclut un système de validation, des indices
+            progressifs et la solution complète. Testez vos XPath directement
+            dans le navigateur !
+          </p>
+        </section>
+
+        <h2 style="margin-bottom: 1.5rem; color: var(--primary-color)">
+          Parcours d'Apprentissage
+        </h2>
+
+        <!-- NIVEAU FACILE -->
+        <div class="difficulty-section">
+          <h3 class="difficulty-section-title">
+            <span class="difficulty easy">Niveau Facile</span>
+          </h3>
+          <div class="levels-grid">
+            <!-- Série 1 -->
+            <div class="level-card">
+              <h3>Série 1 - Sélection simple</h3>
+              <ul>
+                <li>Sélection par nom de balise</li>
+                <li>Utiliser les attributs (id, class, data-*)</li>
+                <li>Combiner plusieurs conditions avec <code>and</code></li>
+                <li>Sélection absolue vs relative</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Boutique e-commerce
+              </p>
+              <a href="exercices/exercice01.html">Commencer →</a>
+            </div>
+
+            <!-- Série 2 -->
+            <div class="level-card">
+              <h3>Série 2 - Texte exact</h3>
+              <ul>
+                <li>Utiliser <code>text()</code> pour le contenu exact</li>
+                <li>Combiner <code>text()</code> avec des attributs</li>
+                <li>Différencier espaces et casse</li>
+                <li>Localiser des liens de navigation</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Menu de navigation
+              </p>
+              <a href="exercices/exercice02.html">Commencer →</a>
+            </div>
+
+            <!-- Série 3 -->
+            <div class="level-card">
+              <h3>Série 3 - Prédicats AND</h3>
+              <ul>
+                <li>Combiner conditions avec <code>and</code></li>
+                <li>
+                  Utiliser <code>text()</code> et <code>starts-with()</code>
+                </li>
+                <li>Sélecteurs avec plusieurs attributs</li>
+                <li>Éviter les ambiguïtés</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Gestion de projets (Jira/Trello)
+              </p>
+              <a href="exercices/exercice03.html">Commencer →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEAU MOYEN -->
+        <div class="difficulty-section">
+          <h3 class="difficulty-section-title">
+            <span class="difficulty medium">Niveau Moyen</span>
+          </h3>
+          <div class="levels-grid">
+            <!-- Série 4 -->
+            <div class="level-card">
+              <h3>Série 4 - Fonctions de texte</h3>
+              <ul>
+                <li><code>contains()</code> pour sous-chaînes</li>
+                <li><code>starts-with()</code> pour début de texte</li>
+                <li><code>normalize-space()</code> pour gérer espaces</li>
+                <li>Combiner plusieurs fonctions</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Catalogue de bibliothèque
+              </p>
+              <a href="exercices/exercice04.html">Commencer →</a>
+            </div>
+
+            <!-- Série 5 -->
+            <div class="level-card">
+              <h3>Série 5 - Axes ascendants</h3>
+              <ul>
+                <li><code>parent::</code> pour remonter au parent direct</li>
+                <li><code>ancestor::</code> pour n'importe quel ancêtre</li>
+                <li>Combiner axes ascendants avec prédicats</li>
+                <li>Naviguer dans tableaux HTML complexes</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Système de suivi de tickets (Redmine)
+              </p>
+              <a href="exercices/exercice05.html">Commencer →</a>
+            </div>
+
+            <!-- Série 6 -->
+            <div class="level-card">
+              <h3>Série 6 - Axes siblings</h3>
+              <ul>
+                <li><code>following-sibling::</code> pour frères suivants</li>
+                <li><code>preceding-sibling::</code> pour frères précédents</li>
+                <li>Combiner axes siblings avec prédicats</li>
+                <li>Naviguer dans formulaires complexes</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Formulaire d'inscription
+              </p>
+              <a href="exercices/exercice06.html">Commencer →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- NIVEAU DIFFICILE -->
+        <div class="difficulty-section">
+          <h3 class="difficulty-section-title">
+            <span class="difficulty hard">Niveau Difficile</span>
+          </h3>
+          <div class="levels-grid">
+            <!-- Série 7 -->
+            <div class="level-card">
+              <h3>Série 7 - Prédicats imbriqués</h3>
+              <ul>
+                <li>
+                  Combiner prédicats avec <code>and</code> et <code>or</code>
+                </li>
+                <li>Prédicats imbriqués sur éléments enfants</li>
+                <li>Filtrer avec conditions multiples complexes</li>
+                <li>Naviguer dans catalogues e-commerce</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Catalogue de produits e-commerce
+              </p>
+              <a href="exercices/exercice07.html">Commencer →</a>
+            </div>
+
+            <!-- Série 8 -->
+            <div class="level-card">
+              <h3>Série 8 - Axes complexes</h3>
+              <ul>
+                <li>
+                  <code>following::</code> pour tous les éléments suivants
+                </li>
+                <li>
+                  <code>preceding::</code> pour tous les éléments précédents
+                </li>
+                <li>Combiner plusieurs axes dans un XPath</li>
+                <li>Naviguer dans documentation technique</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Documentation technique
+              </p>
+              <a href="exercices/exercice08.html">Commencer →</a>
+            </div>
+
+            <!-- Série 9 -->
+            <div class="level-card">
+              <h3>Série 9 - Cas réels avancés</h3>
+              <ul>
+                <li>Appliquer tous les concepts XPath appris</li>
+                <li>Scénarios d'automation web (Selenium, Playwright)</li>
+                <li>Combiner axes, prédicats, fonctions</li>
+                <li>Créer des locateurs robustes et maintenables</li>
+              </ul>
+              <p
+                style="
+                  color: var(--text-secondary);
+                  font-size: 0.9rem;
+                  margin-top: 0.5rem;
+                "
+              >
+                DOM : Dashboard analytique e-commerce
+              </p>
+              <a href="exercices/exercice09.html">Commencer →</a>
+            </div>
+          </div>
+        </div>
+
+        <section class="intro" style="margin-top: 2rem">
+          <h2>Légende des Difficultés</h2>
+          <div
+            style="display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem"
+          >
+            <div style="display: flex; align-items: center; gap: 0.5rem">
+              <span class="difficulty easy">Facile</span>
+              <span style="color: var(--text-secondary); font-size: 0.9rem">
+                3 séries - Sélections directes, fonctions de base
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem">
+              <span class="difficulty medium">Moyen</span>
+              <span style="color: var(--text-secondary); font-size: 0.9rem">
+                3 séries - Navigation par axes, prédicats multiples
+              </span>
+            </div>
+            <div style="display: flex; align-items: center; gap: 0.5rem">
+              <span class="difficulty hard">Difficile</span>
+              <span style="color: var(--text-secondary); font-size: 0.9rem">
+                3 séries - Imbrications, combinaisons d'axes
+              </span>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+  </body>
+</html>

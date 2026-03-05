@@ -1,0 +1,419 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau Moyen - Axes Ascendants | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Moyen : Série d'exercices 5</h1>
+        <p>Axes ascendants - parent::, ancestor::</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice04.html">← Exercice précédent</a>
+        <a href="exercice06.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>
+              Utiliser <code>parent::</code> pour remonter au parent direct
+            </li>
+            <li>
+              Utiliser <code>ancestor::</code> pour remonter à n'importe quel
+              ancêtre
+            </li>
+            <li>Combiner les axes ascendants avec des prédicats</li>
+            <li>Naviguer dans une structure de tableau HTML complexe</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Moyen</span>
+            <span class="badge difficulty">Série 5</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Système de Suivi de Tickets (Redmine)</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici un tableau de tickets issu d'un système de gestion de projets.
+            Utilisez les axes ascendants pour localiser les éléments demandés.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Tableau des tickets -->
+            <div class="autoscroll">
+              <table class="list issues">
+                <thead>
+                  <tr>
+                    <th class="id"><a href="/issues?sort=id">#</a></th>
+                    <th class="project">Projet</th>
+                    <th class="tracker">Tracker</th>
+                    <th class="status">Statut</th>
+                    <th class="priority">Priorité</th>
+                    <th class="subject">Sujet</th>
+                    <th class="assigned_to">Assigné à</th>
+                    <th class="actions">Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr id="issue-81" class="issue tracker-1 status-1 priority-2">
+                    <td class="id"><a href="/issues/81">81</a></td>
+                    <td class="project">
+                      <a href="/projects/parking">Gestion de parking</a>
+                    </td>
+                    <td class="tracker">Bug</td>
+                    <td class="status">New</td>
+                    <td class="priority">Normal</td>
+                    <td class="subject">
+                      <a href="/issues/81">Anomalie de calcul de tarif</a>
+                    </td>
+                    <td class="assigned_to">
+                      <a class="user active" href="/users/56">User 56</a>
+                    </td>
+                    <td class="actions">
+                      <button class="btn-action">⚙️ Modifier</button>
+                    </td>
+                  </tr>
+                  <tr id="issue-80" class="issue tracker-1 status-1 priority-3">
+                    <td class="id"><a href="/issues/80">80</a></td>
+                    <td class="project">
+                      <a href="/projects/parking">Gestion de parking</a>
+                    </td>
+                    <td class="tracker">Bug</td>
+                    <td class="status">New</td>
+                    <td class="priority">High</td>
+                    <td class="subject">
+                      <a href="/issues/80">Erreur de validation formulaire</a>
+                    </td>
+                    <td class="assigned_to">
+                      <a class="user active" href="/users/55">User 55</a>
+                    </td>
+                    <td class="actions">
+                      <button class="btn-action">⚙️ Modifier</button>
+                    </td>
+                  </tr>
+                  <tr id="issue-79" class="issue tracker-2 status-2 priority-2">
+                    <td class="id"><a href="/issues/79">79</a></td>
+                    <td class="project">
+                      <a href="/projects/web-platform">Plateforme Web</a>
+                    </td>
+                    <td class="tracker">Feature</td>
+                    <td class="status">In Progress</td>
+                    <td class="priority">Normal</td>
+                    <td class="subject">
+                      <a href="/issues/79">Ajouter système de paiement</a>
+                    </td>
+                    <td class="assigned_to">
+                      <a class="user active" href="/users/46">User 46</a>
+                    </td>
+                    <td class="actions">
+                      <button class="btn-action">⚙️ Modifier</button>
+                    </td>
+                  </tr>
+                  <tr id="issue-78" class="issue tracker-1 status-1 priority-4">
+                    <td class="id"><a href="/issues/78">78</a></td>
+                    <td class="project">
+                      <a href="/projects/ecommerce">E-Commerce</a>
+                    </td>
+                    <td class="tracker">Bug</td>
+                    <td class="status">New</td>
+                    <td class="priority">Urgent</td>
+                    <td class="subject">
+                      <a href="/issues/78"
+                        >Problème de connexion base de données</a
+                      >
+                    </td>
+                    <td class="assigned_to">
+                      <a class="user active" href="/users/52">User 52</a>
+                    </td>
+                    <td class="actions">
+                      <button class="btn-action">⚙️ Modifier</button>
+                    </td>
+                  </tr>
+                  <tr id="issue-77" class="issue tracker-1 status-3 priority-2">
+                    <td class="id"><a href="/issues/77">77</a></td>
+                    <td class="project">
+                      <a href="/projects/mobile-app">Mobile App</a>
+                    </td>
+                    <td class="tracker">Bug</td>
+                    <td class="status">Resolved</td>
+                    <td class="priority">Normal</td>
+                    <td class="subject">
+                      <a href="/issues/77">Crash au démarrage sur iOS</a>
+                    </td>
+                    <td class="assigned_to">
+                      <a class="user active" href="/users/48">User 48</a>
+                    </td>
+                    <td class="actions">
+                      <button class="btn-action">⚙️ Modifier</button>
+                    </td>
+                  </tr>
+                  <tr id="issue-76" class="issue tracker-2 status-2 priority-3">
+                    <td class="id"><a href="/issues/76">76</a></td>
+                    <td class="project">
+                      <a href="/projects/parking">Gestion de parking</a>
+                    </td>
+                    <td class="tracker">Feature</td>
+                    <td class="status">In Progress</td>
+                    <td class="priority">Normal</td>
+                    <td class="subject">
+                      <a href="/issues/76">Interface de réservation en ligne</a>
+                    </td>
+                    <td class="assigned_to">
+                      <a class="user active" href="/users/45">User 45</a>
+                    </td>
+                    <td class="actions">
+                      <button class="btn-action">⚙️ Modifier</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <!-- Légende des priorités -->
+            <div class="priority-legend">
+              <h4>Légende des priorités :</h4>
+              <ul>
+                <li>
+                  <span class="badge-priority priority-2">Normal</span> -
+                  Priorité standard
+                </li>
+                <li>
+                  <span class="badge-priority priority-3">High</span> - Priorité
+                  élevée
+                </li>
+                <li>
+                  <span class="badge-priority priority-4">Urgent</span> -
+                  Nécessite une action immédiate
+                </li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Trouvez le XPath qui cible UN seul élément précis en utilisant les
+            axes ascendants.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Bouton de la ligne avec l'ID 78</h4>
+            <p>
+              Trouvez le bouton "Modifier" de la ligne dont le premier lien
+              (colonne ID) a le href "/issues/78".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Partez du lien avec @href='/issues/78', remontez à la ligne,
+                puis descendez vers le bouton.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[@href='/issues/78']/ancestor::tr//button[@class='btn-action']"
+              data-alternatives='["//a[@href=\"/issues/78\"]/ancestor::tr//button[@class=\"btn-action\"]", "//tr[@id=\"issue-78\"]//button", "//a[@href=\"/issues/78\"]/parent::td/parent::tr//button"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>Exercice 2 : Trouver la ligne avec priorité "High"</h4>
+            <p>
+              Trouvez la ligne (tr) ancêtre d'une cellule contenant exactement
+              "High" dans la colonne priorité.
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//td[@class='priority' and text()='High']/ancestor::tr"
+              data-alternatives='["//td[@class=\"priority\" and text()=\"High\"]/ancestor::tr", "//td[@class=\"priority\"][text()=\"High\"]/parent::tr"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Exercice 3 : Remonter au tableau depuis une cellule</h4>
+            <p>
+              À partir du lien dont le href est "/issues/78", remontez jusqu'au
+              tableau (table) ancêtre.
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[@href='/issues/78']/ancestor::table"
+              data-alternatives='["//a[@href=\"/issues/78\"]/ancestor::table", "//a[@href=\"/issues/78\"]/ancestor::table[@class=\"list issues\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Exercice 4 : Ligne avec un Bug de priorité Urgent</h4>
+            <p>
+              Trouvez la ligne (tr) qui contient un ticket de type "Bug" et de
+              priorité "Urgent".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Utilisez des prédicats pour filtrer sur tracker ET priorité,
+                puis remontez.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//td[@class='tracker' and text()='Bug']/parent::tr[.//td[@class='priority' and text()='Urgent']]"
+              data-alternatives='["//td[@class=\"tracker\" and text()=\"Bug\"]/parent::tr[.//td[@class=\"priority\" and text()=\"Urgent\"]]", "//tr[td[@class=\"tracker\" and text()=\"Bug\"] and td[@class=\"priority\" and text()=\"Urgent\"]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>Exercice 5 : Cellule parent d'un lien de projet</h4>
+            <p>
+              Trouvez la cellule (td) parente du lien vers le projet
+              "E-Commerce" (href="/projects/ecommerce").
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[@href='/projects/ecommerce']/parent::td"
+              data-alternatives='["//a[@href=\"/projects/ecommerce\"]/parent::td", "//a[text()=\"E-Commerce\"]/parent::td"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>Exercice Bonus : Ligne avec statut "Resolved"</h4>
+            <p>
+              Trouvez la ligne (tr) ancêtre d'une cellule de statut contenant
+              "Resolved" et qui a l'ID "issue-77".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Combinez ancestor:: avec un prédicat sur l'attribut @id du
+                tr.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//td[@class='status' and text()='Resolved']/ancestor::tr[@id='issue-77']"
+              data-alternatives='["//td[@class=\"status\" and text()=\"Resolved\"]/ancestor::tr[@id=\"issue-77\"]", "//tr[@id=\"issue-77\"][.//td[@class=\"status\" and text()=\"Resolved\"]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice06.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : Axes siblings →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

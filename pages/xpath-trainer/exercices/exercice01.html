@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau 1 - Sélection Simple | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Facile : Série d'exercices 1</h1>
+        <p>Sélection simple - Bases de XPath</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice02.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>Sélectionner des éléments par nom de balise</li>
+            <li>
+              Utiliser les attributs pour cibler des éléments précis (id, class,
+              attributs personnalisés)
+            </li>
+            <li>Combiner plusieurs conditions avec <code>and</code></li>
+            <li>
+              Comprendre la différence entre sélection absolue et relative
+            </li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Facile</span>
+            <span class="badge difficulty">Série 1</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Boutique E-Commerce</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici la page HTML que vous devez analyser. Utilisez XPath pour
+            localiser les éléments demandés ci-dessous.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Header de la boutique -->
+            <header class="shop-header">
+              <span id="main-logo" class="logo" alt="TechShop Logo">🏪</span>
+              <h1>TechShop - Votre Boutique High-Tech</h1>
+              <nav class="main-nav">
+                <a href="/accueil" class="nav-link">Accueil</a>
+                <a href="/produits" class="nav-link active">Produits</a>
+                <a href="/contact" class="nav-link">Contact</a>
+                <a href="/panier" class="nav-link cart-link" data-items="3"
+                  >Panier</a
+                >
+              </nav>
+            </header>
+
+            <!-- Liste des produits -->
+            <section class="products-section">
+              <h2 class="section-title">Nos Produits Phares</h2>
+
+              <div class="product-grid">
+                <!-- Produit 1 -->
+                <div class="product-card" data-product-id="P001">
+                  <span class="product-image" alt="Laptop Pro 15">💻</span>
+                  <h3 class="product-title">Laptop Pro 15</h3>
+                  <p class="product-description">
+                    Ordinateur portable haute performance
+                  </p>
+                  <span class="product-price" data-currency="CAD">1799$</span>
+                  <div class="product-stock in-stock">En stock</div>
+                  <button class="btn-add-cart" id="add-P001">
+                    Ajouter au panier
+                  </button>
+                </div>
+
+                <!-- Produit 2 -->
+                <div class="product-card" data-product-id="P002">
+                  <span class="product-image" alt="Smartphone X12">📱</span>
+                  <h3 class="product-title">Smartphone X12</h3>
+                  <p class="product-description">
+                    Le dernier smartphone premium
+                  </p>
+                  <span class="product-price" data-currency="CAD">1249$</span>
+                  <div class="product-stock in-stock">En stock</div>
+                  <button class="btn-add-cart" id="add-P002">
+                    Ajouter au panier
+                  </button>
+                </div>
+
+                <!-- Produit 3 -->
+                <div class="product-card featured" data-product-id="P003">
+                  <span class="badge-featured">Coup de cœur</span>
+                  <span class="product-image" alt="Casque Audio Pro">🎧</span>
+                  <h3 class="product-title">Casque Audio Pro</h3>
+                  <p class="product-description">Réduction de bruit active</p>
+                  <span class="product-price" data-currency="CAD">349$</span>
+                  <div class="product-stock in-stock">En stock</div>
+                  <button class="btn-add-cart" id="add-P003">
+                    Ajouter au panier
+                  </button>
+                </div>
+
+                <!-- Produit 4 -->
+                <div class="product-card" data-product-id="P004">
+                  <span class="product-image" alt="Tablette Air">📱</span>
+                  <h3 class="product-title">Tablette Air</h3>
+                  <p class="product-description">
+                    Légère et puissante pour la mobilité
+                  </p>
+                  <span class="product-price" data-currency="CAD">829$</span>
+                  <div class="product-stock out-of-stock">Rupture de stock</div>
+                  <button class="btn-add-cart" id="add-P004" disabled>
+                    Indisponible
+                  </button>
+                </div>
+
+                <!-- Produit 5 -->
+                <div class="product-card" data-product-id="P005">
+                  <span class="product-image" alt="Écran 4K Ultra">🖥️</span>
+                  <h3 class="product-title">Écran 4K Ultra</h3>
+                  <p class="product-description">
+                    Résolution exceptionnelle 3840x2160
+                  </p>
+                  <span class="product-price" data-currency="CAD">619$</span>
+                  <div class="product-stock in-stock">En stock</div>
+                  <button class="btn-add-cart" id="add-P005">
+                    Ajouter au panier
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <!-- Footer -->
+            <footer class="shop-footer">
+              <p class="copyright">© 2026 TechShop - Tous droits réservés</p>
+              <div class="footer-links">
+                <a href="/mentions-legales" class="footer-link"
+                  >Mentions légales</a
+                >
+                <a href="/cgv" class="footer-link">CGV</a>
+                <a href="/contact" class="footer-link">Support</a>
+              </div>
+            </footer>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Pour chaque exercice, écrivez l'expression XPath qui permet de
+            sélectionner l'élément décrit. Testez vos réponses et demandez des
+            indices si nécessaire.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Sélectionner le logo principal</h4>
+            <p>
+              Trouvez l'icône du logo en utilisant son attribut <code>id</code>.
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici... (ex: //balise[@attribut='valeur'])"
+              data-solution="//span[@id='main-logo']"
+              data-alternatives='["//span[@id=\"main-logo\"]", "//span[@alt=\"TechShop Logo\"]", "//*[@id=\"main-logo\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>
+              Exercice 2 : Sélectionner le titre du produit "Smartphone X12"
+            </h4>
+            <p>
+              Trouvez l'élément <code>h3</code> qui contient exactement le texte
+              "Smartphone X12". <br /><em
+                style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 En automatisation, on cible généralement UN élément précis,
+                pas plusieurs !</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//h3[text()='Smartphone X12']"
+              data-alternatives='["//h3[text()=\"Smartphone X12\"]", "//h3[@class=\"product-title\" and text()=\"Smartphone X12\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>
+              Exercice 3 : Sélectionner le lien "Panier" avec data-attribute
+            </h4>
+            <p>
+              Trouvez le lien qui contient la classe <code>cart-link</code> ET
+              l'attribut <code>data-items</code> égal à "3". <br /><em
+                style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Attention : la balise a 2 classes ("nav-link cart-link"),
+                utilisez contains() !</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[contains(@class, 'cart-link') and @data-items='3']"
+              data-alternatives='["//a[contains(@class, \"cart-link\") and @data-items=\"3\"]", "//a[@data-items=\"3\" and contains(@class, \"cart-link\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Exercice 4 : Sélectionner le produit "coup de cœur"</h4>
+            <p>
+              Trouvez la carte produit qui a les classes
+              <code>product-card</code> et <code>featured</code>.
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[@class='product-card featured']"
+              data-alternatives='["//div[@class=\"product-card featured\"]", "//div[contains(@class, \"featured\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>
+              Exercice 5 : Sélectionner le bouton d'ajout au panier du produit
+              P002
+            </h4>
+            <p>
+              Trouvez le bouton ayant la classe <code>btn-add-cart</code> ET
+              l'id <code>add-P002</code>.
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//button[@class='btn-add-cart' and @id='add-P002']"
+              data-alternatives='["//button[@class=\"btn-add-cart\" and @id=\"add-P002\"]", "//button[@id=\"add-P002\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>Exercice Bonus : Sélectionner le prix du Laptop Pro 15</h4>
+            <p>
+              Trouvez le <code>span</code> de classe <code>product-price</code>
+              qui contient exactement le texte "1799$".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Combinez la classe ET le texte pour être précis !</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//span[@class='product-price' and text()='1799$']"
+              data-alternatives='["//span[@class=\"product-price\" and text()=\"1799$\"]", "//span[text()=\"1799$\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice02.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : Texte exact →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

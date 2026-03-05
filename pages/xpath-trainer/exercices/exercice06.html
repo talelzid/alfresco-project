@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau Moyen - Axes Siblings | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Moyen : Série d'exercices 6</h1>
+        <p>Axes siblings - following-sibling::, preceding-sibling::</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice05.html">← Exercice précédent</a>
+        <a href="exercice07.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>
+              Utiliser <code>following-sibling::</code> pour sélectionner les
+              frères suivants
+            </li>
+            <li>
+              Utiliser <code>preceding-sibling::</code> pour sélectionner les
+              frères précédents
+            </li>
+            <li>Combiner les axes siblings avec des prédicats</li>
+            <li>Naviguer dans une structure de formulaire complexe</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Moyen</span>
+            <span class="badge difficulty">Série 6</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Formulaire d'Inscription</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici un formulaire d'inscription avec plusieurs sections. Utilisez
+            les axes siblings pour naviguer entre les éléments.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Formulaire -->
+            <form class="registration-form" id="main-form">
+              <h2>Formulaire d'inscription</h2>
+
+              <!-- Section Informations personnelles -->
+              <div class="form-section" id="personal-info">
+                <h3>Informations personnelles</h3>
+
+                <div class="form-group">
+                  <label for="firstname">Prénom</label>
+                  <input type="text" id="firstname" name="firstname" required />
+                  <span class="error-message" style="display: none"
+                    >Champ obligatoire</span
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="lastname">Nom</label>
+                  <input type="text" id="lastname" name="lastname" required />
+                  <span class="error-message" style="display: none"
+                    >Champ obligatoire</span
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input type="email" id="email" name="email" required />
+                  <span class="error-message" style="display: none"
+                    >Format email invalide</span
+                  >
+                </div>
+              </div>
+
+              <!-- Section Adresse -->
+              <div class="form-section" id="address-info">
+                <h3>Adresse</h3>
+
+                <div class="form-group">
+                  <label for="street">Rue</label>
+                  <input type="text" id="street" name="street" />
+                  <span class="help-text">Numéro et nom de rue</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="city">Ville</label>
+                  <input type="text" id="city" name="city" required />
+                  <span class="error-message" style="display: none"
+                    >Champ obligatoire</span
+                  >
+                </div>
+
+                <div class="form-group">
+                  <label for="postal">Code postal</label>
+                  <input type="text" id="postal" name="postal" required />
+                  <span class="help-text">Format: A1A 1A1</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="country">Pays</label>
+                  <select id="country" name="country">
+                    <option value="ca">Canada</option>
+                    <option value="us">États-Unis</option>
+                    <option value="fr">France</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Section Préférences -->
+              <div class="form-section" id="preferences">
+                <h3>Préférences</h3>
+
+                <div class="form-group">
+                  <label>Notifications</label>
+                  <div class="checkbox-group">
+                    <label for="newsletter">S'abonner à la newsletter</label>
+                    <input type="checkbox" id="newsletter" name="newsletter" />
+                    <span class="help-text"
+                      >Recevez nos actualités par email</span
+                    >
+
+                    <label for="notifications"
+                      >Recevoir les notifications</label
+                    >
+                    <input
+                      type="checkbox"
+                      id="notifications"
+                      name="notifications"
+                      checked
+                    />
+                    <span class="help-text"
+                      >Notifications importantes seulement</span
+                    >
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label>Langue préférée</label>
+                  <div class="radio-group">
+                    <label>
+                      <input type="radio" name="language" value="fr" checked />
+                      Français
+                    </label>
+                    <label>
+                      <input type="radio" name="language" value="en" />
+                      English
+                    </label>
+                    <label>
+                      <input type="radio" name="language" value="es" />
+                      Español
+                    </label>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Boutons d'action -->
+              <div class="form-actions">
+                <button type="reset" class="btn-secondary">
+                  Réinitialiser
+                </button>
+                <button type="submit" class="btn-primary">S'inscrire</button>
+              </div>
+            </form>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Trouvez le XPath qui cible UN seul élément précis en utilisant les
+            axes siblings.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Frère suivant d'un label</h4>
+            <p>
+              Trouvez l'input qui est le frère suivant immédiat du label
+              "Prénom".
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//label[text()='Prénom']/following-sibling::input"
+              data-alternatives='["//label[text()=\"Prénom\"]/following-sibling::input", "//label[@for=\"firstname\"]/following-sibling::input"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>
+              Exercice 2 : Section "Adresse" après "Informations personnelles"
+            </h4>
+            <p>
+              Trouvez la div.form-section qui suit "personal-info" et qui
+              contient un titre h3 "Adresse".
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[@id='personal-info']/following-sibling::div[@class='form-section'][.//h3[text()='Adresse']]"
+              data-alternatives='["//div[@id=\"personal-info\"]/following-sibling::div[@class=\"form-section\"][.//h3[text()=\"Adresse\"]]", "//div[@id=\"personal-info\"]/following-sibling::div[.//h3[text()=\"Adresse\"]]", "//div[@id=\"address-info\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Exercice 3 : Message d'aide après le champ "Rue"</h4>
+            <p>
+              Trouvez le span.help-text qui est frère suivant de l'input avec
+              id="street".
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//input[@id='street']/following-sibling::span[@class='help-text']"
+              data-alternatives='["//input[@id=\"street\"]/following-sibling::span[@class=\"help-text\"]", "//input[@name=\"street\"]/following-sibling::span"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Exercice 4 : Section "Adresse" précédant "Préférences"</h4>
+            <p>
+              Trouvez la div.form-section qui précède "preferences" et qui
+              contient un titre h3 "Adresse".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Utilisez preceding-sibling avec un prédicat sur le
+                contenu.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[@id='preferences']/preceding-sibling::div[@class='form-section'][.//h3[text()='Adresse']]"
+              data-alternatives='["//div[@id=\"preferences\"]/preceding-sibling::div[@class=\"form-section\"][.//h3[text()=\"Adresse\"]]", "//div[@id=\"preferences\"]/preceding-sibling::div[.//h3[text()=\"Adresse\"]]", "//div[@id=\"address-info\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>Exercice 5 : Bouton suivant le bouton "Réinitialiser"</h4>
+            <p>
+              Trouvez le bouton qui suit immédiatement le bouton de type
+              "reset".
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//button[@type='reset']/following-sibling::button"
+              data-alternatives='["//button[@type=\"reset\"]/following-sibling::button", "//button[text()=\"Réinitialiser\"]/following-sibling::button"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>Exercice Bonus : Checkbox précédé d'un autre checkbox</h4>
+            <p>
+              Trouvez l'input checkbox avec id="notifications" qui a un frère
+              précédent checkbox.
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Combinez @id avec
+                preceding-sibling::input[@type='checkbox'].</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//input[@id='notifications' and preceding-sibling::input[@type='checkbox']]"
+              data-alternatives='["//input[@id=\"notifications\" and preceding-sibling::input[@type=\"checkbox\"]]", "//input[@id=\"notifications\"][preceding-sibling::input[@id=\"newsletter\"]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice07.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : Prédicats imbriqués →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

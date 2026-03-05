@@ -193,6 +193,36 @@
         margin: 0;
       }
 
+      /* Badge Construction */
+      .nav-card .construction-badge {
+        position: absolute;
+        bottom: 8px;
+        right: 8px;
+        background: linear-gradient(135deg, #ffc107, #ff9800);
+        color: #ffffff;
+        padding: 4px 8px;
+        border-radius: 12px;
+        font-size: 0.75em;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        box-shadow: 0 2px 6px rgba(255, 193, 7, 0.4);
+        z-index: 2;
+        transition: transform 0.2s ease;
+      }
+
+      .nav-card:hover .construction-badge {
+        transform: scale(1.05);
+      }
+
+      .construction-badge i {
+        font-size: 1em;
+        color: white;
+        width: auto;
+        margin: 0;
+      }
+
       .nav-card:hover {
         background-color: var(--accent-color);
         color: #ffffff;
@@ -1034,7 +1064,7 @@
         <i class="fas fa-project-diagram"></i>
       </div>
 
-      <h1>Portail de Documentation du Projet de Synthèse</h1>
+      <h1>Portail du Projet de Synthèse</h1>
       <h2>CMS Alfresco</h2>
 
       <!-- Carrousel des annonces prioritaires -->
@@ -1112,7 +1142,7 @@
 
         <a
           class="nav-card"
-          href="../features/features_3_equipes.html"
+          href="../features/features_4_equipes.html"
           title="Voir les User Stories et Critères d'Acceptation"
         >
           <i class="fas fa-list-check" aria-hidden="true"></i>
@@ -1233,6 +1263,64 @@
             <div class="desc">Tester vos connaissances (local)</div>
           </div>
         </a>
+
+        <a
+          class="nav-card"
+          href="../xpath-trainer/index.html"
+          title="Xpath Trainer : Exercices pratiques interactifs"
+        >
+          <span class="new-badge">Nouveau</span>
+          <i class="fas fa-graduation-cap" aria-hidden="true"></i>
+          <div class="meta">
+            <div class="title">Xpath Trainer</div>
+            <div class="desc">9 séries d'exercices progressifs XPath</div>
+          </div>
+        </a>
+
+        <a
+          class="nav-card"
+          href="../guides/guide_github.html"
+          title="Guide Github : Collaboration et gestion de version"
+        >
+          <span class="construction-badge"
+            ><i class="fas fa-hard-hat" aria-hidden="true"></i> En construction</span
+          >
+          <i class="fab fa-github" aria-hidden="true"></i>
+          <div class="meta">
+            <div class="title">Guide Github</div>
+            <div class="desc">Repositories, branches, pull requests</div>
+          </div>
+        </a>
+
+        <a
+          class="nav-card"
+          href="../guides/guide_cucumber.html"
+          title="Guide Cucumber : Framework de tests BDD"
+        >
+          <span class="construction-badge"
+            ><i class="fas fa-hard-hat" aria-hidden="true"></i> En construction</span
+          >
+          <i class="fas fa-seedling" aria-hidden="true"></i>
+          <div class="meta">
+            <div class="title">Guide Cucumber</div>
+            <div class="desc">Tests BDD avec Cucumber et Gherkin</div>
+          </div>
+        </a>
+
+        <a
+          class="nav-card"
+          href="../guides/guide_webdriver.html"
+          title="Guide Webdriver : Automatisation des tests web"
+        >
+          <span class="construction-badge"
+            ><i class="fas fa-hard-hat" aria-hidden="true"></i> En construction</span
+          >
+          <i class="fas fa-robot" aria-hidden="true"></i>
+          <div class="meta">
+            <div class="title">Guide Webdriver</div>
+            <div class="desc">Selenium, locators et bonnes pratiques</div>
+          </div>
+        </a>
         <!-- Carte unique pour les Formats de Données (collapsible) - insérée en dernier -->
         <a
           id="formats-toggle"
@@ -1325,7 +1413,7 @@
           color: #9ca3af;
         "
       >
-        Dernière mise à jour : 23 novembre 2025
+        Dernière mise à jour : 05 mars 2026
       </footer>
     </div>
 

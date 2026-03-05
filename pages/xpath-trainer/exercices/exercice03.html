@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau 3 - Prédicats AND | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Facile : Série d'exercices 3</h1>
+        <p>Prédicats AND - Combinaison de conditions</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice02.html">← Exercice précédent</a>
+        <a href="exercice04.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>
+              Combiner plusieurs conditions avec l'opérateur <code>and</code>
+            </li>
+            <li>
+              Utiliser <code>text()</code> et
+              <code>starts-with()</code> ensemble
+            </li>
+            <li>Créer des sélecteurs très précis avec plusieurs attributs</li>
+            <li>Éviter les ambiguïtés en multipliant les critères</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Facile</span>
+            <span class="badge difficulty">Série 3</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Gestion de Projets</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici une interface de gestion de projets type Jira/Trello.
+            Localisez les éléments avec précision.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Liste des projets -->
+            <div class="projects-container">
+              <h2 class="page-title">Mes Projets</h2>
+
+              <!-- Projet 1 -->
+              <div
+                class="project-card"
+                data-project-id="PRJ-001"
+                data-status="active"
+              >
+                <div class="project-header">
+                  <span class="project-icon">📊</span>
+                  <h3 class="project-name">Refonte Site Web</h3>
+                  <span class="project-status badge-success">Actif</span>
+                </div>
+                <p class="project-description">
+                  Refonte complète du site corporate
+                </p>
+                <div class="project-meta">
+                  <span class="project-owner"
+                    >Chef de projet: Marie Dubois</span
+                  >
+                  <span class="project-deadline">Échéance: 15/03/2026</span>
+                </div>
+                <div class="project-actions">
+                  <a href="/projects/PRJ-001" class="btn-view">Voir</a>
+                  <a
+                    href="/projects/PRJ-001/edit"
+                    class="btn-edit"
+                    data-action="edit"
+                    >Modifier</a
+                  >
+                  <a
+                    href="/projects/PRJ-001/archive"
+                    class="btn-archive"
+                    data-action="archive"
+                    >Archiver</a
+                  >
+                </div>
+              </div>
+
+              <!-- Projet 2 -->
+              <div
+                class="project-card"
+                data-project-id="PRJ-002"
+                data-status="active"
+              >
+                <div class="project-header">
+                  <span class="project-icon">📱</span>
+                  <h3 class="project-name">Application Mobile</h3>
+                  <span class="project-status badge-success">Actif</span>
+                </div>
+                <p class="project-description">
+                  Développement app iOS et Android
+                </p>
+                <div class="project-meta">
+                  <span class="project-owner">Chef de projet: Jean Martin</span>
+                  <span class="project-deadline">Échéance: 30/04/2026</span>
+                </div>
+                <div class="project-actions">
+                  <a href="/projects/PRJ-002" class="btn-view">Voir</a>
+                  <a
+                    href="/projects/PRJ-002/edit"
+                    class="btn-edit"
+                    data-action="edit"
+                    >Modifier</a
+                  >
+                  <a
+                    href="/projects/PRJ-002/archive"
+                    class="btn-archive"
+                    data-action="archive"
+                    >Archiver</a
+                  >
+                </div>
+              </div>
+
+              <!-- Projet 3 -->
+              <div
+                class="project-card"
+                data-project-id="PRJ-003"
+                data-status="pending"
+              >
+                <div class="project-header">
+                  <span class="project-icon">🔧</span>
+                  <h3 class="project-name">Migration Cloud</h3>
+                  <span class="project-status badge-warning">En attente</span>
+                </div>
+                <p class="project-description">
+                  Migration infrastructure vers Azure
+                </p>
+                <div class="project-meta">
+                  <span class="project-owner"
+                    >Chef de projet: Sophie Laurent</span
+                  >
+                  <span class="project-deadline">Échéance: 15/06/2026</span>
+                </div>
+                <div class="project-actions">
+                  <a href="/projects/PRJ-003" class="btn-view">Voir</a>
+                  <a
+                    href="/projects/PRJ-003/edit"
+                    class="btn-edit"
+                    data-action="edit"
+                    >Modifier</a
+                  >
+                  <a
+                    href="/projects/PRJ-003/start"
+                    class="btn-start"
+                    data-action="start"
+                    >Démarrer</a
+                  >
+                </div>
+              </div>
+
+              <!-- Projet 4 -->
+              <div
+                class="project-card"
+                data-project-id="PRJ-004"
+                data-status="completed"
+              >
+                <div class="project-header">
+                  <span class="project-icon">✅</span>
+                  <h3 class="project-name">Formation Équipe</h3>
+                  <span class="project-status badge-completed">Terminé</span>
+                </div>
+                <p class="project-description">
+                  Formation DevOps pour l'équipe technique
+                </p>
+                <div class="project-meta">
+                  <span class="project-owner">Chef de projet: Marc Petit</span>
+                  <span class="project-deadline">Terminé le: 15/01/2026</span>
+                </div>
+                <div class="project-actions">
+                  <a href="/projects/PRJ-004" class="btn-view">Voir</a>
+                  <a
+                    href="/projects/PRJ-004/report"
+                    class="btn-report"
+                    data-action="report"
+                    >Rapport</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Barre d'outils -->
+            <div class="toolbar">
+              <button class="tool-btn" data-tool="filter">
+                <span class="icon">🔍</span>
+                Filtrer
+              </button>
+              <button class="tool-btn" data-tool="sort">
+                <span class="icon">📋</span>
+                Trier
+              </button>
+              <button class="tool-btn" data-tool="export">
+                <span class="icon">📥</span>
+                Exporter
+              </button>
+              <button class="tool-btn primary" data-tool="create">
+                <span class="icon">➕</span>
+                Nouveau projet
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Combinez plusieurs conditions avec <code>and</code> pour cibler
+            précisément UN élément.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Le lien "Voir" du projet "Refonte Site Web"</h4>
+            <p>
+              Trouvez le lien qui a le texte "Voir" ET qui commence par
+              "/projects/PRJ-001".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Combinez text() et starts-with(@href, ...)</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[text()='Voir' and starts-with(@href, '/projects/PRJ-001')]"
+              data-alternatives='["//a[text()=\"Voir\" and starts-with(@href,\"/projects/PRJ-001\")]", "//a[starts-with(@href,\"/projects/PRJ-001\") and text()=\"Voir\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>Exercice 2 : Le bouton "Modifier" du projet PRJ-002</h4>
+            <p>
+              Trouvez le lien qui a la classe "btn-edit" ET l'attribut
+              data-action="edit" ET qui commence par "/projects/PRJ-002".
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[contains(@class, 'btn-edit') and @data-action='edit' and starts-with(@href, '/projects/PRJ-002')]"
+              data-alternatives='["//a[contains(@class,\"btn-edit\") and @data-action=\"edit\" and starts-with(@href,\"/projects/PRJ-002\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Exercice 3 : La carte du projet en statut "pending"</h4>
+            <p>
+              Trouvez le div qui a la classe "project-card" ET l'attribut
+              data-status="pending".
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[contains(@class, 'project-card') and @data-status='pending']"
+              data-alternatives='["//div[contains(@class,\"project-card\") and @data-status=\"pending\"]", "//div[@data-status=\"pending\" and contains(@class,\"project-card\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Exercice 4 : Le bouton "Nouveau projet"</h4>
+            <p>
+              Trouvez le bouton qui contient la classe "primary" ET l'attribut
+              data-tool="create".
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//button[contains(@class, 'primary') and @data-tool='create']"
+              data-alternatives='["//button[contains(@class,\"primary\") and @data-tool=\"create\"]", "//button[@data-tool=\"create\" and contains(@class,\"primary\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>Exercice 5 : Le titre du projet "Application Mobile"</h4>
+            <p>
+              Trouvez le h3 qui a la classe "project-name" ET le texte
+              "Application Mobile".
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//h3[contains(@class, 'project-name') and text()='Application Mobile']"
+              data-alternatives='["//h3[contains(@class,\"project-name\") and text()=\"Application Mobile\"]", "//h3[text()=\"Application Mobile\" and contains(@class,\"project-name\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>Exercice Bonus : Le badge "Terminé"</h4>
+            <p>
+              Trouvez le span qui contient les classes "project-status" ET
+              "badge-completed" ET le texte "Terminé".
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//span[contains(@class, 'project-status') and contains(@class, 'badge-completed') and text()='Terminé']"
+              data-alternatives='["//span[contains(@class,\"badge-completed\") and text()=\"Terminé\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice04.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : contains() et starts-with() →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

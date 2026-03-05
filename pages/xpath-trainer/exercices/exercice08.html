@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau Difficile - Axes Complexes | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Difficile : Série d'exercices 8</h1>
+        <p>Axes complexes - following::, preceding::, combinaisons avancées</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice07.html">← Exercice précédent</a>
+        <a href="exercice09.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>
+              Utiliser <code>following::</code> pour tous les éléments suivants
+            </li>
+            <li>
+              Utiliser <code>preceding::</code> pour tous les éléments
+              précédents
+            </li>
+            <li>Combiner plusieurs axes dans un même XPath</li>
+            <li>Naviguer dans une structure de documentation complexe</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Difficile</span>
+            <span class="badge difficulty">Série 8</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Documentation Technique</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici une structure de documentation technique avec sections, code,
+            notes et avertissements. Utilisez les axes complexes pour naviguer.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Documentation -->
+            <div class="documentation">
+              <h2>📚 Guide d'Installation</h2>
+
+              <!-- Section 1 -->
+              <section class="doc-section" id="prerequisites">
+                <h3>🔧 Prérequis</h3>
+                <p class="intro">
+                  Avant de commencer l'installation, assurez-vous d'avoir les
+                  éléments suivants :
+                </p>
+                <ul class="requirements">
+                  <li class="requirement">Node.js version 18 ou supérieure</li>
+                  <li class="requirement">NPM version 9 ou supérieure</li>
+                  <li class="requirement">Git installé sur votre système</li>
+                </ul>
+                <div class="note info">
+                  <span class="icon">💡</span>
+                  <span class="content"
+                    >Utilisez nvm pour gérer vos versions de Node.js</span
+                  >
+                </div>
+              </section>
+
+              <!-- Section 2 -->
+              <section class="doc-section" id="installation">
+                <h3>📦 Installation</h3>
+                <p class="intro">
+                  Suivez ces étapes pour installer le projet :
+                </p>
+
+                <div class="step" data-number="1">
+                  <h4>Étape 1 : Cloner le dépôt</h4>
+                  <pre
+                    class="code"
+                  ><code>git clone https://github.com/example/project.git
+cd project</code></pre>
+                  <div class="note warning">
+                    <span class="icon">⚠️</span>
+                    <span class="content"
+                      >Assurez-vous d'avoir les droits d'accès au dépôt</span
+                    >
+                  </div>
+                </div>
+
+                <div class="step" data-number="2">
+                  <h4>Étape 2 : Installer les dépendances</h4>
+                  <pre class="code"><code>npm install</code></pre>
+                  <div class="note info">
+                    <span class="icon">💡</span>
+                    <span class="content"
+                      >L'installation peut prendre quelques minutes</span
+                    >
+                  </div>
+                </div>
+
+                <div class="step" data-number="3">
+                  <h4>Étape 3 : Configuration</h4>
+                  <pre class="code"><code>cp .env.example .env
+npm run setup</code></pre>
+                  <div class="note danger">
+                    <span class="icon">🚨</span>
+                    <span class="content"
+                      >Ne committez jamais votre fichier .env dans Git</span
+                    >
+                  </div>
+                </div>
+              </section>
+
+              <!-- Section 3 -->
+              <section class="doc-section" id="configuration">
+                <h3>⚙️ Configuration</h3>
+                <p class="intro">
+                  Configurez les paramètres de votre application :
+                </p>
+
+                <div class="config-item">
+                  <h4>Base de données</h4>
+                  <pre
+                    class="code"
+                  ><code>DATABASE_URL=postgresql://localhost:5432/mydb
+DATABASE_POOL_SIZE=10</code></pre>
+                  <div class="note warning">
+                    <span class="icon">⚠️</span>
+                    <span class="content"
+                      >Modifiez ces valeurs selon votre environnement</span
+                    >
+                  </div>
+                </div>
+
+                <div class="config-item">
+                  <h4>Serveur Web</h4>
+                  <pre class="code"><code>PORT=3000
+HOST=localhost</code></pre>
+                  <div class="note info">
+                    <span class="icon">💡</span>
+                    <span class="content"
+                      >Le port par défaut est 3000 mais peut être modifié</span
+                    >
+                  </div>
+                </div>
+              </section>
+
+              <!-- Section 4 -->
+              <section class="doc-section" id="testing">
+                <h3>🧪 Tests</h3>
+                <p class="intro">
+                  Exécutez les tests pour valider l'installation :
+                </p>
+
+                <div class="test-command">
+                  <h4>Tests unitaires</h4>
+                  <pre class="code"><code>npm test</code></pre>
+                </div>
+
+                <div class="test-command">
+                  <h4>Tests d'intégration</h4>
+                  <pre class="code"><code>npm run test:integration</code></pre>
+                  <div class="note danger">
+                    <span class="icon">🚨</span>
+                    <span class="content"
+                      >Les tests d'intégration nécessitent une base de données
+                      active</span
+                    >
+                  </div>
+                </div>
+              </section>
+
+              <!-- Section 5 -->
+              <section class="doc-section" id="deployment">
+                <h3>🚀 Déploiement</h3>
+                <p class="intro">
+                  Prêt pour la production ? Suivez ces recommandations :
+                </p>
+
+                <div class="deploy-step">
+                  <h4>Build de production</h4>
+                  <pre class="code"><code>npm run build
+npm run start:prod</code></pre>
+                  <div class="note success">
+                    <span class="icon">✅</span>
+                    <span class="content"
+                      >Le build optimise automatiquement votre code</span
+                    >
+                  </div>
+                </div>
+              </section>
+            </div>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Trouvez le XPath qui cible UN seul élément précis en utilisant les
+            axes complexes.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Note warning après un h3 spécifique</h4>
+            <p>
+              Trouvez la div.note.warning qui suit le h3 contenant "📦
+              Installation" et qui contient le texte "Assurez-vous d'avoir les
+              droits d'accès au dépôt".
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//h3[text()='📦 Installation']/following::div[contains(@class, 'note') and contains(@class, 'warning') and .//span[contains(text(), 'accès au dépôt')]]"
+              data-alternatives='["//h3[text()=\"📦 Installation\"]/following::div[contains(@class, \"note\") and contains(@class, \"warning\") and .//span[contains(text(), \"droits d\u0027accès au dépôt\")]]", "//h3[text()=\"📦 Installation\"]/following::div[contains(@class, \"warning\") and .//span[@class=\"content\" and contains(text(), \"Assurez-vous\")]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>Exercice 2 : Note danger après un code spécifique</h4>
+            <p>
+              Trouvez la div.note.danger qui suit le bloc code contenant "npm
+              run test:integration".
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//code[contains(text(), 'test:integration')]/following::div[contains(@class, 'danger') and .//span[@class='content']]"
+              data-alternatives='["//code[contains(text(), \"test:integration\")]/following::div[contains(@class, \"danger\") and .//span[@class=\"content\"]]", "//pre[@class=\"code\" and .//code[contains(text(), \"test:integration\")]]/following-sibling::div[contains(@class, \"danger\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Exercice 3 : Élément précédant une note spécifique</h4>
+            <p>
+              Trouvez le h4 qui précède la div.note contenant "Ne committez
+              jamais votre fichier .env".
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[@class='note danger' and .//span[contains(text(), 'Ne committez jamais')]]/preceding::h4[text()='Étape 3 : Configuration']"
+              data-alternatives='["//div[@class=\"note danger\" and .//span[contains(text(), \"Ne committez jamais\")]]/preceding::h4[text()=\"Étape 3 : Configuration\"]", "//div[.//span[contains(text(), \"fichier .env\")]]/preceding::h4[contains(text(), \"Étape 3\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Exercice 4 : Note info dans une section spécifique</h4>
+            <p>
+              Trouvez la div.note.info qui se trouve dans la section ayant l'id
+              "installation" et qui contient "L'installation peut prendre
+              quelques minutes".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Partez de la section et descendez avec .// pour chercher à
+                l'intérieur.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//section[@id='installation']//div[contains(@class, 'note') and contains(@class, 'info') and .//span[contains(text(), 'installation peut prendre')]]"
+              data-alternatives='["//section[@id=\"installation\"]//div[contains(@class, \"note\") and contains(@class, \"info\") and .//span[contains(text(), \"installation peut prendre\")]]", "//section[@id=\"installation\"]//div[@class=\"step\" and @data-number=\"2\"]//div[contains(@class, \"info\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>Exercice 5 : Code suivant un avertissement</h4>
+            <p>
+              Trouvez le premier élément pre.code qui suit une div.note.warning
+              contenant "Modifiez ces valeurs selon votre environnement".
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[@class='note warning' and .//span[contains(text(), 'Modifiez ces valeurs')]]/following::pre[@class='code' and .//code[contains(text(), 'PORT=3000')]]"
+              data-alternatives='["//div[@class=\"note warning\" and .//span[contains(text(), \"Modifiez ces valeurs\")]]/following::pre[@class=\"code\" and .//code[contains(text(), \"PORT=3000\")]]", "//div[.//span[contains(text(), \"selon votre environnement\")]]/following::pre[@class=\"code\" and contains(.//code, \"HOST=\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>Exercice Bonus : Navigation complexe multi-axes</h4>
+            <p>
+              Trouvez la div.note.success qui se trouve après toutes les
+              div.note.danger du document.
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Utilisez following:: depuis la dernière note danger (celle
+                avec "base de données active").</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[contains(@class, 'danger') and .//span[contains(text(), 'intégration')]]/following::div[contains(@class, 'success')]"
+              data-alternatives='["//div[contains(@class, \"danger\") and .//span[contains(text(), \"intégration\")]]/following::div[contains(@class, \"success\")]", "//section[@id=\"deployment\"]//div[contains(@class, \"success\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice09.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : Cas réels avancés →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

@@ -1,0 +1,411 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau Moyen - Fonctions de texte | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Moyen : Série d'exercices 4</h1>
+        <p>Fonctions de texte - contains(), starts-with(), normalize-space()</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice03.html">← Exercice précédent</a>
+        <a href="exercice05.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>
+              Utiliser <code>contains()</code> pour rechercher une sous-chaîne
+            </li>
+            <li>
+              Utiliser <code>starts-with()</code> pour vérifier le début d'un
+              texte
+            </li>
+            <li>
+              Utiliser <code>normalize-space()</code> pour gérer les espaces
+            </li>
+            <li>Combiner plusieurs fonctions de texte dans un même prédicat</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Moyen</span>
+            <span class="badge difficulty">Série 4</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Catalogue de Bibliothèque</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici un catalogue de livres d'une bibliothèque en ligne. Utilisez
+            les fonctions de texte pour localiser les éléments demandés.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Catalogue de livres -->
+            <div class="library-catalog">
+              <div class="search-bar">
+                <input
+                  type="text"
+                  placeholder="  Rechercher un livre...  "
+                  class="search-input"
+                  id="main-search"
+                />
+                <button class="btn-search">🔍 Rechercher</button>
+              </div>
+
+              <div class="filters">
+                <button class="filter-btn" data-category="fiction">
+                  Fiction
+                </button>
+                <button class="filter-btn active" data-category="non-fiction">
+                  Non-Fiction
+                </button>
+                <button class="filter-btn" data-category="science">
+                  Science
+                </button>
+                <button class="filter-btn" data-category="history">
+                  Histoire
+                </button>
+              </div>
+
+              <!-- Liste des livres -->
+              <div class="books-list">
+                <article class="book-card" data-isbn="978-2-1234-5678-9">
+                  <div class="book-cover">📘</div>
+                  <h3 class="book-title">
+                    Introduction à la Programmation Python
+                  </h3>
+                  <p class="book-author">Jean Dupont</p>
+                  <p class="book-description">
+                    Un guide complet pour apprendre Python de zéro. Idéal pour
+                    les débutants.
+                  </p>
+                  <span class="book-category">Science</span>
+                  <span class="book-price"> 45.99 $ </span>
+                  <a href="/books/python-intro" class="btn-details"
+                    >Voir les détails</a
+                  >
+                </article>
+
+                <article
+                  class="book-card featured"
+                  data-isbn="978-2-9876-5432-1"
+                >
+                  <span class="badge-featured">⭐ En vedette</span>
+                  <div class="book-cover">📗</div>
+                  <h3 class="book-title">
+                    L'Histoire de France : De la Révolution à nos jours
+                  </h3>
+                  <p class="book-author">Marie Martin</p>
+                  <p class="book-description">
+                    Une analyse détaillée de l'histoire moderne française.
+                  </p>
+                  <span class="book-category">Histoire</span>
+                  <span class="book-price">32.50 $</span>
+                  <a href="/books/histoire-france" class="btn-details"
+                    >Voir les détails</a
+                  >
+                </article>
+
+                <article class="book-card" data-isbn="978-1-1111-2222-3">
+                  <div class="book-cover">📙</div>
+                  <h3 class="book-title">Le Mystère de la Chambre Noire</h3>
+                  <p class="book-author">Pierre Leblanc</p>
+                  <p class="book-description">
+                    Un roman policier captivant qui vous tiendra en haleine
+                    jusqu'à la dernière page.
+                  </p>
+                  <span class="book-category">Fiction</span>
+                  <span class="book-price">19.99 $</span>
+                  <a href="/books/mystere-chambre" class="btn-details"
+                    >Voir les détails</a
+                  >
+                </article>
+
+                <article class="book-card" data-isbn="978-3-3333-4444-5">
+                  <div class="book-cover">📕</div>
+                  <h3 class="book-title">
+                    Python Avancé : Techniques et Best Practices
+                  </h3>
+                  <p class="book-author">Sophie Bernard</p>
+                  <p class="book-description">
+                    Maîtrisez les concepts avancés de Python : décorateurs,
+                    générateurs, métaprogrammation.
+                  </p>
+                  <span class="book-category">Science</span>
+                  <span class="book-price">54.99 $</span>
+                  <a href="/books/python-advanced" class="btn-details"
+                    >Voir les détails</a
+                  >
+                </article>
+
+                <article class="book-card" data-isbn="978-4-5555-6666-7">
+                  <div class="book-cover">📔</div>
+                  <h3 class="book-title">
+                    Les Secrets de la Cuisine Française
+                  </h3>
+                  <p class="book-author">Chef Antoine Rousseau</p>
+                  <p class="book-description">
+                    Découvrez les recettes traditionnelles et les techniques des
+                    grands chefs.
+                  </p>
+                  <span class="book-category">Non-Fiction</span>
+                  <span class="book-price"> 28.00 $ </span>
+                  <a href="/books/cuisine-francaise" class="btn-details"
+                    >Voir les détails</a
+                  >
+                </article>
+
+                <article class="book-card" data-isbn="978-5-7777-8888-9">
+                  <div class="book-cover">📓</div>
+                  <h3 class="book-title">
+                    Introduction aux Algorithmes et Structures de Données
+                  </h3>
+                  <p class="book-author">Dr. Thomas Legrand</p>
+                  <p class="book-description">
+                    Les fondamentaux de l'informatique expliqués de manière
+                    claire et accessible.
+                  </p>
+                  <span class="book-category">Science</span>
+                  <span class="book-price">49.99 $</span>
+                  <a href="/books/algorithmes-intro" class="btn-details"
+                    >Voir les détails</a
+                  >
+                </article>
+              </div>
+
+              <!-- Statistiques -->
+              <div class="stats-bar">
+                <span class="stat-item">Total : 6 livres</span>
+                <span class="stat-item">ISBN-13 Format</span>
+                <span class="stat-item">Dernière mise à jour : 20/01/2026</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Trouvez le XPath qui cible UN seul élément précis en utilisant les
+            fonctions de texte.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Trouver un livre sur Python</h4>
+            <p>
+              Trouvez le premier titre de livre qui contient le mot "Python" et
+              qui commence par "Introduction".
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//h3[@class='book-title' and starts-with(normalize-space(.), 'Introduction') and contains(., 'Python')]"
+              data-alternatives='["//h3[@class=\"book-title\" and starts-with(normalize-space(.),\"Introduction\") and contains(.,\"Python\")]", "//h3[starts-with(normalize-space(.),\"Introduction\") and contains(.,\"Python\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>Exercice 2 : Sélectionner un livre par catégorie</h4>
+            <p>
+              Trouvez le span qui contient exactement "Histoire" comme catégorie
+              de livre.
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//span[@class='book-category' and text()='Histoire']"
+              data-alternatives='["//span[@class=\"book-category\" and text()=\"Histoire\"]", "//span[text()=\"Histoire\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Exercice 3 : Normaliser les espaces dans un prix</h4>
+            <p>
+              Trouvez le span de prix qui contient "45.99 $" (avec des espaces
+              avant/après à ignorer).
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Utilisez normalize-space() pour ignorer les espaces
+                superflus.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//span[@class='book-price' and normalize-space(.)='45.99 $']"
+              data-alternatives='["//span[@class=\"book-price\" and normalize-space(.)=\"45.99 $\"]", "//span[normalize-space()=\"45.99 $\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Exercice 4 : Livre avec ISBN commençant par 978-2</h4>
+            <p>
+              Trouvez l'article de livre dont l'attribut data-isbn commence par
+              "978-2" et qui est mis en vedette (classe "featured").
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//article[starts-with(@data-isbn, '978-2') and contains(@class, 'featured')]"
+              data-alternatives='["//article[starts-with(@data-isbn,\"978-2\") and contains(@class,\"featured\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>Exercice 5 : Description contenant "techniques"</h4>
+            <p>
+              Trouvez le paragraphe de description qui contient le mot
+              "techniques" (insensible à la casse du début).
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//p[@class='book-description' and contains(., 'techniques')]"
+              data-alternatives='["//p[@class=\"book-description\" and contains(.,\"techniques\")]", "//p[contains(.,\"techniques\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>
+              Exercice Bonus : Lien avec href commençant par /books/python
+            </h4>
+            <p>
+              Trouvez le lien dont l'attribut href commence par "/books/python"
+              et qui contient "Avancé" dans son ancêtre article.
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Combinez starts-with() sur l'attribut et recherche de texte
+                dans l'ancêtre.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//a[starts-with(@href, '/books/python') and contains(ancestor::article, 'Avancé')]"
+              data-alternatives='["//a[starts-with(@href,\"/books/python\") and contains(ancestor::article,\"Avancé\")]", "//article[contains(.,\"Avancé\")]//a[starts-with(@href,\"/books/python\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice05.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : Axes ascendants →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

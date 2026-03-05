@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau Difficile - Cas Réels Avancés | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Difficile : Série d'exercices 9</h1>
+        <p>
+          Cas réels d'automation - Scénarios complexes combinant tous les
+          concepts
+        </p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice08.html">← Exercice précédent</a>
+        <a href="../index.html">🏠 Retour à l'accueil</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice final, vous allez :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>Appliquer tous les concepts XPath appris dans des cas réels</li>
+            <li>
+              Résoudre des scénarios d'automation web typiques (Selenium,
+              Playwright)
+            </li>
+            <li>
+              Combiner axes, prédicats, fonctions et conditions de manière
+              experte
+            </li>
+            <li>Créer des locateurs robustes et maintenables</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Difficile</span>
+            <span class="badge difficulty">Série 9</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Dashboard Analytique E-Commerce</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici un dashboard d'administration réaliste avec tableaux de bord,
+            graphiques, filtres et actions. Résolvez les scénarios d'automation.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Dashboard -->
+            <div class="dashboard">
+              <h2>📊 Dashboard Analytique</h2>
+
+              <!-- Filtres -->
+              <div class="filters-panel">
+                <h3>Filtres</h3>
+                <div class="filter-group">
+                  <label>Période</label>
+                  <select class="filter-select" data-filter="period">
+                    <option value="today">Aujourd'hui</option>
+                    <option value="week" selected>Cette semaine</option>
+                    <option value="month">Ce mois</option>
+                  </select>
+                </div>
+                <div class="filter-group">
+                  <label>Statut</label>
+                  <select class="filter-select" data-filter="status">
+                    <option value="all">Tous</option>
+                    <option value="active" selected>Actifs</option>
+                    <option value="pending">En attente</option>
+                  </select>
+                </div>
+                <button class="btn-apply-filters">Appliquer</button>
+              </div>
+
+              <!-- Statistiques -->
+              <div class="stats-grid">
+                <div class="stat-card" data-metric="revenue">
+                  <div class="stat-icon">💰</div>
+                  <div class="stat-details">
+                    <span class="stat-value">24,567.89 $</span>
+                    <span class="stat-label">Revenus</span>
+                    <span class="stat-change positive">+12.5%</span>
+                  </div>
+                </div>
+
+                <div class="stat-card" data-metric="orders">
+                  <div class="stat-icon">📦</div>
+                  <div class="stat-details">
+                    <span class="stat-value">1,234</span>
+                    <span class="stat-label">Commandes</span>
+                    <span class="stat-change positive">+8.3%</span>
+                  </div>
+                </div>
+
+                <div class="stat-card" data-metric="customers">
+                  <div class="stat-icon">👥</div>
+                  <div class="stat-details">
+                    <span class="stat-value">856</span>
+                    <span class="stat-label">Clients</span>
+                    <span class="stat-change negative">-2.1%</span>
+                  </div>
+                </div>
+
+                <div class="stat-card" data-metric="conversion">
+                  <div class="stat-icon">📈</div>
+                  <div class="stat-details">
+                    <span class="stat-value">3.2%</span>
+                    <span class="stat-label">Taux de conversion</span>
+                    <span class="stat-change positive">+0.5%</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Tableau des commandes récentes -->
+              <div class="orders-section">
+                <h3>Commandes Récentes</h3>
+                <table class="orders-table">
+                  <thead>
+                    <tr>
+                      <th>ID</th>
+                      <th>Client</th>
+                      <th>Produits</th>
+                      <th>Montant</th>
+                      <th>Statut</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr class="order-row" data-order-id="ORD-2024-1589">
+                      <td class="order-id">
+                        <a href="/orders/ORD-2024-1589">ORD-2024-1589</a>
+                      </td>
+                      <td class="customer-name">Marie Dubois</td>
+                      <td class="product-count">3 articles</td>
+                      <td class="order-amount">456.78 $</td>
+                      <td class="order-status">
+                        <span class="badge status-delivered">Livrée</span>
+                      </td>
+                      <td class="order-actions">
+                        <button
+                          class="btn-icon"
+                          data-action="view"
+                          title="Voir"
+                        >
+                          👁️
+                        </button>
+                        <button
+                          class="btn-icon"
+                          data-action="print"
+                          title="Imprimer"
+                        >
+                          🖨️
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="order-row" data-order-id="ORD-2024-1588">
+                      <td class="order-id">
+                        <a href="/orders/ORD-2024-1588">ORD-2024-1588</a>
+                      </td>
+                      <td class="customer-name">Jean Martin</td>
+                      <td class="product-count">1 article</td>
+                      <td class="order-amount">1299.99 $</td>
+                      <td class="order-status">
+                        <span class="badge status-shipped">Expédiée</span>
+                      </td>
+                      <td class="order-actions">
+                        <button
+                          class="btn-icon"
+                          data-action="view"
+                          title="Voir"
+                        >
+                          👁️
+                        </button>
+                        <button
+                          class="btn-icon"
+                          data-action="track"
+                          title="Suivre"
+                        >
+                          📍
+                        </button>
+                        <button
+                          class="btn-icon"
+                          data-action="print"
+                          title="Imprimer"
+                        >
+                          🖨️
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="order-row" data-order-id="ORD-2024-1587">
+                      <td class="order-id">
+                        <a href="/orders/ORD-2024-1587">ORD-2024-1587</a>
+                      </td>
+                      <td class="customer-name">Sophie Laurent</td>
+                      <td class="product-count">5 articles</td>
+                      <td class="order-amount">789.50 $</td>
+                      <td class="order-status">
+                        <span class="badge status-processing"
+                          >En préparation</span
+                        >
+                      </td>
+                      <td class="order-actions">
+                        <button
+                          class="btn-icon"
+                          data-action="view"
+                          title="Voir"
+                        >
+                          👁️
+                        </button>
+                        <button
+                          class="btn-icon"
+                          data-action="cancel"
+                          title="Annuler"
+                        >
+                          ❌
+                        </button>
+                      </td>
+                    </tr>
+                    <tr
+                      class="order-row priority"
+                      data-order-id="ORD-2024-1586"
+                    >
+                      <td class="order-id">
+                        <a href="/orders/ORD-2024-1586">ORD-2024-1586</a>
+                      </td>
+                      <td class="customer-name">Thomas Bernard</td>
+                      <td class="product-count">2 articles</td>
+                      <td class="order-amount">2199.00 $</td>
+                      <td class="order-status">
+                        <span class="badge status-pending">En attente</span>
+                      </td>
+                      <td class="order-actions">
+                        <button
+                          class="btn-icon"
+                          data-action="view"
+                          title="Voir"
+                        >
+                          👁️
+                        </button>
+                        <button
+                          class="btn-icon priority"
+                          data-action="process"
+                          title="Traiter en priorité"
+                        >
+                          🚀
+                        </button>
+                        <button
+                          class="btn-icon"
+                          data-action="cancel"
+                          title="Annuler"
+                        >
+                          ❌
+                        </button>
+                      </td>
+                    </tr>
+                    <tr class="order-row" data-order-id="ORD-2024-1585">
+                      <td class="order-id">
+                        <a href="/orders/ORD-2024-1585">ORD-2024-1585</a>
+                      </td>
+                      <td class="customer-name">Emma Petit</td>
+                      <td class="product-count">4 articles</td>
+                      <td class="order-amount">523.45 $</td>
+                      <td class="order-status">
+                        <span class="badge status-shipped">Expédiée</span>
+                      </td>
+                      <td class="order-actions">
+                        <button
+                          class="btn-icon"
+                          data-action="view"
+                          title="Voir"
+                        >
+                          👁️
+                        </button>
+                        <button
+                          class="btn-icon"
+                          data-action="track"
+                          title="Suivre"
+                        >
+                          📍
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- Alertes -->
+              <div class="alerts-section">
+                <h3>Alertes et Notifications</h3>
+                <div class="alert warning" data-alert-id="ALT-001">
+                  <span class="alert-icon">⚠️</span>
+                  <span class="alert-message"
+                    >3 commandes en attente de validation depuis plus de
+                    24h</span
+                  >
+                  <button class="alert-action">Vérifier</button>
+                </div>
+                <div class="alert info" data-alert-id="ALT-002">
+                  <span class="alert-icon">💡</span>
+                  <span class="alert-message"
+                    >Nouveau rapport mensuel disponible</span
+                  >
+                  <button class="alert-action">Consulter</button>
+                </div>
+                <div class="alert success" data-alert-id="ALT-003">
+                  <span class="alert-icon">✅</span>
+                  <span class="alert-message"
+                    >Objectif de ventes mensuel atteint à 105%</span
+                  >
+                  <button class="alert-action">Détails</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 Scénarios d'Automation à Résoudre</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Créez un XPath robuste pour chaque scénario d'automation réel.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Scénario 1 : Cliquer sur le bouton "Traiter en priorité"</h4>
+            <p>
+              Vous devez automatiser le clic sur le bouton prioritaire (🚀) de
+              la commande qui a le statut "En attente" ET qui contient "Thomas
+              Bernard" comme client.
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Localisez la ligne par son contenu, puis naviguez vers le
+                bouton spécifique.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//tr[.//td[@class='customer-name' and text()='Thomas Bernard'] and .//span[contains(@class, 'status-pending')]]//button[@data-action='process']"
+              data-alternatives='["//tr[.//td[@class=\"customer-name\" and text()=\"Thomas Bernard\"] and .//span[contains(@class, \"status-pending\")]]//button[@data-action=\"process\"]", "//tr[@data-order-id=\"ORD-2024-1586\"]//button[@data-action=\"process\"]", "//tr[.//td[text()=\"Thomas Bernard\"] and .//span[@class=\"badge status-pending\"]]//button[@class=\"btn-icon priority\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>Scénario 2 : Vérifier le montant d'une commande spécifique</h4>
+            <p>
+              Récupérez le span.order-amount de la commande ayant l'ID
+              "ORD-2024-1588" (commande de Jean Martin).
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//tr[@data-order-id='ORD-2024-1588']//td[@class='order-amount']"
+              data-alternatives='["//tr[@data-order-id=\"ORD-2024-1588\"]//td[@class=\"order-amount\"]", "//a[text()=\"ORD-2024-1588\"]/ancestor::tr//td[@class=\"order-amount\"]", "//td[.//a[@href=\"/orders/ORD-2024-1588\"]]/following-sibling::td[@class=\"order-amount\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Scénario 3 : Filtrer les commandes expédiées uniquement</h4>
+            <p>
+              Comptez toutes les lignes de commandes qui ont le statut
+              "Expédiée" en sélectionnant la première ligne avec ce statut.
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Ciblez la ligne qui contient le badge status-shipped ET le
+                client "Jean Martin".</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//tr[.//span[@class='badge status-shipped'] and .//td[@class='customer-name' and text()='Jean Martin']]"
+              data-alternatives='["//tr[.//span[@class=\"badge status-shipped\"] and .//td[@class=\"customer-name\" and text()=\"Jean Martin\"]]", "//tr[@data-order-id=\"ORD-2024-1588\"]", "//tr[.//span[contains(@class, \"status-shipped\")] and .//td[text()=\"Jean Martin\"]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Scénario 4 : Cliquer sur l'alerte warning spécifique</h4>
+            <p>
+              Automatisez le clic sur le bouton "Vérifier" de l'alerte qui
+              contient "commandes en attente de validation".
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[@class='alert warning' and .//span[contains(text(), 'commandes en attente de validation')]]//button[@class='alert-action']"
+              data-alternatives='["//div[@class=\"alert warning\" and .//span[contains(text(), \"commandes en attente de validation\")]]//button[@class=\"alert-action\"]", "//div[@data-alert-id=\"ALT-001\"]//button", "//div[contains(@class, \"alert\") and contains(@class, \"warning\") and contains(.//span, \"24h\")]//button"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>
+              Scénario 5 : Valider la statistique de revenus avec tendance
+              positive
+            </h4>
+            <p>
+              Sélectionnez la div.stat-card qui affiche les revenus (💰) ET qui
+              a une tendance positive (stat-change positive).
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//div[@class='stat-card' and @data-metric='revenue' and .//span[@class='stat-change positive']]"
+              data-alternatives='["//div[@class=\"stat-card\" and @data-metric=\"revenue\" and .//span[@class=\"stat-change positive\"]]", "//div[@data-metric=\"revenue\"][.//span[contains(@class, \"positive\")]]", "//div[.//div[@class=\"stat-icon\" and text()=\"💰\"] and .//span[@class=\"stat-change positive\"]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>
+              Scénario Bonus : Automation complète - Bouton suivre d'une
+              commande haute valeur
+            </h4>
+            <p>
+              Trouvez le bouton "Suivre" (📍) de la commande qui a un montant
+              supérieur à 1000$ ET le statut "Expédiée".
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Utilisez des conditions numériques sur le montant ET un
+                prédicat sur le statut.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//tr[.//span[@class='badge status-shipped'] and .//td[@class='order-amount' and number(translate(., ' $', '')) > 1000]]//button[@data-action='track']"
+              data-alternatives='["//tr[.//span[@class=\"badge status-shipped\"] and .//td[@class=\"order-amount\" and number(translate(., \" $\", \"\")) > 1000]]//button[@data-action=\"track\"]", "//tr[@data-order-id=\"ORD-2024-1588\"]//button[@data-action=\"track\"]", "//tr[.//td[text()=\"Jean Martin\"] and .//span[contains(@class, \"status-shipped\")]]//button[@title=\"Suivre\"]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <div
+            style="
+              background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
+              color: white;
+              padding: 2rem;
+              border-radius: 12px;
+              margin-bottom: 2rem;
+            "
+          >
+            <h3 style="margin-bottom: 1rem">🎉 Félicitations !</h3>
+            <p style="font-size: 1.1rem; margin-bottom: 1rem">
+              Vous avez complété tous les exercices du niveau Difficile.
+            </p>
+            <p style="opacity: 0.9">
+              Vous maîtrisez maintenant les techniques avancées de XPath pour
+              l'automation web !
+            </p>
+          </div>
+          <a
+            href="../index.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--primary-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+              margin-right: 1rem;
+            "
+          >
+            🏠 Retour à l'accueil
+          </a>
+          <a
+            href="../solutions/solutions.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--accent-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            📚 Consulter toutes les solutions
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>

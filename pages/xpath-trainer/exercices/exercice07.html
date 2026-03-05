@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Niveau Difficile - Prédicats Imbriqués | XPath</title>
+    <link rel="stylesheet" href="../styles/main.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Niveau Difficile : Série d'exercices 7</h1>
+        <p>Prédicats imbriqués et conditions complexes</p>
+      </header>
+
+      <nav>
+        <a href="../index.html" class="home-link">🏠 Accueil</a>
+        <a href="exercice06.html">← Exercice précédent</a>
+        <a href="exercice08.html">Exercice suivant →</a>
+        <a href="../solutions/solutions.html">📚 Solutions</a>
+      </nav>
+
+      <main>
+        <section class="exercise-header">
+          <h2>Objectifs Pédagogiques</h2>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Dans cet exercice, vous allez apprendre à :
+          </p>
+          <ul
+            style="
+              color: var(--text-secondary);
+              margin-left: 2rem;
+              line-height: 1.8;
+            "
+          >
+            <li>
+              Combiner plusieurs prédicats avec <code>and</code> et
+              <code>or</code>
+            </li>
+            <li>Utiliser des prédicats imbriqués sur des éléments enfants</li>
+            <li>Filtrer avec des conditions multiples complexes</li>
+            <li>Naviguer dans une structure de commerce électronique</li>
+          </ul>
+
+          <div class="exercise-meta">
+            <span class="badge level">Niveau Difficile</span>
+            <span class="badge difficulty">Série 7</span>
+          </div>
+        </section>
+
+        <!-- DOM Cible -->
+        <section class="target-dom">
+          <h3>🎯 DOM Cible - Catalogue de Produits E-Commerce</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1rem">
+            Voici un catalogue de produits avec prix, stock, catégories et
+            promotions. Utilisez des prédicats imbriqués pour cibler les
+            produits demandés.
+          </p>
+
+          <div class="dom-content" id="targetDOM">
+            <!-- Catalogue des produits -->
+            <div class="product-catalog">
+              <h2>🛍️ Catalogue de Produits</h2>
+
+              <div class="product-grid">
+                <!-- Produit 1 -->
+                <article class="product-item" data-id="P001">
+                  <div class="product-header">
+                    <h3>Laptop Pro 15"</h3>
+                    <span class="badge-category">💻 Électronique</span>
+                  </div>
+                  <div class="product-details">
+                    <div class="price-info">
+                      <span class="price current">1299.99 $</span>
+                      <span class="price original">1499.99 $</span>
+                    </div>
+                    <div class="stock-info">
+                      <span class="stock available">En stock</span>
+                      <span class="quantity">12 unités</span>
+                    </div>
+                    <div class="product-meta">
+                      <span class="rating">⭐ 4.5</span>
+                      <span class="reviews">89 avis</span>
+                      <span class="badge promo">-13%</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Produit 2 -->
+                <article class="product-item" data-id="P002">
+                  <div class="product-header">
+                    <h3>Chaise de Bureau Ergonomique</h3>
+                    <span class="badge-category">🪑 Mobilier</span>
+                  </div>
+                  <div class="product-details">
+                    <div class="price-info">
+                      <span class="price current">349.99 $</span>
+                    </div>
+                    <div class="stock-info">
+                      <span class="stock available">En stock</span>
+                      <span class="quantity">5 unités</span>
+                    </div>
+                    <div class="product-meta">
+                      <span class="rating">⭐ 4.8</span>
+                      <span class="reviews">156 avis</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Produit 3 -->
+                <article class="product-item" data-id="P003">
+                  <div class="product-header">
+                    <h3>Casque Audio Bluetooth</h3>
+                    <span class="badge-category">🎧 Audio</span>
+                  </div>
+                  <div class="product-details">
+                    <div class="price-info">
+                      <span class="price current">89.99 $</span>
+                      <span class="price original">119.99 $</span>
+                    </div>
+                    <div class="stock-info">
+                      <span class="stock unavailable">Rupture de stock</span>
+                      <span class="quantity">0 unités</span>
+                    </div>
+                    <div class="product-meta">
+                      <span class="rating">⭐ 4.2</span>
+                      <span class="reviews">203 avis</span>
+                      <span class="badge promo">-25%</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Produit 4 -->
+                <article class="product-item" data-id="P004">
+                  <div class="product-header">
+                    <h3>Souris Sans Fil Premium</h3>
+                    <span class="badge-category">🖱️ Accessoires</span>
+                  </div>
+                  <div class="product-details">
+                    <div class="price-info">
+                      <span class="price current">59.99 $</span>
+                    </div>
+                    <div class="stock-info">
+                      <span class="stock available">En stock</span>
+                      <span class="quantity">28 unités</span>
+                    </div>
+                    <div class="product-meta">
+                      <span class="rating">⭐ 4.6</span>
+                      <span class="reviews">412 avis</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Produit 5 -->
+                <article class="product-item" data-id="P005">
+                  <div class="product-header">
+                    <h3>Écran 27" 4K</h3>
+                    <span class="badge-category">💻 Électronique</span>
+                  </div>
+                  <div class="product-details">
+                    <div class="price-info">
+                      <span class="price current">449.99 $</span>
+                      <span class="price original">599.99 $</span>
+                    </div>
+                    <div class="stock-info">
+                      <span class="stock available">En stock</span>
+                      <span class="quantity">7 unités</span>
+                    </div>
+                    <div class="product-meta">
+                      <span class="rating">⭐ 4.7</span>
+                      <span class="reviews">98 avis</span>
+                      <span class="badge promo">-25%</span>
+                    </div>
+                  </div>
+                </article>
+
+                <!-- Produit 6 -->
+                <article class="product-item" data-id="P006">
+                  <div class="product-header">
+                    <h3>Lampe de Bureau LED</h3>
+                    <span class="badge-category">💡 Éclairage</span>
+                  </div>
+                  <div class="product-details">
+                    <div class="price-info">
+                      <span class="price current">34.99 $</span>
+                    </div>
+                    <div class="stock-info">
+                      <span class="stock available">En stock</span>
+                      <span class="quantity">45 unités</span>
+                    </div>
+                    <div class="product-meta">
+                      <span class="rating">⭐ 4.3</span>
+                      <span class="reviews">67 avis</span>
+                    </div>
+                  </div>
+                </article>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Liste des exercices -->
+        <section class="exercises-list">
+          <h3>📝 XPath à Trouver</h3>
+          <p style="color: var(--text-secondary); margin-bottom: 1.5rem">
+            Trouvez le XPath qui cible UN seul élément précis en utilisant des
+            prédicats imbriqués.
+          </p>
+
+          <!-- Exercice 1 -->
+          <div class="exercise-item" data-exercise="1">
+            <h4>Exercice 1 : Produit en promo et en stock</h4>
+            <p>
+              Trouvez l'article produit qui contient un badge "promo" ET une
+              span.stock avec "En stock" ET qui a le data-id "P005".
+            </p>
+            <input
+              type="text"
+              id="answer-1"
+              placeholder="Votre XPath ici..."
+              data-solution="//article[@data-id='P005' and .//span[@class='badge promo'] and .//span[@class='stock available' and text()='En stock']]"
+              data-alternatives='["//article[@data-id=\"P005\" and .//span[@class=\"badge promo\"] and .//span[@class=\"stock available\" and text()=\"En stock\"]]", "//article[@data-id=\"P005\"][.//span[@class=\"badge promo\"]][.//span[contains(@class, \"stock\") and text()=\"En stock\"]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(1)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(1)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(1)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-1"></div>
+          </div>
+
+          <!-- Exercice 2 -->
+          <div class="exercise-item" data-exercise="2">
+            <h4>
+              Exercice 2 : Produit de catégorie spécifique avec note élevée
+            </h4>
+            <p>
+              Trouvez l'article qui contient "Mobilier" dans son badge de
+              catégorie ET un rating de "⭐ 4.8".
+            </p>
+            <input
+              type="text"
+              id="answer-2"
+              placeholder="Votre XPath ici..."
+              data-solution="//article[.//span[@class='badge-category' and contains(text(), 'Mobilier')] and .//span[@class='rating' and text()='⭐ 4.8']]"
+              data-alternatives='["//article[.//span[@class=\"badge-category\" and contains(text(), \"Mobilier\")] and .//span[@class=\"rating\" and text()=\"⭐ 4.8\"]]", "//article[.//span[contains(text(), \"🪑 Mobilier\")] and .//span[@class=\"rating\" and text()=\"⭐ 4.8\"]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(2)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(2)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(2)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-2"></div>
+          </div>
+
+          <!-- Exercice 3 -->
+          <div class="exercise-item" data-exercise="3">
+            <h4>Exercice 3 : Produit avec prix réduit mais rupture de stock</h4>
+            <p>
+              Trouvez l'article qui a un span.price avec class "original" (prix
+              barré) ET un span.stock avec "Rupture de stock".
+            </p>
+            <input
+              type="text"
+              id="answer-3"
+              placeholder="Votre XPath ici..."
+              data-solution="//article[.//span[@class='price original'] and .//span[@class='stock unavailable' and text()='Rupture de stock']]"
+              data-alternatives='["//article[.//span[@class=\"price original\"] and .//span[@class=\"stock unavailable\" and text()=\"Rupture de stock\"]]", "//article[.//span[contains(@class, \"original\")] and .//span[contains(@class, \"unavailable\")]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(3)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(3)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(3)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-3"></div>
+          </div>
+
+          <!-- Exercice 4 -->
+          <div class="exercise-item" data-exercise="4">
+            <h4>Exercice 4 : Badge promo de -25% dans catégorie Audio</h4>
+            <p>
+              Trouvez le span.badge.promo qui contient "-25%" et qui est dans un
+              article contenant "Audio" dans sa catégorie.
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Partez du badge et utilisez ancestor::article avec
+                prédicat.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-4"
+              placeholder="Votre XPath ici..."
+              data-solution="//span[@class='badge promo' and text()='-25%']/ancestor::article[.//span[contains(text(), 'Audio')]]"
+              data-alternatives='["//span[@class=\"badge promo\" and text()=\"-25%\"]/ancestor::article[.//span[contains(text(), \"Audio\")]]", "//span[@class=\"badge promo\" and text()=\"-25%\"]/ancestor::article[.//span[@class=\"badge-category\" and contains(text(), \"Audio\")]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(4)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(4)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(4)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-4"></div>
+          </div>
+
+          <!-- Exercice 5 -->
+          <div class="exercise-item" data-exercise="5">
+            <h4>Exercice 5 : Prix actuel sous 100$ avec plus de 400 avis</h4>
+            <p>
+              Trouvez le span.price.current d'un produit qui coûte moins de 100$
+              ET qui a plus de 400 avis.
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Utilisez des conditions sur le texte (contains et
+                nombre).</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-5"
+              placeholder="Votre XPath ici..."
+              data-solution="//span[@class='price current' and number(translate(., ' $', '')) < 100]/ancestor::article[.//span[@class='reviews' and starts-with(text(), '412')]]//span[@class='price current']"
+              data-alternatives='["//article[.//span[@class=\"reviews\" and starts-with(text(), \"412\")]]//span[@class=\"price current\" and number(translate(., \" $\", \"\")) < 100]", "//article[.//span[@class=\"reviews\" and contains(text(), \"412\")]]//span[@class=\"price current\" and starts-with(text(), \"59.99\")]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(5)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(5)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(5)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-5"></div>
+          </div>
+
+          <!-- Exercice Bonus -->
+          <div
+            class="exercise-item"
+            data-exercise="6"
+            style="border-left-color: var(--warning-color)"
+          >
+            <h4>
+              Exercice Bonus : Produit Électronique en promo avec stock faible
+            </h4>
+            <p>
+              Trouvez l'article qui contient "💻 Électronique" dans sa
+              catégorie, qui a un badge promo, ET dont la quantité est
+              inférieure à 10 unités (mais disponible).
+              <br /><em style="color: var(--text-secondary); font-size: 0.85rem"
+                >💡 Combinez contains(), and, et une condition numérique sur la
+                quantité.</em
+              >
+            </p>
+            <input
+              type="text"
+              id="answer-6"
+              placeholder="Votre XPath ici..."
+              data-solution="//article[.//span[contains(text(), '💻 Électronique')] and .//span[@class='badge promo'] and .//span[@class='quantity' and number(translate(., ' unités', '')) < 10]]"
+              data-alternatives='["//article[.//span[contains(text(), \"💻 Électronique\")] and .//span[@class=\"badge promo\"] and .//span[@class=\"quantity\" and number(translate(., \" unités\", \"\")) < 10]]", "//article[.//span[@class=\"badge-category\" and contains(text(), \"Électronique\")] and .//span[@class=\"badge promo\"] and .//span[@class=\"quantity\" and starts-with(text(), \"7\")]]"]'
+            />
+            <div class="button-group">
+              <button class="btn-validate" onclick="validateAnswer(6)">
+                ✓ Valider
+              </button>
+              <button class="btn-hint" onclick="showHint(6)">💡 Indice</button>
+              <button class="btn-solution" onclick="showSolution(6)">
+                👁 Solution
+              </button>
+            </div>
+            <div class="feedback" id="feedback-6"></div>
+          </div>
+        </section>
+
+        <div style="text-align: center; margin-top: 2rem">
+          <a
+            href="exercice08.html"
+            style="
+              display: inline-block;
+              padding: 1rem 2rem;
+              background: var(--success-color);
+              color: white;
+              text-decoration: none;
+              border-radius: 6px;
+              font-weight: 600;
+            "
+          >
+            Exercice suivant : Axes complexes →
+          </a>
+        </div>
+      </main>
+
+      <footer>
+        <p>&copy; Talel Zid | XPath Trainer | Version 1.1 | Janvier 2026</p>
+      </footer>
+    </div>
+
+    <script src="../scripts/validator.js"></script>
+  </body>
+</html>
