@@ -228,7 +228,7 @@ Ce projet est sous licence **MIT** - voir le fichier [LICENSE](LICENSE) pour plu
 
 <div align="center">
 
-**Dernière mise à jour :** 5 novembre 2025
+**Dernière mise à jour :** 5 mars 2026
 
 Made with ❤️ for education
 
