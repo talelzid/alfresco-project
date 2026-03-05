@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FAQ / Aide Étudiants</title>
+    <link
+      rel="icon"
+      type="image/png"
+      href="../../assets/images/alfresco_icon.png"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg-gradient: linear-gradient(135deg, #f0f9ff, #e0ecff);
+        --card-bg: #ffffff;
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --accent: #0ea5e9;
+        --text: #1f2937;
+        --muted: #6b7280;
+        --shadow: 0 12px 32px rgba(37, 99, 235, 0.12);
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: var(--bg-gradient);
+        color: var(--text);
+      }
+
+      .faq-wrapper {
+        min-height: 100vh;
+        padding: 40px 20px 60px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .faq-container {
+        width: min(1040px, 100%);
+        background: var(--card-bg);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        padding: 32px 40px 48px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+      }
+
+      .faq-header {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .faq-header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .faq-title {
+        margin: 0;
+        font-size: clamp(1.8rem, 2.5vw, 2.4rem);
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .faq-subtitle {
+        margin: 0;
+        font-size: 1rem;
+        color: var(--muted);
+        max-width: 640px;
+      }
+
+      .back-btn {
+        padding: 10px 20px;
+        background: #6c757d;
+        color: #ffffff;
+        text-decoration: none;
+        border-radius: 6px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.95rem;
+        flex-shrink: 0;
+      }
+
+      .back-btn:hover,
+      .back-btn:focus-visible {
+        background: #5a6268;
+        transform: translateY(-2px);
+        outline: none;
+      }
+
+      .faq-heading {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .faq-search-box {
+        position: relative;
+      }
+
+      .faq-search {
+        width: 100%;
+        padding: 14px 48px 14px 54px;
+        border-radius: 999px;
+        border: 1px solid rgba(37, 99, 235, 0.25);
+        font-size: 1rem;
+        background: #f8fbff;
+        color: var(--text);
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .faq-search:focus-visible {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.16);
+        outline: none;
+      }
+
+      .faq-search-icon {
+        position: absolute;
+        top: 50%;
+        left: 20px;
+        transform: translateY(-50%);
+        color: var(--primary);
+      }
+
+      .faq-search-clear {
+        position: absolute;
+        top: 50%;
+        right: 18px;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--muted);
+        cursor: pointer;
+        font-size: 1rem;
+        display: none;
+      }
+
+      .faq-categories {
+        display: grid;
+        gap: 32px;
+      }
+
+      .faq-category {
+        background: #f9fbff;
+        border-radius: 18px;
+        border: 1px solid rgba(37, 99, 235, 0.08);
+        padding: 24px 28px;
+        box-shadow: 0 14px 30px rgba(15, 23, 42, 0.04);
+      }
+
+      .faq-category-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        margin-bottom: 20px;
+        flex-wrap: wrap;
+      }
+
+      .faq-category-title {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: 1.25rem;
+        font-weight: 700;
+        color: var(--primary-dark);
+      }
+
+      .faq-category-title i {
+        font-size: 1.3rem;
+        color: var(--accent);
+      }
+
+      .faq-category-count {
+        font-size: 0.9rem;
+        color: var(--muted);
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+
+      .faq-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .faq-item {
+        border-radius: 16px;
+        border: 1px solid rgba(148, 163, 184, 0.25);
+        background: #ffffff;
+        overflow: hidden;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .faq-item.open {
+        border-color: rgba(37, 99, 235, 0.35);
+        box-shadow: 0 12px 24px rgba(37, 99, 235, 0.12);
+      }
+
+      .faq-question {
+        width: 100%;
+        background: none;
+        border: none;
+        text-align: left;
+        padding: 18px 58px 18px 22px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--text);
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        position: relative;
+        cursor: pointer;
+      }
+
+      .faq-question .index {
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: rgba(37, 99, 235, 0.12);
+        color: var(--primary);
+        font-size: 0.9rem;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+
+      .faq-question i {
+        position: absolute;
+        right: 22px;
+        font-size: 0.95rem;
+        color: var(--primary);
+        transition: transform 0.2s ease;
+      }
+
+      .faq-item.open .faq-question i {
+        transform: rotate(180deg);
+      }
+
+      .faq-answer {
+        display: none;
+        padding: 0 24px 20px 56px;
+        font-size: 0.97rem;
+        line-height: 1.6;
+        color: #334155;
+        background: linear-gradient(
+          180deg,
+          rgba(37, 99, 235, 0.06),
+          rgba(37, 99, 235, 0)
+        );
+      }
+
+      .faq-item.open .faq-answer {
+        display: block;
+      }
+
+      .faq-answer p {
+        margin: 12px 0;
+      }
+
+      .faq-answer ul,
+      .faq-answer ol {
+        margin: 8px 0 12px 22px;
+      }
+
+      .faq-answer code {
+        background: rgba(15, 23, 42, 0.08);
+        padding: 2px 6px;
+        border-radius: 6px;
+        font-size: 0.92em;
+      }
+
+      .faq-no-result {
+        display: none;
+        padding: 32px;
+        text-align: center;
+        color: var(--muted);
+        font-weight: 600;
+        background: rgba(226, 232, 240, 0.65);
+        border-radius: 16px;
+        border: 1px dashed rgba(37, 99, 235, 0.25);
+      }
+
+      .faq-meta {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      @media (max-width: 900px) {
+        .faq-container {
+          padding: 28px 22px 40px;
+        }
+
+        .faq-answer {
+          padding: 0 20px 20px 46px;
+        }
+      }
+
+      @media (max-width: 640px) {
+        .faq-wrapper {
+          padding: 24px 16px 40px;
+        }
+
+        .faq-container {
+          padding: 24px 18px 32px;
+          border-radius: 16px;
+        }
+
+        .faq-question {
+          padding: 16px 48px 16px 18px;
+        }
+
+        .faq-answer {
+          padding: 0 16px 18px 36px;
+        }
+      }
+
+      footer {
+        margin-top: 32px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(148, 163, 184, 0.25);
+        text-align: center;
+        color: var(--muted);
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="faq-wrapper">
+      <main class="faq-container" aria-labelledby="faq-title">
+        <header class="faq-header">
+          <div class="faq-header-top">
+            <div class="faq-heading">
+              <h1 id="faq-title" class="faq-title">
+                FAQ &amp; Centre d'Aide Étudiants
+              </h1>
+            </div>
+            <a class="back-btn" href="menu.html">
+              <i class="fas fa-arrow-left" aria-hidden="true"></i>
+              Retour au menu
+            </a>
+          </div>
+          <p class="faq-subtitle">
+            Retrouve des réponses illustrées pour t'aider à maîtriser
+            l'environnement technique, automatiser tes tests et adopter les
+            meilleures pratiques projet.
+          </p>
+          <div class="faq-search-box">
+            <i class="fas fa-search faq-search-icon" aria-hidden="true"></i>
+            <input
+              id="faq-search"
+              class="faq-search"
+              type="search"
+              placeholder="Rechercher une question, un outil ou une thématique..."
+              aria-label="Rechercher dans la FAQ"
+            />
+            <button
+              id="faq-clear"
+              class="faq-search-clear"
+              type="button"
+              aria-label="Effacer la recherche"
+            >
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </header>
+
+        <div id="faq-no-result" class="faq-no-result">
+          <i class="fas fa-life-ring"></i>
+          Aucune question ne correspond à ta recherche pour le moment.
+        </div>
+
+        <div id="faq-categories" class="faq-categories">
+          <!-- Les catégories et questions seront chargées dynamiquement depuis config/faq.json -->
+          <div style="text-align: center; padding: 40px">
+            <i
+              class="fas fa-spinner fa-spin"
+              style="font-size: 2em; color: var(--primary)"
+            ></i>
+            <p style="margin-top: 15px; color: var(--muted)">
+              Chargement de la FAQ...
+            </p>
+          </div>
+        </div>
+
+        <footer>
+          <p>
+            <i class="fas fa-book"></i> Ajoute tes découvertes :
+            <a
+              href="mailto:zidtalel@gmail.com"
+              style="color: var(--primary); text-decoration: none"
+              >zidtalel@gmail.com</a
+            ><br />
+            &copy; Talel Zid | Version 1.1 — Novembre 2025 |
+            <i class="fas fa-shield-alt"></i> Contenu pédagogique — Usage
+            éducatif seulement
+          </p>
+        </footer>
+      </main>
+    </div>
+
+    <script>
+      const searchInput = document.getElementById("faq-search");
+      const clearBtn = document.getElementById("faq-clear");
+      const noResult = document.getElementById("faq-no-result");
+      const categoriesContainer = document.getElementById("faq-categories");
+      let faqData = { categories: [], questions: [] };
+      let categoryElements = [];
+
+      // Charger les données FAQ depuis le fichier JSON
+      async function loadFaqData() {
+        try {
+          const response = await fetch("../../config/faq.json", {
+            headers: {
+              "Content-Type": "application/json; charset=utf-8",
+            },
+          });
+          if (!response.ok) {
+            throw new Error("Erreur lors du chargement de la FAQ");
+          }
+          // Forcer le décodage UTF-8
+          const text = await response.text();
+          faqData = JSON.parse(text);
+          renderFaq();
+        } catch (error) {
+          console.error("Erreur:", error);
+          categoriesContainer.innerHTML = `
+            <div style="text-align: center; padding: 40px; color: #dc3545;">
+              <i class="fas fa-exclamation-triangle" style="font-size: 2em; margin-bottom: 10px;"></i>
+              <p>Erreur lors du chargement de la FAQ. Veuillez rafraîchir la page.</p>
+            </div>
+          `;
+        }
+      }
+
+      // Rendre l'interface FAQ
+      function renderFaq() {
+        // Filtrer uniquement les questions actives
+        const activeQuestions = faqData.questions.filter((q) => q.active);
+
+        // Trier les catégories par ordre
+        const sortedCategories = [...faqData.categories].sort(
+          (a, b) => a.order - b.order
+        );
+
+        let html = "";
+        sortedCategories.forEach((category) => {
+          // Filtrer les questions de cette catégorie
+          const categoryQuestions = activeQuestions
+            .filter((q) => q.categoryId === category.id)
+            .sort((a, b) => a.order - b.order);
+
+          if (categoryQuestions.length === 0) return;
+
+          html += `
+            <section class="faq-category" data-category="${category.name}">
+              <div class="faq-category-header">
+                <h2 class="faq-category-title">
+                  <i class="fas ${category.icon}"></i>
+                  ${category.order}. ${category.name}
+                </h2>
+                <span class="faq-category-count">
+                  <i class="fas fa-list"></i> ${
+                    categoryQuestions.length
+                  } question${categoryQuestions.length > 1 ? "s" : ""}
+                </span>
+              </div>
+              <ul class="faq-list">
+                ${categoryQuestions
+                  .map(
+                    (q, index) => `
+                  <li class="faq-item">
+                    <button class="faq-question" type="button" aria-expanded="false">
+                      <span class="index">${index + 1}</span>
+                      ${q.question}
+                      <i class="fas fa-chevron-down" aria-hidden="true"></i>
+                    </button>
+                    <div class="faq-answer" hidden>
+                      ${q.answer}
+                    </div>
+                  </li>
+                `
+                  )
+                  .join("")}
+              </ul>
+            </section>
+          `;
+        });
+
+        categoriesContainer.innerHTML = html;
+
+        // Réinitialiser les éléments de catégorie
+        categoryElements = Array.from(
+          document.querySelectorAll(".faq-category")
+        );
+
+        // Attacher les event listeners
+        attachEventListeners();
+      }
+
+      // Attacher les event listeners
+      function attachEventListeners() {
+        categoryElements.forEach((category) => {
+          category.querySelectorAll(".faq-question").forEach((button) => {
+            button.addEventListener("click", toggleFaq);
+          });
+        });
+      }
+
+      function closeAllExcept(current) {
+        categoryElements.forEach((category) => {
+          category.querySelectorAll(".faq-item").forEach((item) => {
+            if (item !== current) {
+              item.classList.remove("open");
+              const btn = item.querySelector(".faq-question");
+              const answer = item.querySelector(".faq-answer");
+              btn.setAttribute("aria-expanded", "false");
+              answer.hidden = true;
+            }
+          });
+        });
+      }
+
+      function toggleFaq(event) {
+        const button = event.currentTarget;
+        const item = button.closest(".faq-item");
+        const answer = item.querySelector(".faq-answer");
+        const expanded = button.getAttribute("aria-expanded") === "true";
+
+        if (!expanded) {
+          closeAllExcept(item);
+        }
+
+        button.setAttribute("aria-expanded", String(!expanded));
+        item.classList.toggle("open", !expanded);
+        answer.hidden = expanded;
+      }
+
+      function filterFaq() {
+        const query = searchInput.value.trim().toLowerCase();
+        clearBtn.style.display = query ? "block" : "none";
+        let matches = 0;
+
+        categoryElements.forEach((category) => {
+          const items = Array.from(category.querySelectorAll(".faq-item"));
+          let categoryMatch = false;
+
+          items.forEach((item) => {
+            const text = item.textContent.toLowerCase();
+            const isMatch = text.includes(query);
+            item.style.display = isMatch ? "" : "none";
+            if (isMatch) {
+              matches += 1;
+              categoryMatch = true;
+            }
+          });
+
+          category.style.display = categoryMatch || !query ? "block" : "none";
+          const countElement = category.querySelector(".faq-category-count");
+          if (countElement) {
+            const visibleCount = items.filter(
+              (it) => it.style.display !== "none"
+            ).length;
+            countElement.innerHTML = `
+              <i class="fas fa-list"></i>
+              ${visibleCount} question${visibleCount > 1 ? "s" : ""}
+            `;
+          }
+        });
+
+        noResult.style.display = query && matches === 0 ? "block" : "none";
+      }
+
+      searchInput.addEventListener("input", filterFaq);
+      clearBtn.addEventListener("click", () => {
+        searchInput.value = "";
+        filterFaq();
+        searchInput.focus();
+      });
+
+      // Accessibilité : fermer avec Échap
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+          closeAllExcept(null);
+        }
+      });
+
+      // Charger les données au chargement de la page
+      loadFaqData();
+    </script>
+  </body>
+</html>

@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Guide — Format JSON</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg: #f4f7fa;
+        --card: #fff;
+        --muted: #6b7280;
+        --accent: #216ba5;
+        --accent-2: #1d77b8;
+        --radius: 12px;
+        --maxw: 1600px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system,
+          "Helvetica Neue", Arial;
+      }
+      body {
+        background: linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+        color: #222;
+        padding: 28px;
+        display: flex;
+        justify-content: center;
+      }
+      .wrap {
+        width: 100%;
+        max-width: var(--maxw);
+      }
+      .content-layout {
+        display: grid;
+        grid-template-columns: 1fr 420px;
+        gap: 24px;
+        margin-top: 18px;
+      }
+      @media screen and (max-width: 1200px) {
+        .content-layout {
+          grid-template-columns: 1fr;
+        }
+        .exercises-panel {
+          order: 2;
+        }
+      }
+      header {
+        background: linear-gradient(
+          90deg,
+          rgba(33, 107, 165, 0.12),
+          rgba(29, 119, 184, 0.06)
+        );
+        padding: 20px 24px;
+        border-radius: calc(var(--radius) + 4px);
+        margin-bottom: 18px;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        border: 1px solid rgba(13, 66, 104, 0.06);
+      }
+      footer {
+        margin-top: 25px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 20px;
+        box-shadow: 0 6px 18px rgba(33, 107, 165, 0.12);
+      }
+      /* Lien Accueil (copié du style commun des pages guides) */
+      .home-link {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        font-size: 0.95em;
+        font-weight: 600;
+        text-decoration: none;
+        color: #495057;
+        padding: 8px 15px;
+        border-radius: 20px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease-in-out;
+      }
+      .home-link:hover {
+        background-color: #e9ecef;
+        color: #007bff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+      }
+      @media screen and (max-width: 768px) {
+        .home-link {
+          font-size: 0.85em;
+          padding: 5px 10px;
+          top: 10px;
+          left: 10px;
+        }
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        color: #083b5a;
+      }
+      p.lead {
+        margin: 2px 0 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .card {
+        background: var(--card);
+        padding: 22px;
+        border-radius: var(--radius);
+        box-shadow: 0 6px 20px rgba(20, 30, 40, 0.04);
+        border: 1px solid rgba(16, 24, 32, 0.03);
+      }
+      main.card {
+        padding: 26px;
+      }
+      h2 {
+        color: #0f3e5f;
+        margin-top: 0;
+        font-size: 18px;
+        border-bottom: 2px solid #e6edf4;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+      h3 {
+        color: #123d57;
+        margin-bottom: 8px;
+        margin-top: 20px;
+        font-size: 16px;
+      }
+      p,
+      li {
+        color: #233242;
+        line-height: 1.6;
+        font-size: 15px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      ul,
+      ol {
+        margin-left: 18px;
+        padding-left: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #e6edf4;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #f2f7fb;
+        color: #123d57;
+        font-weight: 600;
+      }
+      pre {
+        background: #f6fbff;
+        padding: 15px;
+        border-left: 4px solid var(--accent);
+        border-radius: 8px;
+        overflow: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          monospace;
+        font-size: 13px;
+        color: #0b3b57;
+        line-height: 1.5;
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+      .tip-box {
+        background: #e6f7ff;
+        border: 1px solid #b3e0ff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .tip-box h4 {
+        color: var(--accent);
+        margin: 0 0 5px 0;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+      }
+      .exercises-panel {
+        background: var(--card);
+        padding: 20px;
+        border-radius: var(--radius);
+        box-shadow: 0 6px 20px rgba(20, 30, 40, 0.04);
+        border: 1px solid rgba(16, 24, 32, 0.03);
+        position: sticky;
+        top: 20px;
+        max-height: calc(100vh - 40px);
+        overflow-y: auto;
+      }
+      .exercises-panel h2 {
+        font-size: 17px;
+        margin-top: 0;
+      }
+      .exercise {
+        margin-bottom: 24px;
+        padding: 16px;
+        background: #f9fbfc;
+        border-radius: 8px;
+        border: 1px solid #e6edf4;
+      }
+      .exercise h4 {
+        color: #0f3e5f;
+        margin: 0 0 10px 0;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      .exercise p {
+        font-size: 13px;
+        margin: 8px 0;
+      }
+      .exercise textarea {
+        width: 100%;
+        min-height: 100px;
+        padding: 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          monospace;
+        font-size: 12px;
+        resize: vertical;
+        margin: 8px 0;
+      }
+      .exercise input[type="text"] {
+        width: 100%;
+        padding: 8px 10px;
+        border: 1px solid #d1d5db;
+        border-radius: 6px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          monospace;
+        font-size: 12px;
+        margin: 8px 0;
+      }
+      .exercise button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 13px;
+        font-weight: 600;
+        transition: background 0.2s;
+        margin-right: 8px;
+      }
+      .exercise button:hover {
+        background: var(--accent-2);
+      }
+      .exercise .feedback {
+        margin-top: 12px;
+        padding: 12px;
+        border-radius: 6px;
+        font-size: 13px;
+        display: none;
+      }
+      .exercise .feedback.show {
+        display: block;
+      }
+      .exercise .feedback.correct {
+        background: #d4edda;
+        color: #155724;
+        border: 1px solid #c3e6cb;
+      }
+      .exercise .feedback.incorrect {
+        background: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+      }
+      .exercise .feedback strong {
+        display: block;
+        margin-bottom: 6px;
+      }
+      .exercise pre {
+        margin: 8px 0;
+        font-size: 11px;
+        padding: 10px;
+      }
+      .exercise ul {
+        margin: 8px 0;
+        padding-left: 20px;
+      }
+      .exercise li {
+        font-size: 12px;
+        margin: 4px 0;
+      }
+    </style>
+  </head>
+  <body>
+    <a
+      href="../main/menu.html"
+      class="home-link"
+      title="Retour à la page d'accueil"
+      >🏠 Accueil</a
+    >
+    <div class="wrap" role="main" aria-labelledby="title">
+      <header>
+        <div class="logo"><i class="fas fa-cube"></i></div>
+        <div>
+          <h1>Guide du format JSON</h1>
+          <p class="lead">
+            Comprendre, manipuler et valider le format d'échange de données le
+            plus utilisé pour les API modernes.
+          </p>
+        </div>
+      </header>
+      <div class="content-layout">
+        <main class="card">
+          <h2>Introduction au JSON</h2>
+          <p>
+            JSON (JavaScript Object Notation) est un format d'échange de données
+            léger, standard, conçu pour être facilement lisible par l'humain et
+            interprétable par les machines. Bien qu'issu de JavaScript, il est
+            indépendant de tout langage et est devenu le format dominant pour la
+            communication entre serveurs et applications, notamment via les API
+            REST.
+          </p>
+          <h2>1. Structure fondamentale de JSON</h2>
+          <h3>A. L'Objet (Mapping)</h3>
+          <ul>
+            <li>
+              Représente une collection non ordonnée de paires clé:valeur.
+            </li>
+            <li>Délimité par des accolades (<code>{ }</code>).</li>
+            <li>
+              La clé (nom du champ) doit être une chaîne de caractères (string)
+              entre guillemets doubles.
+            </li>
+            <li>La valeur peut être n'importe quel type de donnée JSON.</li>
+          </ul>
+          <b>Exemple d'objet :</b>
+          <pre>
+{
+  "referenceProduit": "XYZ-900",
+  "estDisponible": true,
+  "prixUSD": 12.99
+}</pre
+          >
+          <h3>B. Le Tableau (Array)</h3>
+          <ul>
+            <li>Représente une liste ordonnée de valeurs.</li>
+            <li>Délimité par des crochets (<code>[ ]</code>).</li>
+            <li>Les éléments sont séparés par des virgules.</li>
+            <li>
+              Le tableau peut contenir des valeurs de types différents (y
+              compris d'autres objets ou tableaux).
+            </li>
+          </ul>
+          <b>Exemple de tableau :</b>
+          <pre>
+[
+  "Test d'API",
+  "Test fonctionnel",
+  "Test de charge"
+]</pre
+          >
+          <h2>2. Les types de données JSON</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Type</th>
+                <th>Description</th>
+                <th>Exemple</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>String (Chaîne)</td>
+                <td>Séquence de caractères entre guillemets doubles.</td>
+                <td>"rapport_v1.2"</td>
+              </tr>
+              <tr>
+                <td>Number (Nombre)</td>
+                <td>Entiers ou flottants (pas de distinction).</td>
+                <td>150, 3.14159</td>
+              </tr>
+              <tr>
+                <td>Boolean (Booléen)</td>
+                <td>Vrai ou Faux (sans guillemets).</td>
+                <td>true, false</td>
+              </tr>
+              <tr>
+                <td>Null</td>
+                <td>Représente l'absence de valeur.</td>
+                <td>null</td>
+              </tr>
+              <tr>
+                <td>Object (Objet)</td>
+                <td>Collection de paires clé:valeur (voir 1.A).</td>
+                <td>{ "clé": "valeur" }</td>
+              </tr>
+              <tr>
+                <td>Array (Tableau)</td>
+                <td>Liste ordonnée de valeurs (voir 1.B).</td>
+                <td>[ 1, 2, 3 ]</td>
+              </tr>
+            </tbody>
+          </table>
+          <h3>Exemple avancé (objet imbriqué et tableau d'objets)</h3>
+          <pre>
+{
+  "client": {
+    "clientId": 789,
+    "nom": "Durand",
+    "adresse": "15 Rue de la Liberté"
+  },
+  "commandes": [
+    {
+      "commandeId": "C001",
+      "montant": 45.50
+    },
+    {
+      "commandeId": "C002",
+      "montant": 120.00
+    }
+  ],
+  "dateDerniereMiseAJour": "2025-11-23T10:00:00Z"
+}</pre
+          >
+          <h2>3. JSON et l'automatisation des tests (API Testing)</h2>
+          <h3>A. Construction du "Payload" (Requête)</h3>
+          <ul>
+            <li>
+              Lors de l'envoi d'une requête POST ou PUT à une API REST (pour
+              créer ou modifier une ressource), le corps de la requête (payload)
+              est généralement un objet JSON.
+            </li>
+            <li>
+              L'automatisation consiste à :
+              <ul>
+                <li>
+                  Créer dynamiquement l'objet JSON (ou le lire à partir d'un
+                  fichier).
+                </li>
+                <li>Le sérialiser (le convertir) en chaîne de caractères.</li>
+                <li>L'envoyer au point de terminaison (endpoint) de l'API.</li>
+              </ul>
+            </li>
+          </ul>
+          <h3>B. Vérification de la réponse (Assertions)</h3>
+          <ul>
+            <li>
+              Après avoir reçu une réponse de l'API (souvent sous la forme d'un
+              objet JSON), le test doit valider :
+              <ul>
+                <li>
+                  Le statut HTTP (ex : 200 OK, 201 Created, 404 Not Found).
+                </li>
+                <li>
+                  La structure des données (tous les champs attendus sont
+                  présents).
+                </li>
+                <li>
+                  Les valeurs des champs (ex : Le clientId dans la réponse doit
+                  correspondre à celui envoyé dans la requête).
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="tip-box">
+            <h4>
+              <i class="fas fa-search"></i>&nbsp;JSONPath (Interrogation et
+              Extraction)
+            </h4>
+            <p>
+              Le JSONPath permet de désigner un élément spécifique, un peu comme
+              XPath le fait pour XML/HTML.
+            </p>
+            <table>
+              <thead>
+                <tr>
+                  <th>Requête JSONPath</th>
+                  <th>Description</th>
+                  <th>Valeur extraite (selon l'exemple avancé)</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>$.client.nom</code></td>
+                  <td>
+                    Accède à la valeur de la clé <code>nom</code> dans l'objet
+                    <code>client</code>.
+                  </td>
+                  <td>"Durand"</td>
+                </tr>
+                <tr>
+                  <td><code>$.commandes[0].montant</code></td>
+                  <td>
+                    Accède à l'élément <code>montant</code> du premier objet du
+                    tableau <code>commandes</code>.
+                  </td>
+                  <td>45.50</td>
+                </tr>
+                <tr>
+                  <td><code>$.commandes[*].commandeId</code></td>
+                  <td>
+                    Récupère tous les <code>commandeId</code> de tous les objets
+                    dans le tableau <code>commandes</code>.
+                  </td>
+                  <td>[ "C001", "C002" ]</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <h2>4. Avantages et inconvénients</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Caractéristique</th>
+                <th>Avantage (+)</th>
+                <th>Inconvénient (-)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Lisibilité</td>
+                <td>Structure simple et compacte, très facile à lire.</td>
+                <td>Ne supporte pas les commentaires (officiellement).</td>
+              </tr>
+              <tr>
+                <td>Vitesse</td>
+                <td>
+                  Très léger et rapide à parser (analyser) par les systèmes.
+                </td>
+                <td>
+                  Moins rigide que XML (pas de support natif des schémas XSD).
+                </td>
+              </tr>
+              <tr>
+                <td>Adoption</td>
+                <td>
+                  Supporté nativement par presque tous les langages de
+                  programmation.
+                </td>
+                <td>
+                  Moins adapté pour les données tabulaires massives que CSV.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </main>
+
+        <!-- Panneau des Exercices Interactifs -->
+        <aside class="exercises-panel">
+          <h2>
+            <i class="fas fa-flask" style="margin-right: 8px"></i>Exercices
+            Pratiques
+          </h2>
+
+          <!-- Exercice 1A: Construction Objet vs Tableau -->
+          <div class="exercise" id="ex1a">
+            <h4>1A. Créer Objet et Tableau</h4>
+            <p>
+              <strong>Objectif:</strong> Créer un objet JSON avec une propriété
+              tableau.
+            </p>
+            <p style="font-size: 12px">Créez un objet contenant:</p>
+            <ul>
+              <li>Clé <code>"titre"</code> = <code>"Rapport annuel"</code></li>
+              <li>
+                Clé <code>"auteurs"</code> = tableau avec
+                <code>"Alice"</code> et <code>"Bob"</code>
+              </li>
+            </ul>
+            <textarea
+              id="ex1a-input"
+              placeholder="Écrivez votre code JSON ici..."
+            ></textarea>
+            <button onclick="checkExercise1A()">Vérifier</button>
+            <button onclick="showSolution('ex1a')">Voir Solution</button>
+            <div id="ex1a-feedback" class="feedback"></div>
+          </div>
+
+          <!-- Exercice 1B: Détection d'Erreur -->
+          <div class="exercise" id="ex1b">
+            <h4>1B. Corriger les Erreurs JSON</h4>
+            <p>
+              <strong>Objectif:</strong> Identifier et corriger les erreurs de
+              syntaxe.
+            </p>
+            <textarea id="ex1b-input">
+{
+  'id_utilisateur': 101,
+  "statut_actif": "true",
+  "notes": null
+}</textarea
+            >
+            <button onclick="checkExercise1B()">Vérifier</button>
+            <button onclick="showSolution('ex1b')">Voir Solution</button>
+            <div id="ex1b-feedback" class="feedback"></div>
+          </div>
+
+          <!-- Exercice 2A: JSONPath Extraction Directe -->
+          <div class="exercise" id="ex2a">
+            <h4>2A. JSONPath — Objet Imbriqué</h4>
+            <p>
+              <strong>Question:</strong> Écrivez le JSONPath pour extraire le
+              <code>clientId</code> de l'objet <code>client</code>.
+            </p>
+            <input type="text" id="ex2a-input" placeholder="$.client..." />
+            <button onclick="checkExercise2A()">Vérifier</button>
+            <button onclick="showSolution('ex2a')">Voir Solution</button>
+            <div id="ex2a-feedback" class="feedback"></div>
+          </div>
+
+          <!-- Exercice 2B: JSONPath Extraction dans Tableau -->
+          <div class="exercise" id="ex2b">
+            <h4>2B. JSONPath — Élément de Tableau</h4>
+            <p>
+              <strong>Question:</strong> Écrivez le JSONPath pour récupérer le
+              <code>montant</code> de la <strong>deuxième</strong> commande.
+            </p>
+            <input type="text" id="ex2b-input" placeholder="$.commandes[..." />
+            <button onclick="checkExercise2B()">Vérifier</button>
+            <button onclick="showSolution('ex2b')">Voir Solution</button>
+            <div id="ex2b-feedback" class="feedback"></div>
+          </div>
+
+          <!-- Exercice 2C: JSONPath Wildcard -->
+          <div class="exercise" id="ex2c">
+            <h4>2C. JSONPath — Wildcard (*)</h4>
+            <p>
+              <strong>Question:</strong> Écrivez le JSONPath pour récupérer tous
+              les <code>commandeId</code> du tableau <code>commandes</code>.
+            </p>
+            <input
+              type="text"
+              id="ex2c-input"
+              placeholder="$.commandes[*]..."
+            />
+            <button onclick="checkExercise2C()">Vérifier</button>
+            <button onclick="showSolution('ex2c')">Voir Solution</button>
+            <div id="ex2c-feedback" class="feedback"></div>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        <p>
+          &copy; Talel Zid | Version 1.0 — Novembre 2025 | Guide JSON |<br />Usage
+          personnel ou éducatif.
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      // Solutions et validation des exercices JSON
+      const solutions = {
+        ex1a: `{
+  "titre": "Rapport annuel",
+  "auteurs": [
+    "Alice",
+    "Bob"
+  ]
+}`,
+        ex1b: `{
+  "id_utilisateur": 101,
+  "statut_actif": true,
+  "notes": null
+}`,
+        ex2a: `$.client.clientId`,
+        ex2b: `$.commandes[1].montant`,
+        ex2c: `$.commandes[*].commandeId`,
+      };
+
+      const comments = {
+        ex1a: "L'Objet {} représente une collection non ordonnée de paires clé:valeur, tandis que le Tableau [] est une liste ordonnée. Les clés doivent toujours être entre guillemets doubles.",
+        ex1b: "Règles JSON strictes : 1) Les clés utilisent des guillemets doubles (\"), pas simples ('). 2) Les booléens (true/false) et null n'écrivent SANS guillemets. 3) Virgules entre les paires clé:valeur.",
+        ex2a: "Le symbole $ représente la racine du document JSON. On utilise le point (.) pour naviguer dans les objets imbriqués.",
+        ex2b: "Les tableaux sont indexés à partir de zéro : [0] est le premier élément, [1] est le deuxième. Utilisez le point pour accéder aux propriétés des objets.",
+        ex2c: "Le wildcard (*) à la place de l'index permet de récupérer l'attribut spécifié pour TOUS les éléments du tableau.",
+      };
+
+      function normalizeJSON(str) {
+        try {
+          // Parse et re-stringify pour normaliser le format
+          const parsed = JSON.parse(str);
+          return JSON.stringify(parsed);
+        } catch (e) {
+          return str.replace(/\s+/g, " ").trim();
+        }
+      }
+
+      function normalizeJSONPath(str) {
+        return str.replace(/\s+/g, "").trim();
+      }
+
+      function isValidJSON(str) {
+        try {
+          JSON.parse(str);
+          return true;
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function showFeedback(id, correct, message) {
+        const feedback = document.getElementById(id + "-feedback");
+        feedback.className =
+          "feedback show " + (correct ? "correct" : "incorrect");
+        feedback.innerHTML = message;
+      }
+
+      function showSolution(exId) {
+        const input = document.getElementById(exId + "-input");
+        input.value = solutions[exId];
+        showFeedback(
+          exId,
+          true,
+          "<strong>✓ Solution affichée</strong> " + comments[exId]
+        );
+      }
+
+      function checkExercise1A() {
+        const userAnswer = document.getElementById("ex1a-input").value.trim();
+
+        if (!isValidJSON(userAnswer)) {
+          showFeedback(
+            "ex1a",
+            false,
+            "<strong>✗ Erreur de syntaxe JSON</strong> Vérifiez les guillemets, virgules et accolades."
+          );
+          return;
+        }
+
+        try {
+          const parsed = JSON.parse(userAnswer);
+          const hasTitre = parsed.titre === "Rapport annuel";
+          const hasAuteurs = Array.isArray(parsed.auteurs);
+          const hasAlice = hasAuteurs && parsed.auteurs.includes("Alice");
+          const hasBob = hasAuteurs && parsed.auteurs.includes("Bob");
+
+          if (hasTitre && hasAuteurs && hasAlice && hasBob) {
+            showFeedback(
+              "ex1a",
+              true,
+              "<strong>✓ Parfait !</strong> " + comments.ex1a
+            );
+          } else {
+            let hint = "<strong>✗ Incomplet</strong> ";
+            if (!hasTitre)
+              hint +=
+                'La clé "titre" avec la valeur "Rapport annuel" est manquante. ';
+            if (!hasAuteurs)
+              hint += 'La clé "auteurs" doit être un tableau []. ';
+            if (hasAuteurs && (!hasAlice || !hasBob))
+              hint += 'Le tableau "auteurs" doit contenir "Alice" et "Bob". ';
+            showFeedback("ex1a", false, hint);
+          }
+        } catch (e) {
+          showFeedback("ex1a", false, "<strong>✗ Erreur</strong> " + e.message);
+        }
+      }
+
+      function checkExercise1B() {
+        const userAnswer = document.getElementById("ex1b-input").value.trim();
+
+        if (!isValidJSON(userAnswer)) {
+          const hasSingleQuotes = userAnswer.includes("'");
+          const hasStringTrue = userAnswer.includes('"true"');
+
+          let hint = "<strong>✗ JSON invalide</strong> ";
+          if (hasSingleQuotes)
+            hint +=
+              "Remplacez les guillemets simples (') par des guillemets doubles (\"). ";
+          if (hasStringTrue)
+            hint += "Le booléen true ne doit PAS être entre guillemets. ";
+          if (!userAnswer.includes("101,"))
+            hint += "Virgule manquante après la première paire clé:valeur. ";
+          showFeedback("ex1b", false, hint);
+          return;
+        }
+
+        try {
+          const parsed = JSON.parse(userAnswer);
+          const hasCorrectId = parsed.id_utilisateur === 101;
+          const hasCorrectStatut = parsed.statut_actif === true;
+          const hasCorrectNotes = parsed.notes === null;
+
+          if (hasCorrectId && hasCorrectStatut && hasCorrectNotes) {
+            showFeedback(
+              "ex1b",
+              true,
+              "<strong>✓ Excellent !</strong> " + comments.ex1b
+            );
+          } else {
+            showFeedback(
+              "ex1b",
+              false,
+              "<strong>✗ Vérifiez les valeurs</strong> Les types de données doivent être corrects."
+            );
+          }
+        } catch (e) {
+          showFeedback("ex1b", false, "<strong>✗ Erreur</strong> " + e.message);
+        }
+      }
+
+      function checkExercise2A() {
+        const userAnswer = normalizeJSONPath(
+          document.getElementById("ex2a-input").value
+        );
+        const solution = normalizeJSONPath(solutions.ex2a);
+
+        if (userAnswer === solution) {
+          showFeedback(
+            "ex2a",
+            true,
+            "<strong>✓ Parfait !</strong> " + comments.ex2a
+          );
+        } else {
+          const hint = userAnswer.includes("$.client")
+            ? "<strong>✗ Presque</strong> Vérifiez le nom exact de la propriété à extraire."
+            : "<strong>✗ Incorrect</strong> Utilisez $ pour la racine, puis naviguez avec le point (.).";
+          showFeedback("ex2a", false, hint);
+        }
+      }
+
+      function checkExercise2B() {
+        const userAnswer = normalizeJSONPath(
+          document.getElementById("ex2b-input").value
+        );
+        const solution = normalizeJSONPath(solutions.ex2b);
+
+        if (userAnswer === solution) {
+          showFeedback(
+            "ex2b",
+            true,
+            "<strong>✓ Parfait !</strong> " + comments.ex2b
+          );
+        } else {
+          const hasCorrectIndex = userAnswer.includes("[1]");
+          const hasCommandes = userAnswer.includes("commandes");
+
+          let hint = "<strong>✗ Incorrect</strong> ";
+          if (!hasCommandes) hint += "Commencez par $.commandes. ";
+          if (!hasCorrectIndex)
+            hint +=
+              "La deuxième commande est à l'index [1] (les tableaux commencent à 0). ";
+          if (hasCorrectIndex && !userAnswer.includes("montant"))
+            hint += "N'oubliez pas d'accéder à la propriété .montant";
+          showFeedback("ex2b", false, hint);
+        }
+      }
+
+      function checkExercise2C() {
+        const userAnswer = normalizeJSONPath(
+          document.getElementById("ex2c-input").value
+        );
+        const solution = normalizeJSONPath(solutions.ex2c);
+
+        if (userAnswer === solution) {
+          showFeedback(
+            "ex2c",
+            true,
+            "<strong>✓ Excellent !</strong> " + comments.ex2c
+          );
+        } else {
+          const hasWildcard = userAnswer.includes("[*]");
+          const hasCommandes = userAnswer.includes("commandes");
+          const hasCommandeId = userAnswer.includes("commandeId");
+
+          let hint = "<strong>✗ Incomplet</strong> ";
+          if (!hasCommandes) hint += "Commencez par $.commandes. ";
+          if (!hasWildcard)
+            hint +=
+              "Utilisez [*] pour sélectionner tous les éléments du tableau. ";
+          if (!hasCommandeId)
+            hint += "Ajoutez .commandeId pour extraire cette propriété. ";
+          showFeedback("ex2c", false, hint);
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,717 @@
+# PRD - Restructuration du Projet Alfresco
+
+## 📋 Métadonnées du Document
+
+- **Titre** : Restructuration et Réorganisation de l'Architecture du Projet
+- **Version** : 1.1
+- **Date de création** : 9 novembre 2025
+- **Dernière mise à jour** : 10 novembre 2025
+- **Auteur** : GitHub Copilot
+- **Statut** : Proposition - En attente d'approbation
+
+---
+
+## 🎯 Objectif
+
+Réorganiser la structure actuelle du projet Alfresco pour améliorer la maintenabilité, la scalabilité et la clarté de l'architecture en séparant logiquement les différents types de fichiers dans une hiérarchie de dossiers cohérente.
+
+---
+
+## 📊 Situation Actuelle
+
+### Problèmes Identifiés
+
+1. **Racine surchargée** : 31 éléments mélangés sans hiérarchie claire
+2. **Manque de séparation logique** : Fichiers admin, guides, outils tous au même niveau
+3. **Difficulté de navigation** : Temps de recherche accru pour les développeurs
+4. **Non-scalabilité** : Ajout de nouvelles fonctionnalités compliqué
+5. **Documentation dispersée** : Fichiers MD et PRD mélangés
+
+### Inventaire Actuel
+
+| Type | Nombre | Exemples |
+|------|--------|----------|
+| Pages HTML | ~20 | admin-*.html, guide_*.html, features*.html |
+| Fichiers JSON | 3 | credentials.json, announcements.json, quizzes.json |
+| Documentation MD | ~5 | README.md, SECURITE.md, GITHUB_API_SETUP.md |
+| Documents PRD | ~2 | quiz_feature.prd, Gabarit_Plan_automatisation.md |
+| Scripts JS | 3 | auth-guard.js, admin-guard.js, quiz.js |
+| Dossiers | 4 | js/, images/, downloads/, ressources/ |
+
+---
+
+## 🎨 Architecture Proposée
+
+### Structure Complète
+
+```
+alfresco-project/
+│
+├── pages/                          # 📄 Toutes les pages HTML applicatives
+│   ├── admin/                      # Pages d'administration
+│   │   ├── admin-announcements.html
+│   │   ├── features.html
+│   │   └── admin-quiz.html
+│   │
+│   ├── guides/                     # Guides et documentation utilisateur
+│   │   ├── guide_bdd.html
+│   │   ├── guide_gitlab.html
+│   │   ├── guide_gherkin.html
+│   │   ├── guide_jira.html
+│   │   ├── guide_markdown.html
+│   │   ├── guide_pict.html
+│   │   ├── guide_plan_test.html
+│   │   ├── guide_rapport_anomalie.html
+│   │   └── guide_squash.html
+│   │
+│   ├── tools/                      # Outils et références techniques
+│   │   ├── cheat_sheet_robot.html
+│   │   ├── cheat_sheet_xpath.html
+│   │   └── exemple_us.html
+│   │
+│   ├── features/                   # Pages de gestion des features par équipe
+│   │   ├── features_2_equipes.html
+│   │   ├── features_3_equipes.html
+│   │   ├── features_4_equipes.html
+│   │   └── features_5_equipes.html
+│   │
+│   └── main/                       # Pages principales de navigation
+│       ├── index.html
+│       ├── menu.html
+│       ├── quiz.html
+│       ├── project_timeline.html
+│       └── test_environment.html
+│
+├── config/                         # ⚙️ Configuration et données JSON
+│   ├── credentials.json
+│   ├── announcements.json
+│   └── quizzes.json
+│
+├── docs/                           # 📚 Documentation du projet
+│   ├── markdown/                   # Documentation Markdown
+│   │   ├── README.md
+│   │   ├── SECURITE.md
+│   │   ├── ANNOUNCEMENTS_CAROUSEL_README.md
+│   │   └── GITHUB_API_SETUP.md
+│   │
+│   └── prd/                        # Product Requirements Documents
+│       ├── project_restructuration.prd (ce fichier)
+│       ├── quiz_feature.prd
+│       └── Gabarit_Plan_automatisation.md
+│
+├── assets/                         # 🎨 Ressources statiques
+│   ├── js/
+│   │   ├── auth-guard.js
+│   │   ├── admin-guard.js
+│   │   └── quiz.js
+│   │
+│   ├── images/
+│   │   └── [contenu existant]
+│   │
+│   └── downloads/
+│       └── [contenu existant]
+│
+├── ressources/                     # 📖 Ressources pédagogiques
+│   └── [contenu existant - inchangé]
+│
+└── .git/                           # Version control
+```
+
+---
+
+## 📁 Mapping Détaillé des Fichiers
+
+### 1. Pages HTML → `pages/`
+
+#### `pages/admin/` (3 fichiers)
+- ✅ `admin-announcements.html` → Administration des annonces
+- ✅ `admin-quiz.html` → Administration des quiz
+- ✅ `features.html` → Gestion des features (page principale d'administration)
+  
+  **Note** : `features.html` est placé dans `admin/` car il s'agit de la page de gestion administrative des features. Les variantes par nombre d'équipes (`features_X_equipes.html`) restent dans le dossier `pages/features/`.
+
+#### `pages/guides/` (9 fichiers)
+- ✅ `guide_bdd.html`
+- ✅ `guide_gitlab.html`
+- ✅ `guide_gherkin.html`
+- ✅ `guide_jira.html`
+- ✅ `guide_markdown.html`
+- ✅ `guide_pict.html`
+- ✅ `guide_plan_test.html`
+- ✅ `guide_rapport_anomalie.html`
+- ✅ `guide_squash.html`
+
+#### `pages/tools/` (3 fichiers)
+- ✅ `cheat_sheet_robot.html`
+- ✅ `cheat_sheet_xpath.html`
+- ✅ `exemple_us.html`
+
+#### `pages/features/` (4 fichiers)
+- ✅ `features_2_equipes.html` → Configuration pour 2 équipes
+- ✅ `features_3_equipes.html` → Configuration pour 3 équipes
+- ✅ `features_4_equipes.html` → Configuration pour 4 équipes
+- ✅ `features_5_equipes.html` → Configuration pour 5 équipes
+
+#### `pages/main/` (5 fichiers)
+- ✅ `index.html`
+- ✅ `menu.html`
+- ✅ `quiz.html`
+- ✅ `project_timeline.html`
+- ✅ `test_environment.html`
+
+### 2. Configuration → `config/`
+
+- ✅ `credentials.json` → Comptes utilisateurs
+- ✅ `announcements.json` → Données des annonces
+- ✅ `quizzes.json` → Données des quiz
+
+### 3. Documentation → `docs/`
+
+#### `docs/markdown/` (4 fichiers)
+- ✅ `README.md` → Documentation générale du projet
+- ✅ `SECURITE.md` → Politique de sécurité
+- ✅ `ANNOUNCEMENTS_CAROUSEL_README.md` → Documentation du carrousel
+- ✅ `GITHUB_API_SETUP.md` → Configuration GitHub API
+
+#### `docs/prd/` (3 fichiers)
+- ✅ `project_restructuration.prd` → Ce document
+- ✅ `quiz_feature.prd` → Spécifications du système de quiz
+- ✅ `Gabarit_Plan_automatisation.md` → Template de plan d'automatisation
+
+### 4. Assets → `assets/`
+
+#### `assets/js/` (3 fichiers)
+- ✅ `auth-guard.js`
+- ✅ `admin-guard.js`
+- ✅ `quiz.js`
+
+#### `assets/images/`
+- ✅ [Contenu existant déplacé depuis `images/`]
+
+#### `assets/downloads/`
+- ✅ [Contenu existant déplacé depuis `downloads/`]
+
+---
+
+## 🔧 Modifications Techniques Requises
+
+### 1. Mise à Jour des Chemins dans les Pages HTML
+
+#### A. Pages Principales (`pages/main/`)
+
+**Fichier : `index.html`**
+```html
+<!-- Avant -->
+<script src="js/auth-guard.js"></script>
+
+<!-- Après -->
+<script src="../../assets/js/auth-guard.js"></script>
+```
+
+**Fichier : `menu.html`**
+```html
+<!-- Avant -->
+<a href="quiz.html">Quiz</a>
+<a href="admin-announcements.html">Admin Annonces</a>
+<a href="features.html">Features</a>
+<img src="images/logo.png">
+
+<!-- Après -->
+<a href="quiz.html">Quiz</a>  <!-- Reste identique (même dossier) -->
+<a href="../admin/admin-announcements.html">Admin Annonces</a>
+<a href="../admin/features.html">Features</a>
+<img src="../../assets/images/logo.png">
+```
+
+**Fichier : `quiz.html`**
+```html
+<!-- Avant -->
+<script src="js/quiz.js"></script>
+<a href="menu.html">Retour au menu</a>
+
+<!-- Après -->
+<script src="../../assets/js/quiz.js"></script>
+<a href="menu.html">Retour au menu</a>  <!-- Reste identique -->
+```
+
+#### B. Pages Admin (`pages/admin/`)
+
+**Fichiers : `admin-announcements.html`, `admin-quiz.html`, `features.html`**
+```html
+<!-- Avant -->
+<script src="js/auth-guard.js"></script>
+<script src="js/admin-guard.js"></script>
+<a href="menu.html">Retour</a>
+
+<!-- Après -->
+<script src="../../assets/js/auth-guard.js"></script>
+<script src="../../assets/js/admin-guard.js"></script>
+<a href="../main/menu.html">Retour</a>
+```
+
+**Note** : `features.html` suit la même structure que les autres pages admin, car elle nécessite les mêmes permissions d'administration.
+
+#### C. Pages Guides (`pages/guides/`)
+
+**Tous les fichiers `guide_*.html`**
+```html
+<!-- Avant -->
+<a href="menu.html">Retour au menu</a>
+<img src="images/icon.png">
+
+<!-- Après -->
+<a href="../main/menu.html">Retour au menu</a>
+<img src="../../assets/images/icon.png">
+```
+
+### 2. Mise à Jour des Scripts JavaScript
+
+#### `assets/js/quiz.js`
+```javascript
+// Avant
+fetch('quizzes.json')
+
+// Après
+fetch('../../config/quizzes.json')
+```
+
+#### `assets/js/auth-guard.js`
+```javascript
+// Avant (si présent)
+window.location.href = 'index.html';
+
+// Après
+window.location.href = '/pages/main/index.html';
+```
+
+### 3. Mise à Jour dans `admin-announcements.html` et `admin-quiz.html`
+
+**Appels GitHub API**
+```javascript
+// Avant
+const path = 'announcements.json';
+
+// Après
+const path = 'config/announcements.json';
+```
+
+**Note** : Les chemins GitHub API utilisent des chemins relatifs au dépôt, donc ajuster selon la racine du repo.
+
+---
+
+## 📋 Plan d'Exécution
+
+### Option 1 : Migration Complète (Recommandée)
+
+**Durée estimée** : 2-3 heures
+
+#### Phase 1 : Préparation (15 min)
+1. ✅ Créer une branche Git : `git checkout -b refactor-structure`
+2. ✅ Créer tous les nouveaux dossiers
+3. ✅ Faire un backup de la structure actuelle
+
+#### Phase 2 : Migration des Fichiers (45 min)
+1. ✅ Déplacer les pages HTML vers `pages/` (sous-dossiers appropriés)
+2. ✅ Déplacer les JSON vers `config/`
+3. ✅ Déplacer les fichiers MD vers `docs/markdown/`
+4. ✅ Déplacer les fichiers PRD vers `docs/prd/`
+5. ✅ Déplacer `js/` vers `assets/js/`
+6. ✅ Déplacer `images/` vers `assets/images/`
+7. ✅ Déplacer `downloads/` vers `assets/downloads/`
+
+#### Phase 3 : Mise à Jour des Chemins (60 min)
+1. ✅ Mettre à jour tous les liens dans `menu.html`
+2. ✅ Mettre à jour les scripts dans toutes les pages HTML
+3. ✅ Mettre à jour les chemins d'images
+4. ✅ Mettre à jour les fetch() dans les fichiers JS
+5. ✅ Mettre à jour les chemins GitHub API
+
+#### Phase 4 : Tests et Validation (30 min)
+1. ✅ Tester la page d'accueil (`index.html`)
+2. ✅ Tester la navigation depuis `menu.html` vers toutes les sections
+3. ✅ Tester les pages admin (connexion + fonctionnalités)
+4. ✅ Tester le système de quiz
+5. ✅ Tester le système d'annonces
+6. ✅ Vérifier que toutes les images se chargent
+7. ✅ Vérifier les fichiers téléchargeables
+
+#### Phase 5 : Finalisation (15 min)
+1. ✅ Committer les changements : `git add -A && git commit -m "refactor: Restructure project architecture"`
+2. ✅ Créer une Pull Request vers `master`
+3. ✅ Mettre à jour la documentation (README.md)
+
+---
+
+### Option 2 : Migration Progressive (Plus Sûre)
+
+**Durée estimée** : 4-6 heures (étalée sur plusieurs jours)
+
+#### Itération 1 : Configuration (30 min)
+- Créer `config/` et déplacer les JSON
+- Mettre à jour les chemins dans JS/HTML
+- Tester et valider
+- Committer
+
+#### Itération 2 : Assets (45 min)
+- Créer `assets/` avec sous-dossiers
+- Déplacer js/, images/, downloads/
+- Mettre à jour tous les chemins
+- Tester et valider
+- Committer
+
+#### Itération 3 : Documentation (20 min)
+- Créer `docs/markdown/` et `docs/prd/`
+- Déplacer les fichiers MD et PRD
+- Mettre à jour README si nécessaire
+- Committer
+
+#### Itération 4 : Pages Admin (30 min)
+- Créer `pages/admin/`
+- Déplacer les pages admin
+- Mettre à jour les chemins
+- Tester fonctionnalités admin
+- Committer
+
+#### Itération 5 : Pages Guides (40 min)
+- Créer `pages/guides/`
+- Déplacer tous les guides
+- Mettre à jour les liens
+- Tester navigation
+- Committer
+
+#### Itération 6 : Pages Principales (40 min)
+- Créer `pages/main/`, `pages/features/`, `pages/tools/`
+- Déplacer les pages restantes
+- Mettre à jour tous les liens
+- Tests complets de navigation
+- Committer
+
+#### Itération 7 : Validation Finale (30 min)
+- Tests end-to-end complets
+- Vérification de tous les parcours utilisateur
+- Merge vers `master`
+
+---
+
+## ⚠️ Risques et Mitigation
+
+### Risques Identifiés
+
+| Risque | Probabilité | Impact | Mitigation |
+|--------|-------------|--------|------------|
+| Liens cassés après migration | Élevée | Élevé | Tests systématiques + script de validation |
+| Chemins GitHub API incorrects | Moyenne | Élevé | Tests des fonctionnalités admin avant commit |
+| Images non chargées | Moyenne | Moyen | Vérification visuelle de toutes les pages |
+| Navigation rompue | Élevée | Élevé | Tests de tous les parcours utilisateur |
+| Perte de fichiers | Faible | Critique | Backup complet + branche Git dédiée |
+
+### Stratégies de Mitigation
+
+1. **Backup systématique** : Créer une branche Git avant toute modification
+2. **Tests par étape** : Valider chaque catégorie de fichiers déplacés
+3. **Script de validation** : Créer un script PowerShell pour vérifier tous les liens
+4. **Checklist de tests** : Suivre une liste exhaustive de scénarios
+5. **Rollback plan** : Pouvoir revenir en arrière facilement via Git
+
+---
+
+## ✅ Checklist de Tests
+
+### Tests Fonctionnels
+
+#### Authentification
+- [ ] Login avec utilisateur valide
+- [ ] Login avec identifiants incorrects
+- [ ] Redirection vers index.html si non authentifié
+- [ ] Accès admin bloqué pour rôle étudiant
+
+#### Navigation
+- [ ] Tous les liens du menu fonctionnent
+- [ ] Bouton "Retour" sur chaque page
+- [ ] Bouton "Accueil" (🏠) sur toutes les pages
+- [ ] Navigation entre guides
+
+#### Système d'Annonces
+- [ ] Carrousel se charge et défile
+- [ ] Panneau latéral s'ouvre/ferme
+- [ ] Admin peut créer une annonce
+- [ ] Admin peut modifier une annonce
+- [ ] Admin peut supprimer une annonce
+- [ ] Sauvegarde GitHub API fonctionne
+
+#### Système de Quiz
+- [ ] Liste des quiz s'affiche
+- [ ] Quiz démarre correctement
+- [ ] Questions s'affichent avec tous les types
+- [ ] Réponses sont validées correctement
+- [ ] Résultats s'affichent en fin de quiz
+- [ ] Admin peut créer/modifier/supprimer un quiz
+
+#### Ressources
+- [ ] Images se chargent sur toutes les pages
+- [ ] Fichiers téléchargeables accessibles
+- [ ] Cheat sheets s'affichent correctement
+- [ ] Guides techniques lisibles
+
+### Tests Techniques
+
+#### Chemins
+- [ ] Tous les `<script src="">` résolus
+- [ ] Tous les `<link href="">` résolus
+- [ ] Tous les `<a href="">` fonctionnels
+- [ ] Tous les `<img src="">` chargés
+- [ ] Tous les `fetch()` pointent vers les bons fichiers
+
+#### Console
+- [ ] Aucune erreur 404 dans la console
+- [ ] Aucune erreur JavaScript
+- [ ] Aucun warning CSS
+
+#### Performance
+- [ ] Temps de chargement acceptable
+- [ ] Pas de ressources bloquantes
+
+---
+
+## 📊 Métriques de Succès
+
+### Quantitatives
+- ✅ 100% des pages accessibles sans erreur 404
+- ✅ 0 erreur JavaScript en console
+- ✅ 100% des images chargées
+- ✅ Tous les tests de la checklist passés
+
+### Qualitatives
+- ✅ Structure plus claire et intuitive
+- ✅ Temps de recherche de fichiers réduit de 70%
+- ✅ Facilité d'ajout de nouvelles fonctionnalités
+- ✅ Documentation mieux organisée
+
+---
+
+## 📝 Commandes PowerShell pour la Migration
+
+### Créer la Structure
+
+```powershell
+# Créer une branche Git
+git checkout -b refactor-structure
+
+# Créer tous les dossiers
+New-Item -ItemType Directory -Path "pages\admin" -Force
+New-Item -ItemType Directory -Path "pages\guides" -Force
+New-Item -ItemType Directory -Path "pages\tools" -Force
+New-Item -ItemType Directory -Path "pages\features" -Force
+New-Item -ItemType Directory -Path "pages\main" -Force
+New-Item -ItemType Directory -Path "config" -Force
+New-Item -ItemType Directory -Path "docs\markdown" -Force
+New-Item -ItemType Directory -Path "docs\prd" -Force
+New-Item -ItemType Directory -Path "assets\js" -Force
+New-Item -ItemType Directory -Path "assets\images" -Force
+New-Item -ItemType Directory -Path "assets\downloads" -Force
+```
+
+### Déplacer les Fichiers
+
+```powershell
+# Pages Admin
+Move-Item "admin-announcements.html" "pages\admin\"
+Move-Item "admin-quiz.html" "pages\admin\"
+Move-Item "features.html" "pages\admin\"
+
+# Pages Guides
+Move-Item "guide_*.html" "pages\guides\"
+
+# Pages Tools
+Move-Item "cheat_sheet_*.html" "pages\tools\"
+Move-Item "exemple_us.html" "pages\tools\"
+
+# Pages Features (variantes par nombre d'équipes)
+Move-Item "features_2_equipes.html" "pages\features\"
+Move-Item "features_3_equipes.html" "pages\features\"
+Move-Item "features_4_equipes.html" "pages\features\"
+Move-Item "features_5_equipes.html" "pages\features\"
+
+# Pages Main
+Move-Item "index.html" "pages\main\"
+Move-Item "menu.html" "pages\main\"
+Move-Item "quiz.html" "pages\main\"
+Move-Item "project_timeline.html" "pages\main\"
+Move-Item "test_environment.html" "pages\main\"
+
+# Configuration
+Move-Item "credentials.json" "config\"
+Move-Item "announcements.json" "config\"
+Move-Item "quizzes.json" "config\"
+
+# Documentation MD
+Move-Item "README.md" "docs\markdown\"
+Move-Item "SECURITE.md" "docs\markdown\"
+Move-Item "ANNOUNCEMENTS_CAROUSEL_README.md" "docs\markdown\"
+Move-Item "GITHUB_API_SETUP.md" "docs\markdown\"
+
+# Documentation PRD
+Move-Item "project_restructuration.prd" "docs\prd\"
+Move-Item "quiz_feature.prd" "docs\prd\"
+Move-Item "Gabarit_Plan_automatisation.md" "docs\prd\"
+
+# Assets
+Move-Item "js\*" "assets\js\"
+Remove-Item "js" -Recurse
+Move-Item "images\*" "assets\images\"
+Remove-Item "images" -Recurse
+Move-Item "downloads\*" "assets\downloads\"
+Remove-Item "downloads" -Recurse
+```
+
+### Script de Validation des Liens
+
+```powershell
+# Script pour détecter les liens cassés
+$htmlFiles = Get-ChildItem -Path "pages" -Recurse -Filter "*.html"
+
+foreach ($file in $htmlFiles) {
+    $content = Get-Content $file.FullName -Raw
+    
+    # Vérifier les liens href
+    $links = [regex]::Matches($content, 'href="([^"]+)"')
+    foreach ($link in $links) {
+        $href = $link.Groups[1].Value
+        if ($href -notmatch '^http' -and $href -notmatch '^#') {
+            $fullPath = Join-Path $file.DirectoryName $href
+            if (-not (Test-Path $fullPath)) {
+                Write-Host "LIEN CASSÉ dans $($file.Name): $href" -ForegroundColor Red
+            }
+        }
+    }
+    
+    # Vérifier les scripts src
+    $scripts = [regex]::Matches($content, 'src="([^"]+\.js)"')
+    foreach ($script in $scripts) {
+        $src = $script.Groups[1].Value
+        $fullPath = Join-Path $file.DirectoryName $src
+        if (-not (Test-Path $fullPath)) {
+            Write-Host "SCRIPT MANQUANT dans $($file.Name): $src" -ForegroundColor Red
+        }
+    }
+}
+```
+
+---
+
+## 🔄 Rollback Plan
+
+En cas de problème majeur :
+
+```powershell
+# Revenir à l'état précédent
+git checkout master
+git branch -D refactor-structure
+
+# Ou annuler les derniers commits
+git reset --hard HEAD~1
+```
+
+---
+
+## 📚 Documentation à Mettre à Jour
+
+### `README.md`
+
+Ajouter une section "Structure du Projet" :
+
+```markdown
+## 📁 Structure du Projet
+
+```
+alfresco-project/
+├── pages/          # Pages HTML applicatives
+│   ├── admin/      # Administration
+│   ├── guides/     # Guides utilisateur
+│   ├── tools/      # Outils et références
+│   ├── features/   # Gestion des features
+│   └── main/       # Navigation principale
+├── config/         # Configuration JSON
+├── docs/           # Documentation
+│   ├── markdown/   # Documentation MD
+│   └── prd/        # PRD et spécifications
+├── assets/         # Ressources statiques
+│   ├── js/         # Scripts JavaScript
+│   ├── images/     # Images
+│   └── downloads/  # Fichiers téléchargeables
+└── ressources/     # Ressources pédagogiques
+```
+```
+
+---
+
+## 🎯 Prochaines Étapes
+
+### Immédiat (Après Approbation)
+1. ✅ Valider ce PRD avec l'équipe
+2. ✅ Choisir l'option de migration (complète ou progressive)
+3. ✅ Planifier une fenêtre de migration
+4. ✅ Créer la branche Git `refactor-structure`
+
+### Court Terme (Pendant la Migration)
+1. ✅ Exécuter le plan de migration choisi
+2. ✅ Effectuer les tests de la checklist
+3. ✅ Corriger les problèmes identifiés
+4. ✅ Mettre à jour la documentation
+
+### Moyen Terme (Après la Migration)
+1. ✅ Créer une Pull Request
+2. ✅ Faire une revue de code
+3. ✅ Merger vers `master`
+4. ✅ Communiquer les changements à l'équipe
+
+---
+
+## 💡 Recommandations
+
+### Meilleures Pratiques à Adopter
+
+1. **Convention de nommage** : Maintenir des noms cohérents (snake_case pour fichiers, kebab-case pour dossiers)
+2. **Documentation** : Toujours documenter les nouvelles pages dans le README
+3. **Tests** : Tester chaque nouvelle page avant de committer
+4. **Git** : Utiliser des branches pour toute nouvelle fonctionnalité
+5. **Chemins relatifs** : Privilégier les chemins relatifs pour la portabilité
+
+### Évolutions Futures Facilitées
+
+Avec cette nouvelle structure, il sera facile d'ajouter :
+- ✅ De nouveaux types de pages (ex: `pages/exercises/`)
+- ✅ De nouvelles catégories de guides
+- ✅ De nouveaux formats de documentation (ex: `docs/api/`)
+- ✅ Des assets supplémentaires (ex: `assets/fonts/`, `assets/css/`)
+
+---
+
+## 📞 Contacts et Support
+
+- **Responsable du projet** : À définir
+- **Questions techniques** : GitHub Issues
+- **Documentation** : Voir `docs/markdown/README.md`
+
+---
+
+## 📅 Historique des Versions
+
+| Version | Date | Auteur | Modifications |
+|---------|------|--------|---------------|
+| 1.0 | 9 nov 2025 | GitHub Copilot | Création initiale du PRD |
+| 1.1 | 10 nov 2025 | GitHub Copilot | Déplacement de `features.html` vers `pages/admin/` |
+
+---
+
+## ✍️ Signatures d'Approbation
+
+| Rôle | Nom | Date | Signature |
+|------|-----|------|-----------|
+| Chef de projet | | | |
+| Développeur principal | | | |
+| Testeur | | | |
+
+---
+
+**Fin du Document**
