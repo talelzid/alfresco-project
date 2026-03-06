@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Guide — Selenium WebDriver et Organisation de Projet — Structure, Configuration et Localisation
+    </title>
+    <!-- Script de protection d'accès - Vérification de l'authentification -->
+    <script src="../../assets/js/auth-guard.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg: #f4f7fa;
+        --card: #fff;
+        --muted: #6b7280;
+        --accent: #216ba5;
+        --accent-2: #1d77b8;
+        --radius: 12px;
+        --maxw: 1100px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system,
+          "Helvetica Neue", Arial;
+      }
+      body {
+        background: linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+        color: #222;
+        padding: 28px;
+        display: flex;
+        justify-content: center;
+      }
+      .wrap {
+        width: 100%;
+        max-width: var(--maxw);
+      }
+      header {
+        background: linear-gradient(
+          90deg,
+          rgba(33, 107, 165, 0.12),
+          rgba(29, 119, 184, 0.06)
+        );
+        padding: 20px 24px;
+        border-radius: calc(var(--radius) + 4px);
+        margin-bottom: 18px;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        border: 1px solid rgba(13, 66, 104, 0.06);
+      }
+      .logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 20px;
+        box-shadow: 0 6px 18px rgba(33, 107, 165, 0.12);
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        color: #083b5a;
+      }
+      p.lead {
+        margin: 2px 0 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        align-items: start;
+      }
+      .card {
+        background: var(--card);
+        padding: 22px;
+        border-radius: var(--radius);
+        box-shadow: 0 6px 20px rgba(20, 30, 40, 0.04);
+        border: 1px solid rgba(16, 24, 32, 0.03);
+      }
+      main.card {
+        padding: 26px;
+      }
+      aside.card {
+        position: sticky;
+        top: 20px;
+        padding: 22px;
+        height: fit-content;
+      }
+      h2 {
+        color: #0f3e5f;
+        margin-top: 0;
+        font-size: 18px;
+        border-bottom: 2px solid #e6edf4;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+      h3 {
+        color: #123d57;
+        margin-bottom: 8px;
+        margin-top: 20px;
+        font-size: 16px;
+      }
+      h4 {
+        color: #234556;
+        margin-bottom: 6px;
+        margin-top: 15px;
+        font-size: 14px;
+        font-weight: 600;
+      }
+      p,
+      li {
+        color: #233242;
+        line-height: 1.6;
+        font-size: 15px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      ul,
+      ol {
+        margin-left: 18px;
+        padding-left: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #e6edf4;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #f2f7fb;
+        color: #123d57;
+        font-weight: 600;
+      }
+      pre {
+        background: #f6fbff;
+        padding: 15px;
+        border-left: 4px solid var(--accent);
+        border-radius: 8px;
+        overflow: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          monospace;
+        font-size: 13px;
+        color: #0b3b57;
+        line-height: 1.5;
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+      code {
+        background: #e8f4f8;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          monospace;
+        font-size: 0.9em;
+        color: #0b3b57;
+      }
+      pre code {
+        background: transparent;
+        padding: 0;
+      }
+      .tip-box {
+        background: #e6f7ff;
+        border: 1px solid #b3e0ff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .tip-box h4 {
+        color: var(--accent);
+        margin: 0 0 5px 0;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tip-box p {
+        margin: 0;
+        font-size: 14px;
+      }
+      .warning-box {
+        background: #fff4e6;
+        border: 1px solid #ffd591;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .warning-box h4 {
+        color: #d46b08;
+        margin: 0 0 5px 0;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .list-unstyled {
+        list-style: none;
+        padding-left: 0;
+      }
+      .list-unstyled li {
+        margin-bottom: 8px;
+      }
+      .folder-tree {
+        background: #f9fafb;
+        border: 1px solid #e5e7eb;
+        padding: 15px;
+        border-radius: 8px;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          monospace;
+        font-size: 13px;
+        line-height: 1.8;
+      }
+      .folder-tree .folder {
+        color: #d97706;
+        font-weight: 600;
+      }
+      .folder-tree .file {
+        color: #059669;
+      }
+      footer {
+        margin-top: 25px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      @media (max-width: 1000px) {
+        .grid {
+          grid-template-columns: 1fr 320px;
+        }
+      }
+      @media (max-width: 860px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        aside.card {
+          order: 2;
+          position: static;
+        }
+      }
+      /* Lien Accueil */
+      .home-link {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        font-size: 0.95em;
+        font-weight: 600;
+        text-decoration: none;
+        color: #495057;
+        padding: 8px 15px;
+        border-radius: 20px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease-in-out;
+      }
+      .home-link:hover {
+        background-color: #e9ecef;
+        color: #007bff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+      }
+      @media screen and (max-width: 768px) {
+        .home-link {
+          font-size: 0.85em;
+          padding: 5px 10px;
+          top: 10px;
+          left: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../main/menu.html" class="home-link" title="Retour à la page d'accueil"
+      >🏠 Accueil</a
+    >
+    <div class="wrap" role="main" aria-labelledby="title">
+      <header>
+        <div class="logo" aria-hidden="true">WD</div>
+        <div>
+          <h1 id="title">Guide — Selenium WebDriver : Concepts Fondamentaux</h1>
+          <p class="lead">
+            Création de projet, structure recommandée, configuration avec config.properties et Locators.properties, stratégies de localisation d'éléments.
+          </p>
+        </div>
+      </header>
+
+      <div class="grid">
+        <main class="card" aria-label="Contenu du guide WebDriver">
+          <h2>Introduction à Selenium WebDriver</h2>
+          <p>
+            <strong>Selenium WebDriver</strong> est une collection open source d'API utilisée pour tester les applications web. 
+            L'outil Selenium WebDriver est utilisé pour automatiser les tests d'applications web afin de vérifier qu'elles 
+            fonctionnent comme prévu.
+          </p>
+          <p>
+            Il prend principalement en charge les navigateurs suivants : <code>Firefox</code>, <code>Chrome</code>, 
+            <code>Safari</code> et <code>Edge</code>, permettant d'exécuter des tests multi-navigateurs.
+          </p>
+
+          <h3>Langages Supportés par WebDriver</h3>
+          <p>WebDriver supporte plusieurs langages de programmation :</p>
+          <ul>
+            <li><strong>Java</strong> (plus utilisé sur le marché)</li>
+            <li><strong>Python</strong> (très populaire)</li>
+            <li>.NET</li>
+            <li>PHP</li>
+            <li>Perl</li>
+            <li>Ruby</li>
+          </ul>
+          <p>
+            Dans ce guide, nous utilisons <strong>WebDriver avec Java</strong> et <strong>IntelliJ IDEA</strong> comme IDE.
+          </p>
+
+          <h2>1. Structure Recommandée d'un Projet WebDriver</h2>
+          <p>
+            Une structure claire et modulaire est essentielle pour faciliter la maintenance et la 
+            collaboration. Voici l'architecture recommandée pour un projet Maven avec WebDriver et TestNG.
+          </p>
+
+          <table style="margin-top: 20px; margin-bottom: 20px;">
+            <thead>
+              <tr style="background: #e8f4f8; border-bottom: 2px solid var(--accent);">
+                <th style="padding: 12px; text-align: left; color: #083b5a; font-weight: 600;">Dossier / Fichier</th>
+                <th style="padding: 12px; text-align: left; color: #083b5a; font-weight: 600;">Rôle</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; background: #f9fafb; font-weight: 600;"><span style="color: #d97706;">📁 selenium-project/</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Racine du projet Maven</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 30px;"><span style="color: #d97706;">📁 src/test/java/</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Code source des tests (Java)</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 50px;"><span style="color: #d97706;">📁 config/</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;"><strong>Classes de configuration</strong></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 70px;"><span style="color: #059669;">📄 ConfigReader.java</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Charge et expose les paramètres de config.properties</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 50px;"><span style="color: #d97706;">📁 tests/</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;"><strong>Classes de tests</strong></td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 70px;"><span style="color: #059669;">📄 LoginTest.java</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Cas de test pour la fonctionnalité de login</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 30px;"><span style="color: #d97706;">📁 src/test/resources/</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Fichiers de configuration et données</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 50px;"><span style="color: #059669;">📄 config.properties</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Configuration (navigateur, URL, timeouts, credentials)</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; padding-left: 50px;"><span style="color: #059669;">📄 Locators.properties</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Tous les sélecteurs HTML (localisateurs d'éléments)</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; font-weight: 600;"><span style="color: #059669;">📄 pom.xml</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Dépendances du projet (Selenium, TestNG)</td>
+              </tr>
+              <tr>
+                <td style="padding: 10px; border: 1px solid #e6edf4; font-weight: 600;"><span style="color: #059669;">📄 testng.xml</span></td>
+                <td style="padding: 10px; border: 1px solid #e6edf4;">Configuration d'exécution des tests</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="tip-box">
+            <h4><i class="fas fa-info-circle"></i> Organisation Recommandée</h4>
+            <p>
+              Séparez clairement les <strong>classes de configuration</strong> (config/) 
+              des <strong>classes de tests</strong> (tests/). Cela rend le projet plus maintenable 
+              et facile à naviguer à mesure qu'il grandit.
+            </p>
+          </div>
+
+          <h2>2. Configuration du Projet Maven (pom.xml)</h2>
+          <p>
+            Pour utiliser Selenium WebDriver et TestNG, vous devez ajouter les dépendances nécessaires 
+            dans le fichier <code>pom.xml</code>.
+          </p>
+
+          <h3>Dépendances Essentielles</h3>
+          <pre>
+&lt;dependencies&gt;
+  &lt;!-- Selenium WebDriver --&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.seleniumhq.selenium&lt;/groupId&gt;
+    &lt;artifactId&gt;selenium-java&lt;/artifactId&gt;
+    &lt;version&gt;4.x.x&lt;/version&gt;
+  &lt;/dependency&gt;
+
+  &lt;!-- TestNG --&gt;
+  &lt;dependency&gt;
+    &lt;groupId&gt;org.testng&lt;/groupId&gt;
+    &lt;artifactId&gt;testng&lt;/artifactId&gt;
+    &lt;version&gt;7.x.x&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+  &lt;/dependency&gt;
+&lt;/dependencies&gt;
+</pre>
+
+          <h2>3. Le Fichier config.properties</h2>
+          <p>
+            Le fichier <code>config.properties</code>, placé dans <code>src/test/resources/</code>, 
+            permet de stocker les variables accessibles à toutes les classes. Il centralise la configuration 
+            de l'environnement de test (navigateur, URL, timeouts, credentials, etc.).
+          </p>
+
+          <h3>Exemple de config.properties</h3>
+          <pre>
+# Configuration du navigateur et de l'application
+browser=chrome
+base.url=https://demo.redmine.org
+
+# Credentials pour les tests
+test.username=admin
+test.password=admin123
+
+# Stratégies d'attente (en secondes)
+implicit.wait=20
+explicit.wait=30
+
+# Configuration des rapports
+screenshot.on.failure=true
+report.path=test-output/reports/
+</pre>
+
+          <p>
+            Cette centralisation permet de modifier facilement les paramètres sans toucher au code 
+            des tests (par exemple, changer l'URL ou les credentials sans recompiler).
+          </p>
+
+          <h3>Classe ConfigReader</h3>
+          <p>
+            La classe <code>ConfigReader</code> charge et expose les valeurs du fichier 
+            <code>config.properties</code> pour une utilisation dans tout le projet.
+          </p>
+
+          <pre>
+package config;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+public class ConfigReader {
+    private static Properties properties;
+    private static final String CONFIG_PATH = "src/test/resources/config.properties";
+
+    static {
+        try {
+            FileInputStream fis = new FileInputStream(CONFIG_PATH);
+            properties = new Properties();
+            properties.load(fis);
+            fis.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Impossible de charger config.properties");
+        }
+    }
+
+    public static String getProperty(String key) {
+        return properties.getProperty(key);
+    }
+
+    public static String getBaseUrl() {
+        return properties.getProperty("base.url");
+    }
+
+    public static String getBrowser() {
+        return properties.getProperty("browser");
+    }
+}
+</pre>
+
+          <h2>4. Le Fichier Locators.properties</h2>
+          <p>
+            Le fichier <code>Locators.properties</code>, placé dans <code>src/test/resources/</code>, 
+            centralise tous les localisateurs (sélecteurs) des éléments de l'interface utilisateur. 
+            Cette approche facilite grandement la maintenance : si un sélecteur change, il suffit 
+            de modifier ce fichier sans toucher aux classes de test.
+          </p>
+
+          <h3>Exemple de Locators.properties</h3>
+          <p>Pour une application type (ex: Redmine), les localisateurs pourraient être :</p>
+
+          <pre>
+# Page de Login
+login.username=username
+login.password=password
+login.button=login
+login.error=//div[@id='flash_error']
+
+# Page d'accueil
+home.admin_link=Administration
+home.projects_link=Projects
+home.logout_link=Déconnexion
+</pre>
+
+          <h3>Comment Structurer Locators.properties</h3>
+          <p>
+            Les clés doivent suivre une convention de nommage claire : 
+            <code>[page].[element]</code>
+          </p>
+          <ul>
+            <li><code>login.username</code> : élément username sur la page de login</li>
+            <li><code>login.password</code> : élément password sur la page de login</li>
+            <li><code>home.admin_link</code> : lien Administration sur la page d'accueil</li>
+          </ul>
+
+          <div class="tip-box">
+            <h4><i class="fas fa-lightbulb"></i> Avantage Principal</h4>
+            <p>
+              La séparation des localisateurs du code permet aux testeurs 
+              de maintenir les sélecteurs sans connaître la programmation Java.
+            </p>
+          </div>
+
+          <h2>5. Stratégies de Localisation d'Éléments</h2>
+          <p>
+            Avant de coder la méthode de test, il est nécessaire de préparer les localisateurs 
+            des éléments. <strong>L'instruction findElement de WebDriver</strong> permet de localiser 
+            un élément avec différentes stratégies.
+          </p>
+
+          <h3>Syntaxe Générale</h3>
+          <pre>
+driver.findElement(By.LocatorStrategy("LocatorValue"));
+</pre>
+
+          <h3>Les Stratégies de Localisation Disponibles</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Stratégie</th>
+                <th>Syntaxe</th>
+                <th>Exemple</th>
+                <th>Utilisation</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>id</strong></td>
+                <td><code>By.id()</code></td>
+                <td><code>By.id("username")</code></td>
+                <td>Localise par l'attribut <code>id</code> (recommandé si disponible)</td>
+              </tr>
+              <tr>
+                <td><strong>name</strong></td>
+                <td><code>By.name()</code></td>
+                <td><code>By.name("login")</code></td>
+                <td>Localise par l'attribut <code>name</code></td>
+              </tr>
+              <tr>
+                <td><strong>linkText</strong></td>
+                <td><code>By.linkText()</code></td>
+                <td><code>By.linkText("Administration")</code></td>
+                <td>Localise un lien par son texte exact</td>
+              </tr>
+              <tr>
+                <td><strong>cssSelector</strong></td>
+                <td><code>By.cssSelector()</code></td>
+                <td><code>By.cssSelector("input[type='submit']")</code></td>
+                <td>Utilise les sélecteurs CSS</td>
+              </tr>
+              <tr>
+                <td><strong>xpath</strong></td>
+                <td><code>By.xpath()</code></td>
+                <td><code>By.xpath("//button[@id='submit']")</code></td>
+                <td>Utilise XPath (très flexible mais plus lent)</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>5.1. Localisation par ID</h3>
+          <pre>
+driver.findElement(By.id("username")).sendKeys("admin");
+</pre>
+          <p>
+            C'est la stratégie la plus recommandée car l'ID doit être unique sur une page 
+            et est généralement stable.
+          </p>
+
+          <h3>5.2. Localisation par Name</h3>
+          <pre>
+driver.findElement(By.name("password")).sendKeys("password123");
+</pre>
+
+          <h3>5.3. Localisation par linkText</h3>
+          <pre>
+driver.findElement(By.linkText("Administration")).click();
+</pre>
+          <p>
+            Utilisé spécifiquement pour localiser un lien hypertexte avec son texte exact.
+          </p>
+
+          <h3>5.4. Localisation par CSS Selector</h3>
+          <pre>
+driver.findElement(By.cssSelector("input[type='submit']")).click();
+driver.findElement(By.cssSelector(".btn-primary")).click();
+driver.findElement(By.cssSelector("#submit-button")).click();
+</pre>
+
+          <h3>5.5. Localisation par XPath</h3>
+          <pre>
+driver.findElement(By.xpath("//input[@id='username']")).sendKeys("admin");
+driver.findElement(By.xpath("//button[text()='Login']")).click();
+driver.findElement(By.xpath("//a[contains(@href, 'administration')]")).click();
+</pre>
+          <p>
+            XPath est très flexible mais plus lent que les autres stratégies. À utiliser 
+            quand les autres méthodes ne suffisent pas.
+          </p>
+
+          <div class="warning-box">
+            <h4><i class="fas fa-exclamation-triangle"></i> Ordre de Préférence</h4>
+            <p>
+              <strong>1. ID</strong> (le plus recommandé) → 
+              <strong>2. Name</strong> → 
+              <strong>3. CSS Selector</strong> → 
+              <strong>4. XPath</strong> (dernier recours)
+            </p>
+          </div>
+
+          <h2>6. Exemple Complet : Test de Connexion</h2>
+          <p>
+            Voici un exemple complet d'une classe de test qui démontre l'utilisation 
+            de config.properties, Locators.properties et les stratégies de localisation.
+          </p>
+
+          <pre>
+package tests;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.By;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.*;
+import config.ConfigReader;
+import java.io.FileInputStream;
+import java.util.Properties;
+
+public class LoginTest {
+    private static WebDriver driver;
+    private static Properties locators;
+
+    @BeforeClass
+    public static void setUpBeforeClass() {
+        // Instancier le driver
+        driver = new ChromeDriver();
+        
+        // Charger le fichier Locators.properties
+        try {
+            FileInputStream fis = new FileInputStream(
+                "src/test/resources/Locators.properties"
+            );
+            locators = new Properties();
+            locators.load(fis);
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        
+        // Maximiser la fenêtre
+        driver.manage().window().maximize();
+        
+        // Fixer un timeout implicite de 20 secondes
+        driver.manage().timeouts().implicitlyWait(
+            java.time.Duration.ofSeconds(20)
+        );
+    }
+
+    @Test
+    public void testLogin() {
+        // Récupérer l'URL de base et les localisateurs
+        String baseUrl = ConfigReader.getBaseUrl();
+        String username = ConfigReader.getProperty("test.username");
+        String password = ConfigReader.getProperty("test.password");
+        
+        String usernameLoc = locators.getProperty("login.username");
+        String passwordLoc = locators.getProperty("login.password");
+        String buttonLoc = locators.getProperty("login.button");
+        
+        // Ouvrir l'application
+        driver.get(baseUrl);
+        
+        // Saisir le username
+        driver.findElement(By.id(usernameLoc)).sendKeys(username);
+        
+        // Saisir le password
+        driver.findElement(By.id(passwordLoc)).sendKeys(password);
+        
+        // Cliquer sur le bouton login
+        driver.findElement(By.name(buttonLoc)).click();
+        
+        // Naviguer vers Administration
+        driver.findElement(
+            By.linkText(locators.getProperty("home.admin_link"))
+        ).click();
+        
+        // Déconnexion
+        driver.findElement(
+            By.linkText(locators.getProperty("home.logout_link"))
+        ).click();
+    }
+
+    @AfterClass
+    public static void tearDownAfterClass() {
+        // Quitter le driver
+        driver.quit();
+    }
+}
+</pre>
+
+          <h2>7. Isolation des Tests</h2>
+          <p>
+            Il est important de décider si vos tests s'exécutent avec ou sans isolation :
+          </p>
+
+          <h3>Sans Isolation (SharedWebDriver)</h3>
+          <ul>
+            <li>✅ Avantage : Exécution plus rapide (un navigateur pour tous les tests)</li>
+            <li>❌ Inconvénient : Risque d'effets de bord entre les tests</li>
+          </ul>
+
+          <h3>Avec Isolation (IndividualDriver)</h3>
+          <ul>
+            <li>✅ Avantage : Tests totalement indépendants, plus robustes</li>
+            <li>❌ Inconvénient : Plus lent (relance du navigateur à chaque test)</li>
+          </ul>
+
+          <p>
+            Pour l'isolation, utilisez les annotations <code>@BeforeMethod</code> et 
+            <code>@AfterMethod</code> à la place de <code>@BeforeClass</code> et 
+            <code>@AfterClass</code>. Cela garantit qu'un nouveau driver est créé avant 
+            chaque test et fermé après.
+          </p>
+
+        </main>
+
+        <aside class="card" aria-label="Bonnes pratiques et résumé">
+          <h2>Bonnes Pratiques Essentielles</h2>
+          <ul class="list-unstyled" style="font-size: 14px; line-height: 1.6">
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Centraliser la configuration</strong> : Utilisez config.properties 
+              pour tous les paramètres.
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Centraliser les localisateurs</strong> : Utilisez Locators.properties 
+              pour tous les sélecteurs.
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Privilégier ID</strong> : Utilisez l'attribut ID en priorité 
+              s'il est disponible.
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Éviter les XPath absolus</strong> : Préférez les XPath relatifs 
+              et plus spécifiques.
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Nommage clair</strong> : Utilisez des conventions cohérentes 
+              pour les clés de config et locators.
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Timeouts appropriés</strong> : Définissez un timeout implicite 
+              pour éviter les délais d'attente trop longs.
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Isolation des tests</strong> : Décidez si vos tests doivent 
+              être isolés les uns des autres.
+            </li>
+          </ul>
+
+          <hr style="border: none; border-top: 1px solid #eef6fb; margin: 20px 0" />
+
+          <h2>Pré-requis Techniques</h2>
+          <ul style="font-size: 14px">
+            <li>Java JDK 11 ou supérieur</li>
+            <li>Maven 3.6+</li>
+            <li>IntelliJ IDEA Community Edition</li>
+            <li>Navigateur Chrome avec ChromeDriver</li>
+            <li>Selenium WebDriver 4.x</li>
+            <li>TestNG 7.x</li>
+          </ul>
+
+          <div class="tip-box" style="margin-top: 20px">
+            <h4><i class="fas fa-lightbulb"></i> Convention de Nommage</h4>
+            <p style="font-size: 13px">
+              Pour Locators.properties, utilisez toujours la convention 
+              <code>[pageName].[elementName]</code> pour une lisibilité optimale 
+              et une maintenance facile.
+            </p>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        <p>
+          &copy; Talel Zid | Version 1.0 — Mars 2026 | Guide WebDriver |<br />Usage
+          personnel ou éducatif.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>

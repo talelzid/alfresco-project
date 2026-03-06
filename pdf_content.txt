@@ -1,0 +1,1054 @@
+Nombre de pages: 68
+
+
+================================================================================
+--- PAGE 1 ---
+================================================================================
+AUTOMATISATION
+Webdriver : Concepts de base
+
+================================================================================
+--- PAGE 2 ---
+================================================================================
+Webdriver
+2
+Selenium Webdriver est une collection open source d'API utilisée pour
+
+tester les applications Web.
+L'outil Selenium Webdriver est utilisé pour automatiser les tests
+
+d'applications Web afin de vérifier qu'elles fonctionnent comme prévu ou
+non.
+Il prend principalement en charge les navigateurs comme Firefox, Chrome,
+
+Safari et Edge.
+Il permet également d'exécuter des tests multi-navigateurs.
+
+WebDriver permet également d'utiliser un langage de programmation pour
+
+créer des scripts de test (impossible dans Selenium IDE).
+
+================================================================================
+--- PAGE 3 ---
+================================================================================
+Webdriver
+3
+Les langages de programmation suivants sont pris en charge par WebDriver :
+
+Java
+
+.Net
+
+PHP
+
+Python
+
+Perl
+
+Rubis
+
+Il n’est pas nécessaire de tous les connaître. Il suffit d'en connaître un ou
+
+deux.
+Les plus utilisés sur le marché sont Java et Python.
+
+
+================================================================================
+--- PAGE 4 ---
+================================================================================
+Webdriver
+4
+Dans ce cours nous allons utiliser WebDriver avec Java comme langage et
+
+IntelliJ comme IDE.
+Téléchargez et installez la version Community d’IntelliJ.
+
+https://www.jetbrains.com/idea/download/?section=windows
+
+
+================================================================================
+--- PAGE 5 ---
+================================================================================
+Création du projet
+5
+Créer un nouveau projet Java de type Maven :
+
+
+================================================================================
+--- PAGE 6 ---
+================================================================================
+Configuration du projet
+6
+Ajouter les 3 dépendances suivantes dans le fichier pom.xml :
+
+
+================================================================================
+--- PAGE 7 ---
+================================================================================
+Création de la classe Java
+7
+Créer une classe Java dans src/main/java :
+
+
+================================================================================
+--- PAGE 8 ---
+================================================================================
+Création de la classe de test
+8
+Créer une classe de tests comme suit :
+
+
+================================================================================
+--- PAGE 9 ---
+================================================================================
+Création de la classe de test
+9
+Créer une classe de tests comme suit :
+
+
+================================================================================
+--- PAGE 10 ---
+================================================================================
+Création d’un fichier locators
+10
+Créer un fichier nommé Locators.properties dans le dossier src/test/java :
+
+
+================================================================================
+--- PAGE 11 ---
+================================================================================
+Création d’un fichier config
+11
+Créer un fichier nommé config.properties dans le dossier src/test/resources.
+
+Ce fichier permet de stocker les variables accessibles à toutes les classes.
+
+
+================================================================================
+--- PAGE 12 ---
+================================================================================
+Création de la classe ConfigReader
+12
+Créer un package nommé config dans le dossier src/test/java.
+
+Créer une classe nommée ConfigReader permettant de lire le fichier
+
+config.properties.
+
+================================================================================
+--- PAGE 13 ---
+================================================================================
+Création des localisateurs
+13
+Avant de coder la méthode de test, on commence par préparer les
+
+localisateurs dans le fichier Locators.properties :
+Nous avons 6 localisateurs :
+
+La zone username
+
+La zone password
+
+Le bouton connexion
+
+Le lien Administration
+
+Le lien Project
+
+Le lien Déconnexion
+
+
+================================================================================
+--- PAGE 14 ---
+================================================================================
+Structure du projet
+14
+
+================================================================================
+--- PAGE 15 ---
+================================================================================
+Création d'une classe de test
+15
+Nous allons commencer par créer une classe de test et instancier les objets
+
+nécessaires au test et les variables.
+La ligne 20 permet de créer
+un objet WebDriver. On va
+l’appeler driver.
+La ligne 21 permet de créer
+un objet de type Properties.
+Le reste des lignes permettent de créer les
+On va le nommer locators.
+variables pour la connexion et les critères de
+succès.
+
+================================================================================
+--- PAGE 16 ---
+================================================================================
+Création de la méthode SetUpBeforeClass()
+16
+La méthode SetUpBeforeClass() s’exécute avant toutes les méthodes de test :
+
+Ligne 32 : Instancie le driver comme étant de type ChromeDriver.
+
+Ligne 33 : Indique le chemin d’accès relatif du fichier Locators.properties
+
+Ligne 34 : Charge le fichier pour récupérer le contenu.
+
+Ligne 35 : Maximise la fenêtre du navigateur.
+
+Ligne 36 : Fixe un timeout de 20 secondes.
+
+
+================================================================================
+--- PAGE 17 ---
+================================================================================
+Création de la méthode TearDownAfterClass()
+17
+La méthode TearDownAfterClass() s’exécute après toutes les méthodes de
+
+test :
+Ligne 41 : Quitter l’objet driver et arrêter ainsi le test.
+
+
+================================================================================
+--- PAGE 18 ---
+================================================================================
+Création de la première méthode de test
+18
+La première méthode de test permet de se connecter à l’application Redmine.
+
+Voici la structure de la méthode de test.
+
+
+================================================================================
+--- PAGE 19 ---
+================================================================================
+Création de la première méthode de test
+19
+Dans la méthode de test on commence par préparer les variables :
+
+Les lignes 46 à 50 : Déclaration des variables pour la récupération des localisateurs.
+
+
+================================================================================
+--- PAGE 20 ---
+================================================================================
+Création de la première méthode de test
+20
+Dans la suite de la méthode on programme les actions :
+
+Ligne 52 : Ouverture du navigateur avec l’adresse url stockée dans la variable.
+
+Lignes 53 et 54 : Saisie du login et du mot de passe.
+
+Ligne 55 : Click sur le bouton Connexion.
+
+Ligne 56 : Navigation vers la page d'administration.
+
+Ligne 57 : Déconnexion.
+
+
+================================================================================
+--- PAGE 21 ---
+================================================================================
+Création de la première méthode de test
+21
+La méthode est prête pour l’exécution :
+
+
+================================================================================
+--- PAGE 22 ---
+================================================================================
+Localiser un élément : findElement
+22
+L’instruction findElement de Webdriver permet de localiser un élément avec
+
+différentes méthodes.
+Syntaxe :
+
+driver.findElement(By.LocatorStrategy("LocatorValue"));
+
+Stratégie de localisation :
+
+driver.findElement(By.id ("id"))
+
+driver.findElement(By.name("name"))
+
+driver.findElement(By.linkText("linkText"))
+
+driver.findElement(By.cssSelector("cssSelector"))
+
+driver.findElement(By.xpath("xPath"))
+
+
+================================================================================
+--- PAGE 23 ---
+================================================================================
+Stratégie de localisation
+23
+Stratégie de localisation basée sur le id:
+
+driver.findElement(By.id ("id"))
+
+
+================================================================================
+--- PAGE 24 ---
+================================================================================
+Stratégie de localisation
+24
+Stratégie de localisation basée sur le name :
+
+driver.findElement(By.name("name"))
+
+
+================================================================================
+--- PAGE 25 ---
+================================================================================
+Stratégie de localisation
+25
+Stratégie de localisation sur le linkText :
+
+driver.findElement(By.linkText("linkText"))
+
+
+================================================================================
+--- PAGE 26 ---
+================================================================================
+Stratégie de localisation
+26
+Stratégie de localisation basée sur le sélecteur CSS :
+
+driver.findElement(By.cssSelector("cssSelector"))
+
+
+================================================================================
+--- PAGE 27 ---
+================================================================================
+Stratégie de localisation
+27
+Stratégie de localisation basée sur le Xpath:
+
+driver.findElement(By.xpath("Xpath"))
+
+
+================================================================================
+--- PAGE 28 ---
+================================================================================
+Les actions dans Selenuim Webdriver
+28
+Selenium Webdriver propose plusieurs actions afin de simuler les actions
+
+manuelles d’un utilisateur sur une interface web.
+Syntaxe :
+
+driver.findElement(By.LocatorStrategy("LocatorValue")).action
+Ces actions peuvent être classées en trois grandes catégories :
+
+Les actions de la souris
+
+Les actions du clavier
+
+Les actions avec perform (la classe Actions)
+
+
+================================================================================
+--- PAGE 29 ---
+================================================================================
+Les actions de la souris
+29
+click() : Cette action permet de cliquer sur toute sorte d’élément cliquable
+
+d’une interface web.
+Bouton
+
+Lien hypertexte
+
+Case à cocher
+
+Bouton radio
+
+Onglet
+
+Liste déroulante
+
+
+================================================================================
+--- PAGE 30 ---
+================================================================================
+Les actions de la souris
+30
+doubleClick(): Permet d’effectuer un double clic sur un élément d’une
+
+interface web.
+C’est une action très peu utilisée en raison de la rareté d’éléments
+
+nécessitant un double clic sur les applications web.
+Elle nécessite un argument :
+
+Le localisateur de l’élément ciblé par le double clic.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 31 ---
+================================================================================
+Les actions de la souris
+31
+clickAndHold(): Permet de réaliser un clic prolongé sur le bouton de la souris
+
+sans le relâcher.
+Cette action permet de préparer le déplacement d’un élément d’un
+
+conteneur à un autre.
+Elle nécessite un argument :
+
+Le localisateur de l’élément ciblé par le clic.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 32 ---
+================================================================================
+Les actions de la souris
+32
+dragAndDrop(): Cette action permet de déplacer un élément de son
+
+emplacement d’origine vers une destination.
+Elle nécessite deux arguments :
+
+Le localisateur de l’élément à déplacer.
+
+Le localisateur de la zone cible.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 33 ---
+================================================================================
+Les actions de la souris
+33
+dragAndDropBy(): Cette action permet de déplacer un élément de son
+
+emplacement d’origine vers une destination indiquée par des coordonnées.
+Elle nécessite trois arguments :
+
+Le localisateur de l’élément à déplacer.
+
+Les coordonnées x en pixels de l’emplacement cible.
+
+Les coordonnées y en pixels de l’emplacement cible.
+
+Quelques précisions concernant x et y :
+
+Lorsque x est positif le mouvement est effectué vers la droite.
+
+Lorsque x est négatif le mouvement est effectué vers la gauche.
+
+Lorsque y est positif le mouvement est effectué vers le haut.
+
+Lorsque y est négatif le mouvement est effectué vers le bas.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 34 ---
+================================================================================
+Les actions de la souris
+34
+dragAndDropBy() :
+
+Dans cet exemple le déplacement est fait vers la droite et vers le haut.
+
+
+================================================================================
+--- PAGE 35 ---
+================================================================================
+Les actions de la souris
+35
+moveToElement(): cette action permet de déplacer le curseur de la souris
+
+vers le centre de l’élément.
+Elle permet de simuler une action de type drag and drop.
+
+Elle nécessite un argument :
+
+Le localisateur de l’élément ciblé par le mouvement de la souris.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 36 ---
+================================================================================
+Les actions de la souris
+36
+contextClick(): Cette action permet d’effectuer un clic droit de la souris.
+
+Elle permet d’afficher le menu contextuel lié à un élément de l’interface web
+
+testée.
+Elle nécessite un argument :
+
+Le localisateur de l’élément ciblé par le clic.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 37 ---
+================================================================================
+Les actions de la souris
+37
+moveByOffset(int xOffset, int yOffset) : Cette action permet de déplacer le
+
+curseur de la souris de sa position courante vers une autre position indiquée
+par des coordonnées.
+Elle nécessite deux arguments :
+
+Les coordonnées x en pixels de l’emplacement cible.
+
+Les coordonnées y en pixels de l’emplacement cible.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 38 ---
+================================================================================
+Les actions de la souris
+38
+scrollToElement(WebElement element) : Cette action permet de défiler la
+
+barre (scroll) vers un élément cible.
+Elle nécessite un argument :
+
+Le localisateur de l’élément ciblé par le défilement.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 39 ---
+================================================================================
+Les actions de la souris
+39
+selectByVisibleText(WebElement element) : Permet de sélectionner un
+
+élément dans une liste. La sélection se fait avec le texte affiché dans la liste.
+Elle nécessite un argument :
+
+Le texte de l’élément à sélectionner.
+
+Cette action nécessite d’abord la localisation de la liste.
+
+Deux autres méthodes sont également disponibles pour la sélection :
+
+selectByValue
+
+selectByIndex
+
+
+================================================================================
+--- PAGE 40 ---
+================================================================================
+Les actions du clavier
+40
+sendKeys(): Cette action permet d’envoyer un ensemble d’entrées clavier à
+
+l’élément visé.
+Elle est notamment utile pour la saisie de données dans un formulaire
+
+contenant des zones de saisie.
+Cette action nécessite un argument : une valeur en dur ou une variable
+
+contenant la valeur à saisir.
+
+================================================================================
+--- PAGE 41 ---
+================================================================================
+Les actions du clavier
+41
+keyDown(): Cette action permet d’appuyer sur une touche du clavier sans la
+
+relâcher.
+Elle nécessite un argument :
+
+La touche du clavier qu’on souhaite activer.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 42 ---
+================================================================================
+Les actions du clavier
+42
+keyUp(): Cette action permet de relâcher une touche.
+
+Elle nécessite un argument :
+
+La touche du clavier qu’on souhaite relâcher.
+
+Cette action utilise la classe Actions et la méthode perform().
+
+
+================================================================================
+--- PAGE 43 ---
+================================================================================
+Exercice
+43
+Écrire une méthode simple avec 3 arguments : url, login, pw. La méthode doit permettre
+
+d'effectuer le login.
+Écrire une méthode simple permettant d'effectuer un logout.
+
+Écrire une méthode qui permet de définir le nombre maximum d’heures pouvant être
+
+saisies par un utilisateur sur un jour, La méthode doit accepter un argument de type entier.
+
+================================================================================
+--- PAGE 44 ---
+================================================================================
+Exercice
+44
+Créer une nouvelle méthode de test qui appelle les 3 méthodes :
+
+login
+
+configurerMaxHeures
+
+logout
+
+
+================================================================================
+--- PAGE 45 ---
+================================================================================
+Exercice
+45
+La classe obtenue contient au final deux méthodes de tests.
+
+La méthode redmine_LoginLogout
+
+La méthode TC1
+
+L'exécution de toute la classe montre que les deux méthodes s'exécutent dans la même
+
+instance du navigateur.
+C'est ce qu'on appelle une exécution sans isolation.
+
+Il est possible aussi d'exécuter les 2 méthodes avec isolation.
+
+
+================================================================================
+--- PAGE 46 ---
+================================================================================
+Exécution avec VS sans isolation
+46
+Dans une exécution sans isolation, toutes les méthodes de la classe
+
+s'exécutent dans la même instance du navigateur :
+Avantages :
+
+Le navigateur est lancé une seule fois, l'exécution est donc plus rapide. Convient lorsque le
+◼
+nombre de tests est grand.
+Moins de consommation de ressources.
+◼
+Inconvénients :
+
+Tous les tests partagent la même instance → risques d’effets de bord (ex. état laissé par un
+◼
+test qui perturbe le suivant).
+Plus difficile de déboguer un test isolé.
+◼
+Si un test fait planter le navigateur, toute la suite est impactée.
+◼
+
+================================================================================
+--- PAGE 47 ---
+================================================================================
+Exécution avec VS sans isolation
+47
+Dans une exécution avec isolation, chaque méthode de la classe s'exécute
+
+dans une instance séparée du navigateur :
+Avantages :
+
+Chaque test est totalement indépendant.
+◼
+Pas de pollution d’état entre les tests.
+◼
+Plus robuste si un test échoue ou plante.
+◼
+Inconvénients :
+
+Plus lent (le navigateur est relancé pour chaque test).
+◼
+Peut consommer plus de ressources (surtout avec de nombreux tests et plusieurs
+◼
+navigateurs).
+
+================================================================================
+--- PAGE 48 ---
+================================================================================
+Tests avec isolation
+48
+Nous allons transformer la classe pour créer des tests avec isolation :
+
+Créer une copie de la classe précédente.
+
+Limiter le rôle de la méthode BeforeAll à la préparation du fichier des localisateurs :
+
+Vider la méthode AfterAll.
+
+
+================================================================================
+--- PAGE 49 ---
+================================================================================
+Tests avec isolation
+49
+Ajout des méthodes BeforeEach et AfterEach :
+
+La méthode BeforeEach doit instancier le driver avant chaque méthode de test.
+
+La méthode AfterEach doit fermer le navigateur après chaque méthode de test.
+
+
+================================================================================
+--- PAGE 50 ---
+================================================================================
+Les actions de type wait
+50
+Webdriver propose trois stratégies d’attente dans un script afin d’éviter les
+
+arrêts causés par la lenteur de chargement :
+La stratégie de type Implicit Wait
+
+La stratégie de type Explicit Wait
+
+La stratégie de type Fluent Wait
+
+Chacune de ces stratégies propose un mécanisme et un fonctionnement
+
+différent.
+
+================================================================================
+--- PAGE 51 ---
+================================================================================
+Les actions de type wait
+51
+La stratégie de type Implicit Wait avec timeouts :
+
+Dans cette stratégie Selenium webdriver attend un certain temps avant de lever une
+
+exception.
+Une fois la commande exécutée, l'attente implicite reste active pendant toute la durée
+
+d'ouverture du navigateur.
+Le paramètre par défaut est 0 et le temps d'attente spécifique doit être défini par la
+
+syntaxe suivante.
+Un seul Implicit Wait est nécessaire pour toutes les actions d'une méthode.
+
+Il est possible aussi de positionner le Implicit Wait dans la méthode setUpBeforeClass.
+
+
+================================================================================
+--- PAGE 52 ---
+================================================================================
+Les actions de type wait
+52
+La stratégie de type Explicit Wait :
+
+En utilisant une commande de type Explicit Wait, WebDriver est invité à attendre
+
+qu'une certaine condition se produise avant de procéder à l'exécution du code.
+La définition d'une attente explicite est importante dans les cas où certains éléments
+
+prennent naturellement plus de temps à se charger.
+L'attente explicite est plus spécifique que l’attente implicite.
+
+Cependant, elle ne peut être appliquée que pour des éléments spécifiés.
+
+
+================================================================================
+--- PAGE 53 ---
+================================================================================
+Les actions de type wait
+53
+La stratégie de type Explicit Wait : presenceOfAllElementsLocatedBy()
+
+
+presenceOfElementLocated()
+Voici quelque unes des conditions 
+
+textToBePresentInElement()
+pouvant être utilisés avec un Explicit 
+Wait : textToBePresentInElementLocated()
+
+textToBePresentInElementValue()
+alertIsPresent() 
+
+visibilityOf()
+elementSelectionStateToBe() 
+
+visibilityOfAllElements()
+elementToBeClickable() 
+
+visibilityOfAllElementsLocatedBy()
+elementToBeSelected() 
+
+visibilityOfElementLocated()
+frameToBeAvaliableAndSwitchToIt() 
+
+invisibilityOfTheElementLocated()
+
+invisibilityOfElementWithText()
+
+
+================================================================================
+--- PAGE 54 ---
+================================================================================
+Les actions de type wait
+54
+La stratégie de type Fluent Wait :
+
+Cette stratégie marque le temps maximum pendant lequel Selenium WebDriver attend
+
+qu'une certaine condition (élément Web) devienne visible.
+Il définit également la fréquence à laquelle WebDriver vérifiera si la condition apparaît.
+
+Fluent Wait recherche un élément Web à plusieurs reprises à intervalles réguliers
+
+jusqu'à ce que le délai expire ou jusqu'à ce que l'objet soit trouvé.
+Les attentes fluides sont aussi parfois appelées attentes intelligentes car elles
+
+n'attendent pas toute la durée définie dans le code. Au lieu de cela, le test continue de
+s'exécuter dès que l'élément est détecté.
+
+================================================================================
+--- PAGE 55 ---
+================================================================================
+Les actions de type wait
+55
+La stratégie de type Fluent Wait :
+
+Exemple d’utilisation :
+
+
+================================================================================
+--- PAGE 56 ---
+================================================================================
+Les assertions
+56
+Selenium webdriver propose deux types d’assertions :
+
+Hard assert :
+
+Soft assert
+
+False Hard True False Soft True
+assert assert
+L’exécution du L’exécution du L’exécution du L’exécution du
+script s’arrête script continue script continue script continue
+
+================================================================================
+--- PAGE 57 ---
+================================================================================
+Les assertions
+57
+Hard assert :
+
+Hard Assert est une technique utilisée dans les tests logiciels pour vérifier si une
+
+certaine condition est vraie ou non.
+Lorsqu'une instruction de type hard assert est exécutée, elle compare le résultat
+
+obtenu d'un test avec le résultat attendu.
+Si les deux résultats correspondent, l'instruction assert réussit et le test continue.
+
+Si le résultat obtenu ne correspond pas au résultat attendu, l'instruction assert échoue
+
+et le test est interrompu.
+La suite du test est ignorée et le test est marqué comme ayant échoué.
+
+
+================================================================================
+--- PAGE 58 ---
+================================================================================
+Hard Assertions
+58
+assertEquals() :
+
+C’est une méthode qui prend un minimum de 2 arguments et compare les résultats
+
+obtenus aux résultats attendus.
+Si les deux correspondent, l’assertion est réussie et le cas de test est marqué comme
+
+réussi.
+assertEquals() peut comparer des chaînes, des entiers, des doubles et bien d'autres
+
+variables, comme le montre l'image ci-dessous.
+
+================================================================================
+--- PAGE 59 ---
+================================================================================
+Hard Assertions
+59
+assertNotEquals() :
+
+C’est une méthode qui fait le contraire de la méthode assertEquals().
+
+La méthode compare les résultats obtenu et attendu et la condition d'assertion est
+
+remplie si les deux ne sont pas identiques.
+Le cas de test est marqué comme réussi si les résultats obtenu et attendu ne sont pas
+
+les mêmes.
+
+================================================================================
+--- PAGE 60 ---
+================================================================================
+Hard Assertions
+60
+assertTrue():
+
+Cette assertion vérifie la valeur booléenne renvoyée par la condition.
+
+Si la valeur booléenne est vraie, l'assertion réussit.
+
+
+================================================================================
+--- PAGE 61 ---
+================================================================================
+Hard Assertions
+61
+assertFalse():
+
+Cette méthode fonctionne à l'opposé de assertTrue().
+
+L'assertion vérifie la valeur booléenne renvoyée par la condition.
+
+Si la valeur booléenne est fausse, l'assertion réussit.
+
+
+================================================================================
+--- PAGE 62 ---
+================================================================================
+Hard Assertions
+62
+assertNull():
+
+Cette méthode vérifie si la sortie attendue est nulle. Sinon, la valeur renvoyée est un
+
+échec.
+
+================================================================================
+--- PAGE 63 ---
+================================================================================
+Hard Assertions
+63
+assertNotNull():
+
+Cette méthode fonctionne à l'opposé de la méthode assertNull().
+
+La condition d'assertion est remplie lorsque la méthode valide que le résultat attendu
+
+n'est pas nul.
+
+================================================================================
+--- PAGE 64 ---
+================================================================================
+Les assertions
+64
+Soft assert :
+
+Soft Assert est une technique utilisée dans les tests logiciels pour vérifier si une
+
+certaine condition est vraie ou non sans interrompre le test.
+Lorsqu'une instruction de type soft assert est exécutée, elle compare le résultat obtenu
+
+d'un test avec le résultat attendu.
+Si les deux résultats correspondent, l'instruction assert réussit et le test continue.
+
+Si le résultat obtenu ne correspond pas au résultat attendu, l'instruction assert échoue
+
+mais le test continu.
+La suite du test continu de s'exécuter.
+
+
+================================================================================
+--- PAGE 65 ---
+================================================================================
+Soft Assertions
+65
+Les assertions de cette catégorie sont les mêmes utilisées dans la technique
+
+Hard Assertion.
+La principale différence réside dans l’instanciation : L’objet instancié pour
+
+gérer ces assertions est de type SoftAssert.
+Pour utiliser le type SoftAssert, il est nécessaire d’ajouter TestNG au projet à
+
+travers le pom.xml.
+• softAssert.assertEquals
+• softAssert.assertNotEquals
+• softAssert.assertNull
+• softAssert.assertNotNull
+• softAssert.assertTrue
+• softAssert.assertFalse
+
+================================================================================
+--- PAGE 66 ---
+================================================================================
+Soft Assertions
+66
+Dans cet exemple, la ligne 59 permet d’instancier l’objet softAssert.
+
+La ligne 63 permet de lancer un softAssert de type assertEquals.
+
+Si l’assertion échoue, la ligne 64 sera tout de même exécutée.
+
+Cependant, le résultat du test signale un succès et le log ne contient aucune
+
+trace de l’échec de l’assertion.
+
+================================================================================
+--- PAGE 67 ---
+================================================================================
+Soft Assertions
+67
+Afin de forcer le script à garder une trace de l’échec de l’assertion dans le
+
+log, il faut ajouter un assertAll() à la fin du script.
+En cas d’échec d’une assertion de type Soft, le test est déclaré en échec et le
+
+log contiendra la trace de l’erreur.
+
+================================================================================
+--- PAGE 68 ---
+================================================================================
+Exercice
+68
+Reprendre l’exercice précédent et ajouter les éléments suivants :
+
+Une vérification du titre de la page d’accueil juste après la connexion en utilisant
+
+assertEquals.
+Une vérification du titre de la page d’administration juste après le clic sur le lien
+
+administration en utilisant assertEquals.
+Une vérification du titre de la page de configuration juste après le clic sur le lien
+
+Configuration en utilisant assertEquals.
+Une vérification de l’affichage du message de succès juste après le clic sur le bouton
+
+Sauvegarder en utilisant un Soft Assert.
+Une vérification de la valeur saisie et affichée dans la zone de texte en utilisant
+
+assertEquals.
