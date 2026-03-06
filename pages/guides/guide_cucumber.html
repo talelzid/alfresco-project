@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>
+      Guide — Framework Cucumber pour le BDD — Tests comportementaux
+    </title>
+    <!-- Script de protection d'accès - Vérification de l'authentification -->
+    <script src="js/auth-guard.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg: #f4f7fa;
+        --card: #fff;
+        --muted: #6b7280;
+        --accent: #216ba5;
+        --accent-2: #1d77b8;
+        --radius: 12px;
+        --maxw: 1100px;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system,
+          "Helvetica Neue", Arial;
+      }
+      body {
+        background: linear-gradient(180deg, #f7fbff 0%, var(--bg) 100%);
+        color: #222;
+        padding: 28px;
+        display: flex;
+        justify-content: center;
+      }
+      .wrap {
+        width: 100%;
+        max-width: var(--maxw);
+      }
+      header {
+        background: linear-gradient(
+          90deg,
+          rgba(33, 107, 165, 0.12),
+          rgba(29, 119, 184, 0.06)
+        );
+        padding: 20px 24px;
+        border-radius: calc(var(--radius) + 4px);
+        margin-bottom: 18px;
+        display: flex;
+        gap: 18px;
+        align-items: center;
+        border: 1px solid rgba(13, 66, 104, 0.06);
+      }
+      .logo {
+        width: 64px;
+        height: 64px;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #23d96a, #1ab759);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 20px;
+        box-shadow: 0 6px 18px rgba(26, 183, 89, 0.18);
+      }
+      h1 {
+        margin: 0;
+        font-size: 20px;
+        color: #083b5a;
+      }
+      p.lead {
+        margin: 2px 0 0 0;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .grid {
+        display: grid;
+        /* Deux colonnes : principal (2/3) et sidebar (1/3) */
+        grid-template-columns: 2fr 1fr;
+        gap: 20px;
+        align-items: start;
+      }
+      .card {
+        background: var(--card);
+        padding: 22px;
+        border-radius: var(--radius);
+        box-shadow: 0 6px 20px rgba(20, 30, 40, 0.04);
+        border: 1px solid rgba(16, 24, 32, 0.03);
+      }
+      main.card {
+        padding: 26px;
+      }
+      aside.card {
+        position: sticky; /* Pour garder l'aside visible en haut */
+        top: 20px;
+        padding: 22px;
+        height: fit-content;
+      }
+      h2 {
+        color: #0f3e5f;
+        margin-top: 0;
+        font-size: 18px;
+        border-bottom: 2px solid #e6edf4;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+      h3 {
+        color: #123d57;
+        margin-bottom: 8px;
+        margin-top: 20px;
+        font-size: 16px;
+      }
+      p,
+      li {
+        color: #233242;
+        line-height: 1.6;
+        font-size: 15px;
+      }
+      .muted {
+        color: var(--muted);
+        font-size: 13px;
+      }
+      ul,
+      ol {
+        margin-left: 18px;
+        padding-left: 0;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        font-size: 14px;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #e6edf4;
+        text-align: left;
+        vertical-align: top;
+      }
+      th {
+        background: #f2f7fb;
+        color: #123d57;
+        font-weight: 600;
+      }
+      pre {
+        background: #f6fbff;
+        padding: 15px;
+        border-left: 4px solid var(--accent);
+        border-radius: 8px;
+        overflow: auto;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono",
+          monospace;
+        font-size: 13px;
+        color: #0b3b57;
+        line-height: 1.5;
+        margin-top: 15px;
+        margin-bottom: 20px;
+      }
+      .tip-box {
+        background: #e6f7ff;
+        border: 1px solid #b3e0ff;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .tip-box h4 {
+        color: var(--accent);
+        margin: 0 0 5px 0;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .tip-box p {
+        margin: 0;
+        font-size: 14px;
+      }
+      .list-unstyled {
+        list-style: none;
+        padding-left: 0;
+      }
+      .list-unstyled li {
+        margin-bottom: 8px;
+      }
+      .warning-box {
+        background: #fff3cd;
+        border: 1px solid #ffc107;
+        padding: 15px;
+        border-radius: 8px;
+        margin-top: 20px;
+      }
+      .warning-box h4 {
+        color: #856404;
+        margin: 0 0 5px 0;
+        font-size: 15px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .warning-box p {
+        margin: 0;
+        font-size: 14px;
+        color: #664d03;
+      }
+
+      footer {
+        margin-top: 25px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      @media (max-width: 1000px) {
+        .grid {
+          grid-template-columns: 1fr 320px;
+        }
+      }
+      @media (max-width: 860px) {
+        .grid {
+          grid-template-columns: 1fr;
+        }
+        aside.card {
+          order: 2;
+          position: static; /* Retire sticky sur mobile */
+        }
+      }
+      /* Lien Accueil */
+      .home-link {
+        position: fixed;
+        top: 20px;
+        left: 20px;
+        z-index: 1000;
+        font-size: 0.95em;
+        font-weight: 600;
+        text-decoration: none;
+        color: #495057;
+        padding: 8px 15px;
+        border-radius: 20px;
+        background-color: #f8f9fa;
+        border: 1px solid #dee2e6;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.2s ease-in-out;
+      }
+      .home-link:hover {
+        background-color: #e9ecef;
+        color: #007bff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        transform: translateY(-1px);
+      }
+      @media screen and (max-width: 768px) {
+        .home-link {
+          font-size: 0.85em;
+          padding: 5px 10px;
+          top: 10px;
+          left: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a href="../main/menu.html" class="home-link" title="Retour à la page d'accueil"
+      >🏠 Accueil</a
+    >
+    <div class="wrap" role="main" aria-labelledby="title">
+      <header>
+        <div class="logo" aria-hidden="true">🥒</div>
+        <div>
+          <h1 id="title">Guide — Framework Cucumber pour le BDD</h1>
+          <p class="lead">
+            Automatisation des tests comportementaux avec Cucumber, Gherkin et les Step Definitions.
+          </p>
+        </div>
+      </header>
+
+      <div class="grid">
+        <main class="card" aria-label="Contenu du guide Cucumber">
+          <h2>Introduction au Behavior-Driven Development (BDD)</h2>
+          <p>
+            Le <strong>BDD (Behavior-Driven Development)</strong> est une méthodologie qui encourage 
+            la collaboration entre développeurs, testeurs et parties prenantes non techniques. 
+            L'objectif est de créer une <strong>compréhension commune</strong> du comportement 
+            attendu d'un système avant son implémentation.
+          </p>
+          <p>
+            <strong>Cucumber</strong> est un framework open-source qui facilite le BDD en permettant 
+            d'écrire des tests dans un langage naturel (Gherkin) qui peut être lu et compris par tous 
+            les membres de l'équipe.
+          </p>
+
+          <h3>Pourquoi utiliser Cucumber ?</h3>
+          <ul>
+            <li><strong>Documentation vivante</strong> : Les scénarios Gherkin servent de documentation toujours à jour</li>
+            <li><strong>Collaboration améliorée</strong> : Langage commun entre l'équipe technique et métier</li>
+            <li><strong>Tests automatisés</strong> : Exécution automatique des scénarios via le code</li>
+            <li><strong>Traçabilité</strong> : Lien direct entre exigences métier et tests</li>
+          </ul>
+
+          <h2>Architecture de Cucumber</h2>
+          <p>
+            Cucumber suit une architecture en trois couches qui sépare les responsabilités :
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Composant</th>
+                <th>Rôle</th>
+                <th>Format</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Feature Files</strong></td>
+                <td>Fichiers contenant les scénarios de test écrits en Gherkin</td>
+                <td><code>.feature</code></td>
+              </tr>
+              <tr>
+                <td><strong>Step Definitions</strong></td>
+                <td>Code qui implémente les étapes Gherkin (Given, When, Then)</td>
+                <td><code>.java</code>, <code>.py</code>, <code>.rb</code>, etc.</td>
+              </tr>
+              <tr>
+                <td><strong>Test Runner</strong></td>
+                <td>Orchestre l'exécution des tests et génère les rapports</td>
+                <td>Classe Java annotée ou configuration</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Flux d'exécution de Cucumber</h3>
+          <pre>
+1. Le Test Runner lit les fichiers .feature
+2. Cucumber analyse les scénarios Gherkin
+3. Pour chaque étape (Given/When/Then), Cucumber cherche la Step Definition correspondante
+4. Le code de la Step Definition est exécuté
+5. Les résultats sont collectés et un rapport est généré
+</pre>
+
+          <h2>Structure d'un projet Cucumber</h2>
+          <p>Organisation typique des fichiers dans un projet Cucumber :</p>
+          <pre>
+src/
+├── test/
+│   ├── java/
+│   │   ├── runners/
+│   │   │   └── TestRunner.java
+│   │   ├── steps/
+│   │   │   ├── LoginSteps.java
+│   │   │   └── TicketSteps.java
+│   │   └── hooks/
+│   │       └── Hooks.java
+│   └── resources/
+│       └── features/
+│           ├── login.feature
+│           └── tickets.feature
+</pre>
+
+          <h2>Les Step Definitions</h2>
+          <p>
+            Les <strong>Step Definitions</strong> sont le pont entre le langage Gherkin et le code d'automatisation. 
+            Chaque étape Gherkin est mappée à une méthode Java (ou autre langage) via des annotations.
+          </p>
+
+          <h3>Annotations principales</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Annotation</th>
+                <th>Usage</th>
+                <th>Exemple</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>@Given</code></td>
+                <td>Préconditions et contexte initial</td>
+                <td><code>@Given("l'utilisateur est sur la page de connexion")</code></td>
+              </tr>
+              <tr>
+                <td><code>@When</code></td>
+                <td>Actions effectuées par l'utilisateur</td>
+                <td><code>@When("il entre ses identifiants valides")</code></td>
+              </tr>
+              <tr>
+                <td><code>@Then</code></td>
+                <td>Vérifications et assertions</td>
+                <td><code>@Then("il doit être redirigé vers le tableau de bord")</code></td>
+              </tr>
+              <tr>
+                <td><code>@And</code> / <code>@But</code></td>
+                <td>Continuation d'étapes (même annotation que la précédente)</td>
+                <td><code>@And("un message de bienvenue s'affiche")</code></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Exemple de Step Definition</h3>
+          <pre>
+public class LoginSteps {
+    WebDriver driver;
+    
+    @Given("l'utilisateur est sur la page de connexion")
+    public void utilisateur_sur_page_connexion() {
+        driver = new ChromeDriver();
+        driver.get("https://redmine.example.com/login");
+    }
+    
+    @When("il entre le nom d'utilisateur {string} et le mot de passe {string}")
+    public void entre_identifiants(String username, String password) {
+        driver.findElement(By.id("username")).sendKeys(username);
+        driver.findElement(By.id("password")).sendKeys(password);
+        driver.findElement(By.name("login")).click();
+    }
+    
+    @Then("il doit être connecté avec succès")
+    public void verifie_connexion_reussie() {
+        Assert.assertTrue(driver.findElement(By.className("loggedinas")).isDisplayed());
+        driver.quit();
+    }
+}
+</pre>
+
+          <h3>Paramètres dans les Step Definitions</h3>
+          <p>
+            Cucumber supporte plusieurs types de paramètres pour rendre les steps réutilisables :
+          </p>
+          <ul>
+            <li><strong>Strings</strong> : <code>{string}</code> pour capturer du texte entre guillemets</li>
+            <li><strong>Integers</strong> : <code>{int}</code> pour les nombres entiers</li>
+            <li><strong>Floats</strong> : <code>{float}</code> ou <code>{double}</code> pour les décimaux</li>
+            <li><strong>Expressions régulières</strong> : Pour des patterns complexes</li>
+          </ul>
+
+          <pre>
+@When("il crée {int} nouveaux tickets")
+public void cree_plusieurs_tickets(int nombre) {
+    for (int i = 0; i < nombre; i++) {
+        // Logique de création
+    }
+}
+</pre>
+
+          <h2>Les Hooks</h2>
+          <p>
+            Les <strong>Hooks</strong> permettent d'exécuter du code avant et après les scénarios ou les steps. 
+            Ils sont utilisés pour la configuration et le nettoyage.
+          </p>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Hook</th>
+                <th>Moment d'exécution</th>
+                <th>Usage typique</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>@Before</code></td>
+                <td>Avant chaque scénario</td>
+                <td>Initialisation du WebDriver, connexion à la base de données</td>
+              </tr>
+              <tr>
+                <td><code>@After</code></td>
+                <td>Après chaque scénario</td>
+                <td>Fermeture du navigateur, capture d'écran en cas d'échec</td>
+              </tr>
+              <tr>
+                <td><code>@BeforeStep</code></td>
+                <td>Avant chaque étape</td>
+                <td>Logging détaillé</td>
+              </tr>
+              <tr>
+                <td><code>@AfterStep</code></td>
+                <td>Après chaque étape</td>
+                <td>Vérifications intermédiaires</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Exemple de Hooks</h3>
+          <pre>
+public class Hooks {
+    WebDriver driver;
+    
+    @Before
+    public void setUp() {
+        System.out.println("Démarrage du scénario...");
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+    }
+    
+    @After
+    public void tearDown(Scenario scenario) {
+        if (scenario.isFailed()) {
+            // Capture d'écran en cas d'échec
+            byte[] screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BYTES);
+            scenario.attach(screenshot, "image/png", "Échec du scénario");
+        }
+        driver.quit();
+        System.out.println("Scénario terminé.");
+    }
+}
+</pre>
+
+          <h2>Configuration du Test Runner</h2>
+          <p>
+            Le <strong>Test Runner</strong> est une classe qui configure l'exécution des tests Cucumber. 
+            Il utilise des annotations pour spécifier les options.
+          </p>
+
+          <pre>
+import org.junit.runner.RunWith;
+import io.cucumber.junit.Cucumber;
+import io.cucumber.junit.CucumberOptions;
+
+@RunWith(Cucumber.class)
+@CucumberOptions(
+    features = "src/test/resources/features",           // Chemin des fichiers .feature
+    glue = {"steps", "hooks"},                          // Packages des step definitions
+    plugin = {"pretty", "html:target/cucumber-reports"}, // Formats de rapport
+    tags = "@smoke",                                     // Tags à exécuter
+    monochrome = true,                                   // Sortie console lisible
+    dryRun = false                                       // true = vérification sans exécution
+)
+public class TestRunner {
+}
+</pre>
+
+          <h3>Options importantes du Test Runner</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Option</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><code>features</code></td>
+                <td>Chemin vers les fichiers .feature</td>
+              </tr>
+              <tr>
+                <td><code>glue</code></td>
+                <td>Packages contenant les step definitions et hooks</td>
+              </tr>
+              <tr>
+                <td><code>plugin</code></td>
+                <td>Formats de rapport (HTML, JSON, XML, etc.)</td>
+              </tr>
+              <tr>
+                <td><code>tags</code></td>
+                <td>Filtrage des scénarios par tags (@smoke, @regression, etc.)</td>
+              </tr>
+              <tr>
+                <td><code>dryRun</code></td>
+                <td>Vérifier la correspondance entre steps et définitions sans exécuter</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h2>Les Tags dans Cucumber</h2>
+          <p>
+            Les <strong>tags</strong> permettent d'organiser et de filtrer l'exécution des scénarios. 
+            Ils sont préfixés par <code>@</code> et placés avant les Features ou Scenarios.
+          </p>
+
+          <pre>
+@regression @login
+Feature: Authentification utilisateur
+
+  @smoke @critical
+  Scenario: Connexion avec des identifiants valides
+    Given l'utilisateur est sur la page de connexion
+    When il entre des identifiants valides
+    Then il doit être connecté avec succès
+    
+  @negative
+  Scenario: Connexion avec des identifiants invalides
+    Given l'utilisateur est sur la page de connexion
+    When il entre des identifiants invalides
+    Then un message d'erreur doit s'afficher
+</pre>
+
+          <h3>Combinaison de tags</h3>
+          <ul>
+            <li><code>@smoke</code> : Exécute tous les scénarios tagués @smoke</li>
+            <li><code>@smoke and @critical</code> : Scénarios ayant les deux tags</li>
+            <li><code>@smoke or @regression</code> : Scénarios ayant l'un ou l'autre</li>
+            <li><code>not @wip</code> : Exclut les scénarios en "Work In Progress"</li>
+          </ul>
+
+          <h2>Data Tables et Scenario Outlines</h2>
+          
+          <h3>Data Tables</h3>
+          <p>
+            Les <strong>Data Tables</strong> permettent de passer des ensembles de données structurées à une étape.
+          </p>
+          <pre>
+Scenario: Création de plusieurs utilisateurs
+  Given les utilisateurs suivants existent:
+    | Nom      | Email              | Rôle     |
+    | Alice    | alice@example.com  | Manager  |
+    | Bob      | bob@example.com    | Testeur  |
+    | Charlie  | charlie@example.com| Dev      |
+</pre>
+
+          <pre>
+@Given("les utilisateurs suivants existent:")
+public void cree_utilisateurs(DataTable dataTable) {
+    List&lt;Map&lt;String, String&gt;&gt; users = dataTable.asMaps();
+    for (Map&lt;String, String&gt; user : users) {
+        String nom = user.get("Nom");
+        String email = user.get("Email");
+        String role = user.get("Rôle");
+        // Logique de création
+    }
+}
+</pre>
+
+          <h3>Scenario Outline</h3>
+          <p>
+            Les <strong>Scenario Outlines</strong> permettent d'exécuter le même scénario avec différents jeux de données.
+          </p>
+          <pre>
+Scenario Outline: Vérifier la recherche de tickets
+  Given je suis connecté en tant que "&lt;Utilisateur&gt;"
+  When je recherche les tickets avec le statut "&lt;Statut&gt;"
+  Then je dois voir &lt;Nombre&gt; tickets
+
+  Examples:
+    | Utilisateur | Statut   | Nombre |
+    | Admin       | Nouveau  | 15     |
+    | Manager     | En cours | 8      |
+    | Testeur     | Fermé    | 32     |
+</pre>
+
+          <h2>Bonnes pratiques Cucumber</h2>
+          
+          <div class="tip-box">
+            <h4><i class="fas fa-lightbulb"></i> Conventions de nommage</h4>
+            <p>
+              <strong>Fichiers .feature</strong> : Noms descriptifs en minuscules avec underscores 
+              (ex: <code>user_login.feature</code>)<br>
+              <strong>Step Definitions</strong> : Noms de classe en PascalCase avec suffixe "Steps" 
+              (ex: <code>LoginSteps.java</code>)
+            </p>
+          </div>
+
+          <ul style="margin-top: 20px;">
+            <li><strong>Une action par scénario</strong> : Chaque scénario doit tester un comportement spécifique</li>
+            <li><strong>Steps réutilisables</strong> : Évitez la duplication en créant des steps génériques</li>
+            <li><strong>Indépendance des scénarios</strong> : Chaque scénario doit pouvoir s'exécuter seul</li>
+            <li><strong>Background pour la répétition</strong> : Utilisez Background pour les préconditions communes</li>
+            <li><strong>Tags stratégiques</strong> : Organisez vos tests avec des tags significatifs (@smoke, @regression, @api)</li>
+            <li><strong>Pas de logique dans les features</strong> : Gardez Gherkin simple et lisible</li>
+            <li><strong>Page Object Model</strong> : Combinez Cucumber avec le pattern POM pour une meilleure maintenabilité</li>
+          </ul>
+
+          <div class="warning-box">
+            <h4><i class="fas fa-exclamation-triangle"></i> Pièges à éviter</h4>
+            <p>
+              ❌ Ne pas dupliquer le code dans les step definitions<br>
+              ❌ Éviter les steps trop génériques (ex: "je clique sur le bouton")<br>
+              ❌ Ne pas tester l'implémentation technique dans les scénarios<br>
+              ❌ Éviter les dépendances entre scénarios
+            </p>
+          </div>
+
+          <h2>Rapports et Intégration Continue</h2>
+          <p>
+            Cucumber génère plusieurs formats de rapports pour faciliter l'analyse des résultats :
+          </p>
+          <ul>
+            <li><strong>HTML</strong> : Rapport visuel détaillé avec statuts des scénarios</li>
+            <li><strong>JSON</strong> : Format structuré pour l'intégration avec d'autres outils</li>
+            <li><strong>JUnit XML</strong> : Compatible avec les outils CI/CD (Jenkins, GitLab CI)</li>
+            <li><strong>Pretty Console</strong> : Sortie formatée dans la console</li>
+          </ul>
+
+          <p>
+            Pour intégrer Cucumber dans un pipeline CI/CD, utilisez Maven ou Gradle pour automatiser 
+            l'exécution et la génération des rapports :
+          </p>
+          <pre>
+mvn clean test -Dcucumber.options="--tags @smoke"
+</pre>
+
+          <h2>Ressources complémentaires</h2>
+          <ul>
+            <li><a href="https://cucumber.io/docs/cucumber/" target="_blank">Documentation officielle Cucumber</a></li>
+            <li><a href="https://github.com/cucumber/cucumber-jvm" target="_blank">Cucumber JVM sur GitHub</a></li>
+            <li><a href="guide_gherkin.html">Guide Gherkin - Écriture de scénarios</a></li>
+          </ul>
+
+        </main>
+
+        <aside class="card" aria-label="Aide-mémoire Cucumber">
+          <h2>Aide-mémoire Cucumber</h2>
+          <ul class="list-unstyled" style="font-size: 14px; line-height: 1.6">
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Feature File</strong> : Contient les scénarios en Gherkin (.feature)
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Step Definitions</strong> : Implémentation du code de test
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Hooks</strong> : @Before / @After pour setup et cleanup
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Test Runner</strong> : Configure et lance les tests
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Tags</strong> : Organisent et filtrent les scénarios
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Data Tables</strong> : Passages de données structurées
+            </li>
+            <li>
+              <i class="fas fa-check-circle" style="color: green"></i>
+              <strong>Scenario Outline</strong> : Tests paramétrés avec Examples
+            </li>
+          </ul>
+
+          <hr
+            style="border: none; border-top: 1px solid #eef6fb; margin: 20px 0"
+          />
+
+          <div class="tip-box" style="margin-top: 20px;">
+            <h4><i class="fas fa-code"></i> Dépendances Maven</h4>
+            <p style="font-size: 12px; font-family: monospace; background: #f8f9fa; padding: 8px; border-radius: 4px; margin-top: 8px;">
+              &lt;dependency&gt;<br>
+              &nbsp;&nbsp;&lt;groupId&gt;io.cucumber&lt;/groupId&gt;<br>
+              &nbsp;&nbsp;&lt;artifactId&gt;cucumber-java&lt;/artifactId&gt;<br>
+              &nbsp;&nbsp;&lt;version&gt;7.14.0&lt;/version&gt;<br>
+              &lt;/dependency&gt;
+            </p>
+          </div>
+
+          <div class="tip-box" style="margin-top: 20px; background: #e8f5e9; border-color: #81c784;">
+            <h4><i class="fas fa-rocket"></i> Démarrage rapide</h4>
+            <p style="font-size: 13px;">
+              1. Créez un fichier .feature<br>
+              2. Écrivez vos scénarios en Gherkin<br>
+              3. Générez les step definitions<br>
+              4. Implémentez le code de test<br>
+              5. Configurez le Test Runner<br>
+              6. Exécutez avec Maven/Gradle
+            </p>
+          </div>
+        </aside>
+      </div>
+
+      <footer>
+        <p>
+          &copy; Talel Zid | Version 1.0 — Mars 2026 | Guide Cucumber |<br />Usage
+          personnel ou éducatif.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
