@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Guide — Git & GitHub</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <style>
+      :root {
+        --bg: #f4f7fa;
+        --card: #fff;
+        --muted: #6b7280;
+        --accent: #216ba5;
+        --accent-2: #1d77b8;
+        --radius: 12px;
+        --maxw: 1100px;
+      }
+      * { box-sizing: border-box; }
+      html, body { height:100%; margin:0; font-family: Inter, "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial; }
+      body { background: linear-gradient(180deg,#f7fbff 0%, var(--bg) 100%); color:#222; padding:28px; display:flex; justify-content:center; }
+      .wrap { width:100%; max-width:var(--maxw); }
+      header { background: linear-gradient(90deg, rgba(33,107,165,0.12), rgba(29,119,184,0.06)); padding:20px 24px; border-radius:calc(var(--radius)+4px); margin-bottom:18px; display:flex; gap:18px; align-items:center; border:1px solid rgba(13,66,104,0.06); }
+      footer {
+        margin-top: 25px;
+        text-align: center;
+        color: var(--muted);
+        font-size: 13px;
+      }
+      .logo { width:64px; height:64px; border-radius:12px; background:linear-gradient(135deg,var(--accent),var(--accent-2)); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:700; font-size:20px; box-shadow:0 6px 18px rgba(33,107,165,0.12); }
+      .home-link { position:fixed; top:20px; left:20px; z-index:1000; font-size:0.95em; font-weight:600; text-decoration:none; color:#495057; padding:8px 15px; border-radius:20px; background-color:#f8f9fa; border:1px solid #dee2e6; box-shadow:0 2px 5px rgba(0,0,0,0.1); transition:all 0.2s ease-in-out; }
+      .home-link:hover { background-color:#e9ecef; color:#007bff; box-shadow:0 4px 8px rgba(0,0,0,0.15); transform:translateY(-1px); }
+      @media screen and (max-width:768px) { .home-link { font-size:0.85em; padding:5px 10px; top:10px; left:10px; } }
+      h1 { margin:0; font-size:20px; color:#083b5a; }
+      p.lead { margin:2px 0 0 0; color:var(--muted); font-size:13px; }
+      .card { background:var(--card); padding:22px; border-radius:var(--radius); box-shadow:0 6px 20px rgba(20,30,40,0.04); border:1px solid rgba(16,24,32,0.03); }
+      main.card { padding:26px; }
+      h2 { color:#0f3e5f; margin-top:0; font-size:18px; border-bottom:2px solid #e6edf4; padding-bottom:5px; margin-bottom:15px; }
+      h3 { color:#123d57; margin-bottom:8px; margin-top:20px; font-size:16px; }
+      h4 { color:#1e4a68; margin-bottom:6px; margin-top:15px; font-size:15px; }
+      p, li { color:#233242; line-height:1.6; font-size:15px; }
+      .muted { color:var(--muted); font-size:13px; }
+      ul, ol { margin-left:18px; padding-left:0; }
+      ul li, ol li { margin-bottom: 8px; }
+      table { width:100%; border-collapse:collapse; margin-top:15px; margin-bottom:15px; font-size:14px; }
+      th, td { padding:10px; border:1px solid #e6edf4; text-align:left; vertical-align:top; }
+      th { background:#f2f7fb; color:#123d57; font-weight:600; }
+      pre { background:#f6fbff; padding:15px; border-left:4px solid var(--accent); border-radius:8px; overflow:auto; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:13px; color:#0b3b57; line-height:1.5; margin-top:15px; margin-bottom:20px; }
+      code { background:#f0f6fb; padding:2px 6px; border-radius:4px; font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", monospace; font-size:13px; color:#0b3b57; }
+      pre code { background:transparent; padding:0; }
+      .tip-box { background:#e6f7ff; border:1px solid #b3e0ff; padding:15px; border-radius:8px; margin-top:20px; margin-bottom:20px; }
+      .tip-box h4 { margin-top:0; color:#0c5a8a; }
+      .success-box { background:#e8f5e9; border:1px solid #a5d6a7; padding:15px; border-radius:8px; margin-top:20px; margin-bottom:20px; }
+      .warning-box { background:#fff3e0; border:1px solid #ffb74d; padding:15px; border-radius:8px; margin-top:20px; margin-bottom:20px; }
+      .danger-box { background:#ffebee; border:1px solid #ef5350; padding:15px; border-radius:8px; margin-top:20px; margin-bottom:20px; }
+      .badge { display:inline-block; padding:3px 8px; border-radius:4px; font-size:12px; font-weight:600; margin-right:5px; }
+      .badge-success { background:#e8f5e9; color:#2e7d32; }
+      .badge-danger { background:#ffebee; color:#c62828; }
+      strong { color:#0a3d5c; }
+    </style>
+  </head>
+  <body>
+    <a href="../main/menu.html" class="home-link" title="Retour à la page d'accueil">🏠 Accueil</a>
+    <div class="wrap" role="main" aria-labelledby="title">
+      <header>
+        <div class="logo"><i class="fab fa-github"></i></div>
+        <div>
+          <h1>Guide Git & GitHub</h1>
+          <p class="lead">Maîtrisez le contrôle de version et la collaboration avec Git et GitHub pour vos projets de tests automatisés.</p>
+        </div>
+      </header>
+      <main class="card">
+        <h2>Introduction à Git et GitHub</h2>
+        <p><strong>Git</strong> est un système de contrôle de version distribué qui permet de suivre les modifications du code source au fil du temps. <strong>GitHub</strong> est une plateforme d'hébergement de code basée sur Git qui facilite la collaboration et le partage de projets.</p>
+
+        <h3>Pourquoi utiliser Git et GitHub dans ce projet ?</h3>
+        <ul>
+          <li>✅ <strong>Historique complet</strong> : Suivre toutes les modifications du projet Alfresco</li>
+          <li>✅ <strong>Collaboration</strong> : Travailler en équipe sur les tests automatisés</li>
+          <li>✅ <strong>Sauvegarde</strong> : Code hébergé en ligne, accessible partout</li>
+          <li>✅ <strong>GitHub Pages</strong> : Déploiement automatique du portail web</li>
+          <li>✅ <strong>Gestion de versions</strong> : Revenir à une version antérieure si besoin</li>
+        </ul>
+
+        <h2>1. Configuration initiale de Git</h2>
+        
+        <h3>A. Installation de Git</h3>
+        <p><strong>Windows</strong> :</p>
+        <ul>
+          <li>Télécharger depuis <a href="https://git-scm.com/download/win" target="_blank">git-scm.com</a></li>
+          <li>Installer avec les options par défaut</li>
+          <li>Vérifier l'installation : <code>git --version</code></li>
+        </ul>
+
+        <p><strong>macOS</strong> :</p>
+        <pre># Via Homebrew
+brew install git
+
+# Vérifier
+git --version</pre>
+
+        <p><strong>Linux (Ubuntu/Debian)</strong> :</p>
+        <pre>sudo apt update
+sudo apt install git
+git --version</pre>
+
+        <h3>B. Configuration de votre identité</h3>
+        <pre># Nom d'utilisateur (obligatoire)
+git config --global user.name "Votre Nom"
+
+# Email (obligatoire)
+git config --global user.email "votre.email@example.com"
+
+# Éditeur par défaut (optionnel)
+git config --global core.editor "code --wait"
+
+# Vérifier la configuration
+git config --list</pre>
+
+        <h3>C. Authentification GitHub</h3>
+        <p>Pour vous connecter à GitHub, vous avez deux options :</p>
+
+        <h4>Option 1 : Personal Access Token (PAT) — recommandé</h4>
+        <pre># 1. Créer un token sur GitHub
+https://github.com/settings/tokens/new?scopes=repo
+
+# 2. Copier le token (commence par ghp_)
+
+# 3. Utiliser lors du push
+Username: votre-username
+Password: ghp_votre_token_ici</pre>
+
+        <h4>Option 2 : SSH Keys</h4>
+        <pre># Générer une clé SSH
+ssh-keygen -t ed25519 -C "votre.email@example.com"
+
+# Copier la clé publique
+cat ~/.ssh/id_ed25519.pub
+
+# Ajouter sur GitHub : Settings > SSH and GPG keys</pre>
+
+        <h2>2. Commandes Git essentielles</h2>
+
+        <h3>Les 5 commandes de base</h3>
+        <table>
+          <thead>
+            <tr>
+              <th>Commande</th>
+              <th>Description</th>
+              <th>Exemple</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><code>git clone</code></td>
+              <td>Télécharger un dépôt depuis GitHub</td>
+              <td><code>git clone https://github.com/user/repo.git</code></td>
+            </tr>
+            <tr>
+              <td><code>git add</code></td>
+              <td>Préparer des fichiers pour le commit</td>
+              <td><code>git add fichier.txt</code> ou <code>git add .</code></td>
+            </tr>
+            <tr>
+              <td><code>git commit</code></td>
+              <td>Enregistrer les modifications</td>
+              <td><code>git commit -m "Description"</code></td>
+            </tr>
+            <tr>
+              <td><code>git push</code></td>
+              <td>Envoyer les commits vers GitHub</td>
+              <td><code>git push origin master</code></td>
+            </tr>
+            <tr>
+              <td><code>git pull</code></td>
+              <td>Récupérer les dernières modifications</td>
+              <td><code>git pull origin master</code></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <h3>Commandes de consultation</h3>
+        <pre># Voir l'état du dépôt (fichiers modifiés, en attente)
+git status
+
+# Voir l'historique des commits
+git log
+git log --oneline  # Version compacte
+git log --graph --all  # Voir les branches
+
+# Voir les différences avant commit
+git diff
+git diff fichier.txt  # Pour un fichier spécifique
+
+# Voir les branches
+git branch  # Branches locales
+git branch -a  # Toutes les branches</pre>
+
+        <h3>Commandes d'annulation</h3>
+        <pre># Annuler les modifications d'un fichier (avant add)
+git checkout -- fichier.txt
+
+# Retirer un fichier du staging (après add, avant commit)
+git reset fichier.txt
+
+# Annuler le dernier commit (garder les modifications)
+git reset --soft HEAD~1
+
+# Annuler le dernier commit (perdre les modifications) ⚠️
+git reset --hard HEAD~1
+
+# Revenir à un commit précis
+git checkout &lt;hash-du-commit&gt;</pre>
+
+        <h2>3. Workflow Git complet</h2>
+
+        <h3>Scénario A : Premier clonage du projet</h3>
+        <pre># 1. Cloner le projet
+git clone https://github.com/zidtalel/alfresco-project.git
+
+# 2. Entrer dans le dossier
+cd alfresco-project
+
+# 3. Vérifier la branche actuelle
+git branch
+
+# 4. Commencer à travailler !</pre>
+
+        <h3>Scénario B : Travailler sur le projet</h3>
+        <pre># 1. S'assurer d'avoir la dernière version
+git pull origin master
+
+# 2. Modifier des fichiers (ex: ajouter un test)
+# ... édition de fichiers ...
+
+# 3. Voir ce qui a changé
+git status
+git diff
+
+# 4. Ajouter les fichiers modifiés
+git add pages/guides/guide_github.html
+# ou tout ajouter :
+git add .
+
+# 5. Créer un commit avec un message descriptif
+git commit -m "Ajout du guide GitHub"
+
+# 6. Envoyer vers GitHub
+git push origin master</pre>
+
+        <h3>Scénario C : Résoudre un conflit</h3>
+        <p>Un conflit se produit quand deux personnes modifient la même ligne d'un fichier.</p>
+        <pre># 1. Tentative de pull
+git pull origin master
+# → CONFLIT détecté !
+
+# 2. Ouvrir le fichier en conflit
+# Git marque les conflits ainsi :
+&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD
+Votre version locale
+=======
+Version de GitHub
+&gt;&gt;&gt;&gt;&gt;&gt;&gt; branch-name
+
+# 3. Choisir quelle version garder (ou fusionner manuellement)
+# 4. Supprimer les marqueurs Git (&lt;&lt;&lt;&lt;, ====, &gt;&gt;&gt;&gt;)
+# 5. Finaliser
+
+git add fichier-corrige.txt
+git commit -m "Résolution du conflit"
+git push origin master</pre>
+
+        <h2>4. Gestion des branches</h2>
+        <p>Les branches permettent de travailler sur des fonctionnalités indépendantes sans impacter le code principal.</p>
+
+        <h3>Créer et utiliser une branche</h3>
+        <pre># Créer une nouvelle branche
+git branch feature-nouveau-test
+
+# Changer de branche
+git checkout feature-nouveau-test
+
+# Raccourci : créer + changer
+git checkout -b feature-nouveau-test
+
+# Voir toutes les branches
+git branch
+
+# Travailler normalement
+git add .
+git commit -m "Développement de la nouvelle fonctionnalité"
+
+# Envoyer la branche sur GitHub
+git push origin feature-nouveau-test</pre>
+
+        <h3>Fusionner une branche (merge)</h3>
+        <pre># 1. Retourner sur la branche principale
+git checkout master
+
+# 2. Fusionner la branche
+git merge feature-nouveau-test
+
+# 3. Envoyer les modifications
+git push origin master
+
+# 4. Supprimer la branche locale (optionnel)
+git branch -d feature-nouveau-test
+
+# 5. Supprimer la branche sur GitHub (optionnel)
+git push origin --delete feature-nouveau-test</pre>
+
+        <h2>5. Bonnes pratiques</h2>
+
+        <h3>Messages de commit clairs et descriptifs</h3>
+        
+        <p><span class="badge badge-success">✅ BON</span></p>
+        <pre>git commit -m "Ajout du guide GitHub avec exemples de commandes"
+git commit -m "Correction du bug d'affichage des annonces"
+git commit -m "Refonte de la page FAQ avec recherche"</pre>
+
+        <p><span class="badge badge-danger">❌ MAUVAIS</span></p>
+        <pre>git commit -m "update"
+git commit -m "fix"
+git commit -m "test"
+git commit -m "corrections diverses"</pre>
+
+        <h3>Structure d'un bon message de commit</h3>
+        <pre># Format recommandé
+&lt;type&gt;: &lt;sujet court (50 chars max)&gt;
+
+&lt;description détaillée optionnelle&gt;
+
+# Types courants :
+feat:     Nouvelle fonctionnalité
+fix:      Correction de bug
+docs:     Documentation seulement
+style:    Formatage, style (sans changement de code)
+refactor: Refactorisation de code
+test:     Ajout de tests
+chore:    Tâches de maintenance</pre>
+
+        <p><strong>Exemples</strong> :</p>
+        <pre>git commit -m "feat: ajout d'un guide GitHub interactif"
+git commit -m "fix: correction de l'erreur 404 sur menu.html"
+git commit -m "docs: mise à jour du README avec instructions d'installation"</pre>
+
+        <h3>Fréquence des commits</h3>
+        <ul>
+          <li>✅ Commiter régulièrement (toutes les 30 min - 1h de travail)</li>
+          <li>✅ Un commit = une modification logique</li>
+          <li>✅ Tester avant de commiter</li>
+          <li>❌ Éviter les commits trop gros (100+ fichiers)</li>
+          <li>❌ Ne jamais commiter de mots de passe ou tokens</li>
+        </ul>
+
+        <h3>Fichiers à ignorer (.gitignore)</h3>
+        <p>Créer un fichier <code>.gitignore</code> à la racine du projet :</p>
+        <pre># Fichiers système
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Éditeurs
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+logs/
+
+# Dépendances
+node_modules/
+venv/
+__pycache__/
+
+# Fichiers temporaires
+*.tmp
+*.bak
+*.cache
+
+# Secrets (IMPORTANT !)
+*.env
+config/credentials.json
+tokens.txt</pre>
+
+        <h2>6. Ressources et liens utiles</h2>
+
+        <h3>Documentation officielle</h3>
+        <ul>
+          <li>📚 <a href="https://git-scm.com/doc" target="_blank">Git Documentation</a></li>
+          <li>📚 <a href="https://docs.github.com" target="_blank">GitHub Docs</a></li>
+          <li>📚 <a href="https://pages.github.com/" target="_blank">GitHub Pages</a></li>
+        </ul>
+
+        <h3>Outils visuels</h3>
+        <ul>
+          <li>🖥️ <a href="https://desktop.github.com/" target="_blank">GitHub Desktop</a> - Interface graphique Git</li>
+          <li>🖥️ <a href="https://www.gitkraken.com/" target="_blank">GitKraken</a> - Client Git visuel</li>
+          <li>🖥️ <a href="https://www.sourcetreeapp.com/" target="_blank">SourceTree</a> - Alternative gratuite</li>
+        </ul>
+
+        <h3>Tutoriels interactifs</h3>
+        <ul>
+          <li>🎓 <a href="https://learngitbranching.js.org/" target="_blank">Learn Git Branching</a> - Apprendre Git de façon interactive</li>
+          <li>🎓 <a href="https://skills.github.com/" target="_blank">GitHub Skills</a> - Cours gratuits GitHub</li>
+          <li>🎓 <a href="https://education.github.com/git-cheat-sheet-education.pdf" target="_blank">Git Cheat Sheet</a> - Aide-mémoire</li>
+        </ul>
+
+        <h3>Commandes résumées</h3>
+        <pre># Configuration
+git config --global user.name "Nom"
+git config --global user.email "email@example.com"
+
+# Démarrage
+git clone &lt;url&gt;
+git init
+
+# Workflow de base
+git status
+git add .
+git commit -m "message"
+git push origin master
+git pull origin master
+
+# Branches
+git branch
+git checkout -b nouvelle-branche
+git merge autre-branche
+
+# Annulation
+git checkout -- fichier.txt
+git reset HEAD~1
+git revert &lt;hash&gt;
+
+# Consultation
+git log --oneline --graph
+git diff
+git show &lt;hash&gt;</pre>
+
+        <div class="success-box">
+          <h3>Conclusion</h3>
+          <p>Git et GitHub sont des outils essentiels pour tout développeur et testeur. Maîtriser ces commandes vous permettra de :</p>
+          <ul>
+            <li>✅ Collaborer efficacement en équipe</li>
+            <li>✅ Gérer l'historique du projet Alfresco</li>
+            <li>✅ Déployer automatiquement le portail web</li>
+            <li>✅ Revenir en arrière en cas d'erreur</li>
+            <li>✅ Expérimenter sans risque avec les branches</li>
+          </ul>
+          <p><strong>Conseil</strong> : Pratiquez régulièrement ! Git devient intuitif avec l'usage.</p>
+        </div>
+
+      </main>
+      <footer>
+        <p>
+          &copy; Talel Zid | Version 1.0 — Mars 2026 | Guide Git & GitHub |<br />Usage
+          personnel ou éducatif.
+        </p>
+      </footer>
+    </div>
+  </body>
+</html>
