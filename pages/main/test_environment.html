@@ -256,6 +256,111 @@
           left: 10px;
         }
       }
+
+      /* ======================================================= */
+      /* STYLES POUR LA PROCÉDURE DOCKER                         */
+      /* ======================================================= */
+
+      pre {
+        background-color: #1e1e2e;
+        color: #cdd6f4;
+        padding: 15px 20px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 0.88em;
+        font-family: "Courier New", monospace;
+        margin: 10px 0;
+      }
+
+      code {
+        font-family: "Courier New", monospace;
+        background-color: #f0f2f5;
+        padding: 1px 5px;
+        border-radius: 3px;
+        font-size: 0.9em;
+        color: #1e3a8a;
+      }
+
+      .step-block {
+        margin: 20px 0;
+        padding-left: 12px;
+        border-left: 3px solid #10b981;
+      }
+
+      .step-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.05em;
+        font-weight: 700;
+        color: #1e3a8a;
+        margin-bottom: 8px;
+      }
+
+      .step-number {
+        background-color: #1e3a8a;
+        color: white;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.85em;
+        flex-shrink: 0;
+      }
+
+      .config-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+        font-size: 0.88em;
+      }
+
+      .config-table th {
+        background-color: #1e3a8a;
+        color: white;
+        padding: 10px 12px;
+        text-align: left;
+      }
+
+      .config-table td {
+        padding: 7px 12px;
+        border-bottom: 1px solid #e5e7eb;
+        vertical-align: top;
+      }
+
+      .config-table tr:nth-child(even) td {
+        background-color: #f7f8fc;
+      }
+
+      .config-table td:nth-child(2) {
+        font-weight: 700;
+        color: #10b981;
+        white-space: nowrap;
+      }
+
+      .download-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        color: #1e3a8a;
+        text-decoration: none;
+        font-weight: 600;
+        background-color: #e0f2f1;
+        border: 1px solid #10b981;
+        padding: 3px 10px;
+        border-radius: 15px;
+        font-size: 0.82em;
+        font-style: normal;
+        transition: all 0.2s ease;
+        margin-left: 8px;
+      }
+
+      .download-link:hover {
+        background-color: #10b981;
+        color: white;
+      }
     </style>
   </head>
   <body>
@@ -266,62 +371,85 @@
       <h1>Architecture et Environnement de Test Alfresco</h1>
 
       <div class="section-card">
-        <h2>Serveur de Test Principal</h2>
-        <p style="font-size: 1.1em; font-weight: 600">
-          Application à tester : CMS Alfresco
-          <span style="font-weight: bold; color: #ef4444"
-            >(Version 7.4-7.4.1-1)</span
-          >
-        </p>
+        <h2>Déploiement du Serveur Alfresco sous Docker</h2>
+        <p>Déployez une instance locale d'<strong>Alfresco Content Services (ACS) Community Edition 26.1</strong> à l'aide du générateur officiel Docker d'Alfresco (stack complète : Repository, Share, PostgreSQL, Solr).</p>
 
-        <h3>Accès et État du Serveur</h3>
-        <ul class="config-list">
-          <li style="background-color: #d1fae5; border-color: #10b981">
-            <span class="key">Statut actuel</span>
-            <span
-              class="value"
-              style="background-color: #10b981; color: white; font-weight: bold"
-              >running</span
-            >
-          </li>
-          <li>
-            <span class="key">Tunnel d'accès (HTTP)</span>
-            <span class="value">205.236.44.133:80</span>
-          </li>
-          <li>
-            <span class="key">Session SSH</span>
-            <span class="value">mercure.minilab.bdeb.qc.ca</span>
-          </li>
+        <h3>Prérequis</h3>
+        <ul>
+          <li><strong>Docker</strong> installé et en cours d'exécution.</li>
+          <li><strong>Node.js</strong> installé (nécessaire pour le générateur <code>yo</code>).</li>
+          <li><strong>16 Go de RAM</strong> alloués à Docker dans les paramètres de votre logiciel.</li>
         </ul>
 
-        <h3>Configuration Technique (VM Proxmox)</h3>
-        <ul class="config-list">
-          <li>
-            <span class="key">Processeurs</span>
-            <span class="value">2 (1 sockets, 2 cores) [host]</span>
-          </li>
-          <li>
-            <span class="key">Mémoire Allouée</span>
-            <span class="value">4.00 GiB</span>
-          </li>
-          <li>
-            <span class="key">Utilisation Mémoire Actuelle</span>
-            <span class="value" style="color: #ef4444; font-weight: bold"
-              >92.97% (3.72 GiB)</span
-            >
-          </li>
-          <li>
-            <span class="key">Disque Dur</span>
-            <span class="value">10G (local-lvm:vm-304-disk-0)</span>
-          </li>
-          <li>
-            <span class="key">Contrôleur Réseau/SCSI</span>
-            <span class="value">VirtIO / VirtIO SCSI single</span>
-          </li>
-          <li>
-            <span class="key">Machine/BIOS</span>
-            <span class="value">Default (i440fx) / Default (SeaBIOS)</span>
-          </li>
+        <div class="step-block">
+          <div class="step-title"><span class="step-number">1</span> Installation de l'outil générateur</div>
+          <p>Le générateur <code>yo</code> automatise la création des fichiers de configuration Docker complexes.</p>
+          <pre>npm install -g yo generator-alfresco-docker-installer</pre>
+        </div>
+
+        <div class="step-block">
+          <div class="step-title"><span class="step-number">2</span> Création du projet</div>
+          <p>Créez un dossier de projet, placez-vous dedans, puis lancez le générateur :</p>
+          <pre>mkdir mon-alfresco
+cd mon-alfresco
+yo alfresco-docker-installer</pre>
+        </div>
+
+        <div class="step-block">
+          <div class="step-title"><span class="step-number">3</span> Configuration du serveur</div>
+          <p>Répondez aux questions posées par le générateur comme suit :</p>
+          <table class="config-table">
+            <thead>
+              <tr><th>Question</th><th>Réponse</th><th>Pourquoi ?</th></tr>
+            </thead>
+            <tbody>
+              <tr><td>Which ACS version...</td><td>26.1</td><td>Version stable la plus récente.</td></tr>
+              <tr><td>How may GB RAM...</td><td>16</td><td>Consommation minimale requise.</td></tr>
+              <tr><td>Use HTTPs for Web Proxy?</td><td>No</td><td>Inutile pour un usage local.</td></tr>
+              <tr><td>Which proxy would you like to use?</td><td>nginx</td><td>Standard pour le routage.</td></tr>
+              <tr><td>Name of your server?</td><td>localhost</td><td>Pour un accès local.</td></tr>
+              <tr><td>Password for your admin user</td><td>admin</td><td>Identifiant par défaut simple.</td></tr>
+              <tr><td>HTTP port?</td><td>8084</td><td>Évite les conflits sur le port 80/8080.</td></tr>
+              <tr><td>Custom binding IP?</td><td>No</td><td>Utilise <code>0.0.0.0</code> par défaut.</td></tr>
+              <tr><td>Use FTP?</td><td>No</td><td>Inutile pour ce TP.</td></tr>
+              <tr><td>Use MariaDB instead of PostgreSQL?</td><td>No</td><td>PostgreSQL est recommandé.</td></tr>
+              <tr><td>Using different languages?</td><td>Yes</td><td>Support multi-langues standard.</td></tr>
+              <tr><td>Search in document content?</td><td>Yes</td><td>Active l'indexation plein texte.</td></tr>
+              <tr><td>Which search engine?</td><td>Jeci community fork (Solr 9)</td><td>Compatible avec la version 26.1.</td></tr>
+              <tr><td>Use Events service (ActiveMQ)?</td><td>No</td><td>Complexité non nécessaire.</td></tr>
+              <tr><td>Create internal SMTP server?</td><td>No</td><td>Pas d'envoi d'emails requis.</td></tr>
+              <tr><td>Create internal LDAP server?</td><td>No</td><td>Authentification locale par défaut.</td></tr>
+              <tr><td>Select the addons?</td><td>(Vide)</td><td>Garder une base propre.</td></tr>
+              <tr><td>Docker manage volume storage?</td><td>Yes</td><td>Évite les problèmes de droits.</td></tr>
+              <tr><td>Use a start script?</td><td>No</td><td>La configuration native suffit.</td></tr>
+              <tr><td>Get script to create host volumes?</td><td>No</td><td>Docker gère les volumes seul.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="step-block">
+          <div class="step-title"><span class="step-number">4</span> Lancement du serveur</div>
+          <p>Dans le dossier du projet, lancez la construction et le démarrage des conteneurs :</p>
+          <pre>docker compose up --build</pre>
+          <div class="note" style="margin-top: 12px;">
+            <strong>Patience :</strong> La première exécution peut prendre <strong>10 à 15 minutes</strong>. Attendez le message : <em>Server startup in [NNNNN] milliseconds</em>.
+          </div>
+        </div>
+
+        <div class="step-block">
+          <div class="step-title"><span class="step-number">5</span> Accès à l'application</div>
+          <ul class="config-list">
+            <li><span class="key">URL</span><span class="value">http://localhost:8084/share</span></li>
+            <li><span class="key">Identifiant</span><span class="value">admin</span></li>
+            <li><span class="key">Mot de passe</span><span class="value">admin</span></li>
+          </ul>
+        </div>
+
+        <h3>Aide au dépannage</h3>
+        <ul>
+          <li><strong>Interface non trouvée :</strong> Assurez-vous d'ajouter <code>/share</code> à l'URL. L'URL racine pointe vers le moteur technique.</li>
+          <li><strong>Serveur semble lent :</strong> Vérifiez que Docker a bien les 16 Go de RAM alloués dans ses paramètres.</li>
+          <li><strong>Arrêter le serveur :</strong> Utilisez <code>Ctrl + C</code> dans le terminal, puis <code>docker compose down</code> pour nettoyer proprement.</li>
         </ul>
       </div>
 
@@ -355,11 +483,11 @@
           </li>
           <li>
             <span class="category">Tests d'API</span>
-            <span class="tools"><strong>Postman</strong></span>
+            <span class="tools"><strong>Postman</strong><a href="https://www.postman.com/downloads/" target="_blank" class="download-link">&#8681; Télécharger</a></span>
           </li>
           <li>
             <span class="category">Tests de Charge</span>
-            <span class="tools"><strong>Jmeter</strong></span>
+            <span class="tools"><strong>Jmeter</strong><a href="https://jmeter.apache.org/download_jmeter.cgi" target="_blank" class="download-link">&#8681; Télécharger</a></span>
           </li>
           <li>
             <span class="category">Cadre d'Exécution Java</span>
@@ -392,6 +520,8 @@
           d'Alfresco (v. 7.4-7.4.1-1). Cette VM doit être utilisée comme
           <strong>environnement de secours</strong> en cas de panne ou
           d'indisponibilité prolongée du serveur de test principal.
+          <br /><br />
+          Le fichier <strong>OVA</strong> nécessaire à la création de cette VM est disponible sur le <strong>canal du groupe Teams</strong>.
         </div>
 
         <h3>Communication et Suivi</h3>
@@ -409,7 +539,7 @@
     </div>
     <footer>
       <p>
-        &copy; Talel Zid | Version 1.0 — Octobre 2025.
+        &copy; Talel Zid | Version 2.0 — Juin 2026.
         <br />Pour usage personnel ou éducatif seulement.
       </p>
     </footer>
