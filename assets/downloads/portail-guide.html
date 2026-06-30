@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guide Étudiant — Portail CMS Alfresco · Projet de Synthèse</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <style>
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: #94a3b8;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      color-adjust: exact;
+    }
+
+    /* ============================================================
+       PRINT SETUP
+    ============================================================ */
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    @media print {
+      html, body { background: white; }
+      .page      { box-shadow: none; margin: 0; }
+    }
+
+    /* ============================================================
+       PAGE SHELL  (210 × 297 mm = one A4)
+    ============================================================ */
+    .page {
+      width:    210mm;
+      height:   297mm;
+      background: #f8fafc;
+      margin:   0 auto 20px;
+      box-shadow: 0 10px 50px rgba(0,0,0,0.35);
+      display:  flex;
+      flex-direction: column;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* ============================================================
+       RAINBOW TOP STRIPE
+    ============================================================ */
+    .top-stripe {
+      height: 6px;
+      flex-shrink: 0;
+      background: linear-gradient(
+        to right,
+        #06b6d4 0%,
+        #6366f1 30%,
+        #8b5cf6 55%,
+        #ec4899 75%,
+        #f59e0b 100%
+      );
+    }
+
+    /* ============================================================
+       HEADER
+    ============================================================ */
+    .header {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #0a1e3d 0%, #0f2d5e 45%, #0c5a7a 100%);
+      padding: 20px 28px 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* large decorative circles */
+    .header::before {
+      content: '';
+      position: absolute; top: -55px; right: -55px;
+      width: 220px; height: 220px;
+      background: radial-gradient(circle, rgba(255,255,255,0.07) 0%, transparent 68%);
+      border-radius: 50%;
+    }
+    .header::after {
+      content: '';
+      position: absolute; bottom: -40px; left: 220px;
+      width: 150px; height: 150px;
+      background: radial-gradient(circle, rgba(6,182,212,0.18) 0%, transparent 65%);
+      border-radius: 50%;
+    }
+
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .emblem {
+      width: 62px; height: 62px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
+      border: 1.5px solid rgba(255,255,255,0.22);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+    }
+
+    .header-copy { flex: 1; }
+
+    .header-eyebrow {
+      font-size: 7.5pt;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 5px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .header-eyebrow::before {
+      content: '';
+      display: inline-block;
+      width: 22px; height: 2px;
+      background: #06b6d4;
+      border-radius: 2px;
+    }
+
+    .header-title {
+      font-size: 20pt;
+      font-weight: 900;
+      color: #ffffff;
+      line-height: 1.1;
+      margin-bottom: 3px;
+      letter-spacing: -0.3px;
+    }
+    .header-title .accent { color: #38bdf8; }
+
+    .header-sub {
+      font-size: 9.5pt;
+      font-weight: 400;
+      color: rgba(255,255,255,0.65);
+    }
+
+    .header-tagline {
+      position: relative; z-index: 1;
+      margin-top: 12px;
+      padding-top: 11px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      font-size: 8.5pt;
+      color: rgba(255,255,255,0.58);
+      font-style: italic;
+      font-weight: 300;
+      line-height: 1.5;
+    }
+
+    /* ============================================================
+       ACCESS BANNER
+    ============================================================ */
+    .access-banner {
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #fefce8, #fef3c7);
+      border-bottom: 3.5px solid #f59e0b;
+      padding: 12px 28px;
+    }
+
+    .access-label-row {
+      display: flex; align-items: center; gap: 6px;
+      margin-bottom: 9px;
+    }
+    .access-label-row .icon { font-size: 13px; }
+    .access-label-row .title {
+      font-size: 7.5pt;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: #92400e;
+    }
+
+    .access-items {
+      display: flex;
+      gap: 10px;
+    }
+
+    .access-pill {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      background: white;
+      border-radius: 8px;
+      padding: 7px 13px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+    }
+    .access-pill.grow { flex: 1; }
+
+    .pill-lbl {
+      font-size: 6.5pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #a16207;
+    }
+    .pill-val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 9pt;
+      font-weight: 600;
+      color: #0f2d5e;
+    }
+    .pill-val.url {
+      font-size: 7.8pt;
+      color: #0369a1;
+    }
+
+    /* ============================================================
+       BODY
+    ============================================================ */
+    .body {
+      flex: 1;
+      padding: 14px 28px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 11px;
+      overflow: hidden;
+    }
+
+    /* Intro callout */
+    .intro {
+      border-left: 3.5px solid #06b6d4;
+      background: rgba(6,182,212,0.05);
+      border-radius: 0 7px 7px 0;
+      padding: 8px 13px;
+      font-size: 8.8pt;
+      line-height: 1.62;
+      color: #374151;
+    }
+    .intro strong { color: #0a1e3d; font-weight: 700; }
+
+    /* Section head */
+    .section-head {
+      font-size: 8pt;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: #0a1e3d;
+      display: flex; align-items: center; gap: 8px;
+      margin-bottom: 7px;
+    }
+    .section-head .ico { font-size: 11px; }
+    .section-head::after {
+      content: '';
+      flex: 1;
+      height: 1.5px;
+      background: linear-gradient(to right, #06b6d4, rgba(6,182,212,0.08));
+      border-radius: 2px;
+    }
+
+    /* ============================================================
+       CARDS GRID
+    ============================================================ */
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
+
+    .card {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      padding: 9px 11px;
+      border-radius: 9px;
+      border-left: 4px solid;
+    }
+    .card.wide { grid-column: 1 / -1; }
+
+    .card-ico { font-size: 17px; flex-shrink: 0; line-height: 1; margin-top: 1px; }
+
+    .card-body { flex: 1; }
+
+    .card-title {
+      font-size: 8.5pt;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+    .card-desc {
+      font-size: 7.2pt;
+      line-height: 1.52;
+    }
+
+    /* ——— colour variants ——— */
+    .c-blue   { background:#eff6ff; border-color:#3b82f6; }
+    .c-blue   .card-title { color:#1e40af; }
+    .c-blue   .card-desc  { color:#1d4ed8; }
+
+    .c-teal   { background:#ecfeff; border-color:#06b6d4; }
+    .c-teal   .card-title { color:#0e7490; }
+    .c-teal   .card-desc  { color:#0891b2; }
+
+    .c-green  { background:#f0fdf4; border-color:#22c55e; }
+    .c-green  .card-title { color:#15803d; }
+    .c-green  .card-desc  { color:#16a34a; }
+
+    .c-amber  { background:#fffbeb; border-color:#f59e0b; }
+    .c-amber  .card-title { color:#b45309; }
+    .c-amber  .card-desc  { color:#d97706; }
+
+    .c-purple { background:#f5f3ff; border-color:#8b5cf6; }
+    .c-purple .card-title { color:#6d28d9; }
+    .c-purple .card-desc  { color:#7c3aed; }
+
+    .c-rose   { background:#fff1f2; border-color:#f43f5e; }
+    .c-rose   .card-title { color:#be123c; }
+    .c-rose   .card-desc  { color:#e11d48; }
+
+    .c-slate  { background:#f1f5f9; border-color:#64748b; }
+    .c-slate  .card-title { color:#334155; }
+    .c-slate  .card-desc  { color:#475569; }
+
+    /* Tags */
+    .tags { display:flex; flex-wrap:wrap; gap:4px; margin-top:5px; }
+    .tag {
+      font-size: 6.5pt;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 20px;
+      background: rgba(0,0,0,0.07);
+      color: inherit;
+    }
+
+    /* ============================================================
+       AUDIO BLOCK
+    ============================================================ */
+    .audio-block {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, #0a1e3d 0%, #0f2d5e 100%);
+      border-radius: 10px;
+      padding: 11px 16px;
+    }
+
+    .audio-ring {
+      width: 44px; height: 44px;
+      flex-shrink: 0;
+      background: rgba(255,255,255,0.1);
+      border: 1.5px solid rgba(255,255,255,0.2);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+    }
+
+    .audio-copy { flex: 1; }
+
+    .audio-title {
+      font-size: 9pt;
+      font-weight: 700;
+      color: white;
+      margin-bottom: 3px;
+    }
+
+    .audio-desc {
+      font-size: 7.5pt;
+      color: rgba(255,255,255,0.7);
+      line-height: 1.48;
+    }
+    .audio-desc strong { color: #7dd3fc; }
+
+    .audio-tags { display:flex; gap:5px; flex-wrap:wrap; margin-top:6px; }
+    .audio-tag {
+      font-size: 6.5pt;
+      font-weight: 700;
+      background: rgba(6,182,212,0.18);
+      border: 1px solid rgba(6,182,212,0.35);
+      color: #7dd3fc;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+
+    /* ============================================================
+       STATS STRIP
+    ============================================================ */
+    .stats-strip {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 7px;
+    }
+
+    .stat-box {
+      background: white;
+      border-radius: 9px;
+      padding: 10px 8px 9px;
+      text-align: center;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+      border-top: 3.5px solid;
+    }
+
+    .stat-num {
+      font-size: 20pt;
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 3px;
+    }
+
+    .stat-lbl {
+      font-size: 6.5pt;
+      line-height: 1.4;
+      color: #6b7280;
+      font-weight: 500;
+    }
+
+    /* ============================================================
+       QUICK START
+    ============================================================ */
+    .quick-start {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .qs-step {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      background: white;
+      border-radius: 9px;
+      padding: 10px 12px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.07);
+    }
+
+    .qs-num {
+      width: 22px; height: 22px;
+      flex-shrink: 0;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 8.5pt;
+      font-weight: 900;
+      color: white;
+      margin-top: 1px;
+    }
+
+    .qs-title {
+      font-size: 8.5pt;
+      font-weight: 700;
+      color: #0a1e3d;
+      margin-bottom: 2px;
+    }
+
+    .qs-desc {
+      font-size: 7pt;
+      color: #6b7280;
+      line-height: 1.48;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    .footer {
+      flex-shrink: 0;
+      background: #0a1e3d;
+      padding: 8px 28px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left { font-size: 7.5pt; color: rgba(255,255,255,0.55); }
+    .footer-left strong { display:block; color:rgba(255,255,255,0.85); font-size:8.5pt; }
+
+    .footer-right { text-align: right; }
+    .footer-date { font-size:7pt; color:rgba(255,255,255,0.45); margin-bottom:2px; }
+    .footer-url  {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 7.5pt;
+      font-weight: 600;
+      color: #38bdf8;
+    }
+
+    /* ============================================================
+       TIPS ROW
+    ============================================================ */
+    .tips-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 7px;
+    }
+
+    .tip-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: white;
+      border-radius: 9px;
+      padding: 9px 11px;
+      box-shadow: 0 1px 5px rgba(0,0,0,0.06);
+      border-bottom: 3px solid;
+    }
+
+    .tip-ico { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+    .tip-title {
+      font-size: 8pt;
+      font-weight: 700;
+      color: #0a1e3d;
+      margin-bottom: 2px;
+    }
+
+    .tip-text {
+      font-size: 7pt;
+      color: #6b7280;
+      line-height: 1.48;
+    }
+
+    /* ============================================================
+       RIGHT ACCENT BAR
+    ============================================================ */
+    .right-bar {
+      position: absolute;
+      top: 0; right: 0; bottom: 0;
+      width: 5px;
+      background: linear-gradient(to bottom, #06b6d4 0%, #8b5cf6 50%, #f59e0b 100%);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page">
+
+    <!-- vertical accent -->
+    <div class="right-bar"></div>
+
+    <!-- ░░ RAINBOW STRIPE ░░ -->
+    <div class="top-stripe"></div>
+
+    <!-- ░░ HEADER ░░ -->
+    <header class="header">
+      <div class="header-row">
+        <div class="emblem">🎓</div>
+        <div class="header-copy">
+          <div class="header-eyebrow">Projet de Synthèse · Automne 2026</div>
+          <div class="header-title">Portail <span class="accent">CMS Alfresco</span></div>
+          <div class="header-sub">Guide étudiant — Ressources pédagogiques &amp; outils techniques</div>
+        </div>
+      </div>
+      <p class="header-tagline">
+        Ce portail est votre point d'entrée centralisé pour l'ensemble des ressources du cours. Il regroupe
+        les guides, outils d'automatisation, exercices pratiques et spécifications de votre projet de session —
+        tout ce dont vous avez besoin, accessible en un seul endroit.
+      </p>
+    </header>
+
+    <!-- ░░ ACCESS BANNER ░░ -->
+    <div class="access-banner">
+      <div class="access-label-row">
+        <span class="icon">🔑</span>
+        <span class="title">Accès au portail</span>
+      </div>
+      <div class="access-items">
+        <div class="access-pill grow">
+          <span class="pill-lbl">URL d'accès</span>
+          <span class="pill-val url">https://talelzid.github.io/alfresco-project/</span>
+        </div>
+        <div class="access-pill">
+          <span class="pill-lbl">Nom d'utilisateur</span>
+          <span class="pill-val">etudiant</span>
+        </div>
+        <div class="access-pill">
+          <span class="pill-lbl">Mot de passe</span>
+          <span class="pill-val">bdeb2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ░░ BODY ░░ -->
+    <main class="body">
+
+      <!-- Intro -->
+      <p class="intro">
+        Retrouvez ici la <strong>planification du projet</strong>, les <strong>spécifications par équipe</strong>,
+        l'<strong>environnement Docker</strong> prêt à l'emploi, ainsi que des dizaines de guides techniques et
+        d'exercices interactifs. Consultez-le régulièrement : il évolue tout au long de la session.
+      </p>
+
+      <!-- Stats strip -->
+      <div>
+        <div class="section-head"><span class="ico">📊</span> Le portail en chiffres</div>
+        <div class="stats-strip">
+          <div class="stat-box" style="border-color:#06b6d4">
+            <div class="stat-num" style="color:#06b6d4">9</div>
+            <div class="stat-lbl">Séries d'exercices<br>XPath interactifs</div>
+          </div>
+          <div class="stat-box" style="border-color:#8b5cf6">
+            <div class="stat-num" style="color:#8b5cf6">7</div>
+            <div class="stat-lbl">Formats de données<br>documentés &amp; illustrés</div>
+          </div>
+          <div class="stat-box" style="border-color:#f59e0b">
+            <div class="stat-num" style="color:#f59e0b">4</div>
+            <div class="stat-lbl">Podcasts<br>pédagogiques inclus</div>
+          </div>
+          <div class="stat-box" style="border-color:#22c55e">
+            <div class="stat-num" style="color:#22c55e; font-size:11pt; padding-top:4px">ISO<br>29119</div>
+            <div class="stat-lbl">Norme internationale<br>de test logiciel</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Content grid -->
+      <div>
+        <div class="section-head"><span class="ico">📚</span> Contenu du portail</div>
+
+        <div class="cards">
+
+          <div class="card c-blue">
+            <div class="card-ico">🗓️</div>
+            <div class="card-body">
+              <div class="card-title">Planification &amp; Chronologie</div>
+              <div class="card-desc">
+                Suivi des phases, jalons et calendrier officiel du projet. Visualisez les livrables
+                attendus à chaque étape de la session.
+              </div>
+            </div>
+          </div>
+
+          <div class="card c-teal">
+            <div class="card-ico">📋</div>
+            <div class="card-body">
+              <div class="card-title">Épics &amp; User Stories</div>
+              <div class="card-desc">
+                Backlog segmenté par équipe (2 à 3 équipes). Fonctionnalités cibles et critères
+                d'acceptation détaillés pour chaque US.
+              </div>
+            </div>
+          </div>
+
+          <div class="card c-green">
+            <div class="card-ico">🐳</div>
+            <div class="card-body">
+              <div class="card-title">Environnement de Test — Docker</div>
+              <div class="card-desc">
+                Instructions complètes pour déployer Alfresco en local via Docker. Configuration
+                stable et reproductible pour toute l'équipe.
+              </div>
+            </div>
+          </div>
+
+          <div class="card c-amber">
+            <div class="card-ico">📖</div>
+            <div class="card-body">
+              <div class="card-title">Guides Méthodologiques</div>
+              <div class="card-desc">
+                Standards ISO&nbsp;29119-3, plans et rapports de test, gabarits de documents,
+                normes de collaboration et gestion de projet.
+              </div>
+            </div>
+          </div>
+
+          <div class="card c-purple">
+            <div class="card-ico">🤖</div>
+            <div class="card-body">
+              <div class="card-title">Automatisation &amp; BDD</div>
+              <div class="card-desc">
+                Robot Framework, Webdriver/Selenium, approche BDD avec Gherkin &amp; Cucumber,
+                génération de données de test avec PICT.
+              </div>
+            </div>
+          </div>
+
+          <div class="card c-rose">
+            <div class="card-ico">🏋️</div>
+            <div class="card-body">
+              <div class="card-title">Apprentissage Pratique</div>
+              <div class="card-desc">
+                XPath Trainer — 9 séries d'exercices progressifs interactifs, quiz thématique
+                et feuilles de référence Robot &amp; XPath.
+              </div>
+            </div>
+          </div>
+
+          <div class="card c-slate wide">
+            <div class="card-ico">📂</div>
+            <div class="card-body">
+              <div class="card-title">Documentation Technique — Formats de Données</div>
+              <div class="card-desc">
+                Guides pratiques et exemples de code commentés — lecture, écriture et cas d'usage
+                réels dans le contexte du projet Alfresco.
+              </div>
+              <div class="tags">
+                <span class="tag">CSV</span>
+                <span class="tag">XML</span>
+                <span class="tag">JSON</span>
+                <span class="tag">YAML</span>
+                <span class="tag">.properties</span>
+                <span class="tag">Markdown</span>
+                <span class="tag">GitHub</span>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /cards -->
+      </div>
+
+      <!-- Quick start -->
+      <div>
+        <div class="section-head"><span class="ico">🚀</span> Démarrage rapide — 3 étapes</div>
+        <div class="quick-start">
+
+          <div class="qs-step">
+            <div class="qs-num" style="background:#06b6d4">1</div>
+            <div>
+              <div class="qs-title">Se connecter au portail</div>
+              <div class="qs-desc">Accédez à l'URL avec vos identifiants, parcourez le menu et familiarisez-vous avec les sections disponibles.</div>
+            </div>
+          </div>
+
+          <div class="qs-step">
+            <div class="qs-num" style="background:#8b5cf6">2</div>
+            <div>
+              <div class="qs-title">Lire ses User Stories</div>
+              <div class="qs-desc">Consultez les Épics de votre équipe, identifiez les critères d'acceptation et planifiez vos scénarios de test.</div>
+            </div>
+          </div>
+
+          <div class="qs-step">
+            <div class="qs-num" style="background:#22c55e">3</div>
+            <div>
+              <div class="qs-title">Déployer l'environnement</div>
+              <div class="qs-desc">Suivez le guide Docker pour lancer Alfresco en local et valider votre installation avec toute l'équipe.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Audio block -->
+      <div class="audio-block">
+        <div class="audio-ring">🎧</div>
+        <div class="audio-copy">
+          <div class="audio-title">Ressources Audio — Podcasts Pédagogiques</div>
+          <div class="audio-desc">
+            Plusieurs guides clés sont accompagnés d'un <strong>podcast très instructif</strong>.
+            Écoutez-les pour approfondir les concepts et les bonnes pratiques — fortement recommandé !
+          </div>
+          <div class="audio-tags">
+            <span class="audio-tag">User Stories</span>
+            <span class="audio-tag">XPath</span>
+            <span class="audio-tag">Gherkin</span>
+            <span class="audio-tag">PICT</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tips row -->
+      <div>
+        <div class="section-head"><span class="ico">💡</span> Bon à savoir</div>
+        <div class="tips-row">
+
+          <div class="tip-box" style="border-color:#06b6d4">
+            <div class="tip-ico">📅</div>
+            <div>
+              <div class="tip-title">Consultez régulièrement</div>
+              <div class="tip-text">Le portail évolue tout au long de la session — de nouveaux exercices et guides peuvent être ajoutés à tout moment.</div>
+            </div>
+          </div>
+
+          <div class="tip-box" style="border-color:#8b5cf6">
+            <div class="tip-ico">🤝</div>
+            <div>
+              <div class="tip-title">Synchronisez votre équipe</div>
+              <div class="tip-text">Partagez vos configurations Docker et vos scripts Robot Framework pour garantir la cohérence des résultats dans le groupe.</div>
+            </div>
+          </div>
+
+          <div class="tip-box" style="border-color:#f59e0b">
+            <div class="tip-ico">📝</div>
+            <div>
+              <div class="tip-title">Utilisez les gabarits</div>
+              <div class="tip-text">Des modèles de plan de test et de rapport sont fournis — utilisez-les comme base officielle pour tous vos livrables.</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </main><!-- /body -->
+
+    <!-- ░░ FOOTER ░░ -->
+    <footer class="footer">
+      <div class="footer-left">
+        <strong>Collège de Bois-de-Boulogne</strong>
+        Département Informatique · Projet de Synthèse
+      </div>
+      <div class="footer-right">
+        <div class="footer-date">Dernière mise à jour : 30 juin 2026</div>
+        <div class="footer-url">talelzid.github.io/alfresco-project/</div>
+      </div>
+    </footer>
+
+  </div><!-- /page -->
+
+</body>
+</html>
